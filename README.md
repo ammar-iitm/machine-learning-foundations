@@ -1,12 +1,12 @@
 # Machine Learning Foundations
 
-The complete handwritten lecture notebook for **Machine Learning Foundations** — Weeks 1–12, 60 lectures — typeset as a single self-contained HTML book, with every diagram redrawn as a vector figure.
+The complete handwritten lecture notebook for **Machine Learning Foundations**, written by **Kshitij Maheshwari** — Weeks 1–12, 60 lectures — typeset as a single self-contained HTML book, with every diagram redrawn as a vector figure.
 
 **Read it:** https://ammar-iitm.github.io/machine-learning-foundations/
 
 ## What's in it
 
-- Every definition, worked example and line of arithmetic from the original 74 handwritten pages, in the notebook's own order
+- Every definition, worked example and line of arithmetic from Kshitij's original 74 handwritten pages, in the notebook's own order
 - 33 hand-drawn diagrams redrawn as clean SVG — projection geometry, hyperplanes, the Argand diagram, descent and feasible-direction cones, epigraphs and convex hulls, PDF/CDF plots, the convolution triangle, the normal curve
 - Mathematics typeset with MathJax
 - Sidebar contents with a filter, scroll-linked highlighting, light and dark themes, and print styles
@@ -40,4 +40,4 @@ There is no build step. `index.html` is a single self-contained file; MathJax an
 
 These are personal study notes for the Machine Learning Foundations course in the IIT Madras BS in Data Science and Applications programme. They are not official course material and are not affiliated with or endorsed by IIT Madras or the course instructors.
 
-Notes by **Ammar Hashmi**.
+Notes by **Kshitij Maheshwari** (author). Typeset edition created by **Ammar Hashmi** (creator).
