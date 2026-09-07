@@ -46,6 +46,13 @@
   --tint-2:rgba(34,69,143,.10);
   --shadow:0 1px 2px rgba(27,35,51,.05), 0 8px 24px -14px rgba(27,35,51,.28);
 
+  --v1:#22458f;
+  --v2:#b3245f;
+  --v3:#0f7d6c;
+  --v4:#b0761a;
+  --grid:#e4e3d6;
+  --glow:none;
+
   --f-display:"Spectral", "Iowan Old Style", Georgia, "Times New Roman", serif;
   --f-body:"Spectral", "Iowan Old Style", Georgia, "Times New Roman", serif;
   --f-ui:"IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -55,7 +62,7 @@
   --sidebar:288px;
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
+  :root:not([data-theme]){
     --paper:#111319;
     --surface:#171a21;
     --surface-2:#1e222b;
@@ -73,6 +80,12 @@
     --fix:#e0a077;
     --fix-bg:rgba(224,160,119,.10);
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
+    --v1:#93b2ff;
+    --v2:#ff8fb3;
+    --v3:#5fd4bd;
+    --v4:#f0b95c;
+    --grid:#232833;
+    --glow:none;
   }
 }
 :root[data-theme="dark"]{
@@ -93,6 +106,52 @@
   --fix:#e0a077;
   --fix-bg:rgba(224,160,119,.10);
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
+  --v1:#93b2ff;
+  --v2:#ff8fb3;
+  --v3:#5fd4bd;
+  --v4:#f0b95c;
+  --grid:#232833;
+  --glow:none;
+}
+
+/* ---------- bright: a high-key, saturated reading mode ---------- */
+:root[data-theme="bright"]{
+  --paper:#fffdf6;
+  --surface:#ffffff;
+  --surface-2:#f4edff;
+  --ink:#150f22;
+  --ink-soft:#584a72;
+  --ink-faint:#8d7fa8;
+  --pen:#6d28d9;
+  --pen-soft:#9457f5;
+  --rule:#e7ddfa;
+  --rule-strong:#cdbaf2;
+  --hl-yellow:rgba(255,214,0,.62);
+  --hl-orange:rgba(255,133,51,.60);
+  --tint:rgba(109,40,217,.055);
+  --tint-2:rgba(109,40,217,.13);
+  --fix:#d1345b;
+  --fix-bg:rgba(209,52,91,.07);
+  --shadow:0 1px 2px rgba(80,40,160,.07), 0 10px 30px -16px rgba(80,40,160,.42);
+  --v1:#6d28d9;
+  --v2:#e0117f;
+  --v3:#00a389;
+  --v4:#f08c00;
+  --grid:#ece2ff;
+  --glow:drop-shadow(0 0 2px rgba(109,40,217,.20));
+}
+:root[data-theme="bright"] body{
+  background:
+    radial-gradient(1100px 620px at 88% -8%, rgba(224,17,127,.07), transparent 60%),
+    radial-gradient(900px 560px at -6% 4%, rgba(109,40,217,.09), transparent 62%),
+    var(--paper);
+  background-attachment:fixed;
+}
+:root[data-theme="bright"] .rail{background:rgba(255,255,255,.86);backdrop-filter:blur(9px)}
+:root[data-theme="bright"] .week-tag{box-shadow:0 1px 0 rgba(0,0,0,.06)}
+:root[data-theme="bright"] .cover h1 em{
+  background:linear-gradient(96deg,var(--pen) 0%,var(--v2) 62%,var(--v4) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
 *{box-sizing:border-box}
@@ -152,7 +211,10 @@ a{color:var(--pen);text-decoration-thickness:1px;text-underline-offset:2px}
 .toc .hide{display:none}
 
 /* ---------- reading column ---------- */
-main{padding:0 clamp(20px,5vw,72px) 120px;max-width:calc(var(--col) + 340px)}
+/* min-width:0 — a grid item otherwise refuses to shrink below its widest
+   unbreakable child, which pushed the whole page sideways on small screens */
+main{padding:0 clamp(20px,5vw,72px) 120px;max-width:calc(var(--col) + 340px);min-width:0}
+.rail{min-width:0}
 .wrap{max-width:var(--col)}
 
 /* ---------- title page ---------- */
@@ -332,6 +394,88 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
 .top.show{opacity:1;pointer-events:auto}
 .top:hover{color:var(--pen);border-color:var(--pen-soft)}
 
+/* ---------- reading progress ---------- */
+.prog{
+  position:fixed;top:0;left:0;height:3px;width:0;z-index:60;pointer-events:none;
+  background:linear-gradient(90deg,var(--v1),var(--v2) 55%,var(--v4));
+  transition:width .12s linear;
+}
+
+/* ---------- theme switcher ---------- */
+.themes{display:flex;gap:2px;padding:2px;border:1px solid var(--rule-strong);border-radius:6px;background:var(--paper)}
+.themes button{
+  flex:1;border:0;background:transparent;cursor:pointer;border-radius:4px;padding:5px 0;
+  font-family:var(--f-ui);font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);transition:background .15s,color .15s;
+}
+.themes button:hover{color:var(--ink)}
+.themes button[aria-pressed="true"]{background:var(--tint-2);color:var(--pen)}
+
+/* ---------- heading anchors ---------- */
+.lec h3{position:relative}
+.alink{
+  position:absolute;left:-1.15em;top:.12em;text-decoration:none;color:var(--pen-soft);
+  font-family:var(--f-ui);font-size:.62em;opacity:0;transition:opacity .15s;
+}
+.lec:hover .alink,.alink:focus-visible{opacity:.75}
+@media (max-width:1100px){.alink{display:none}}
+
+/* ---------- scroll reveal ---------- */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- interactive figures ---------- */
+.viz{
+  margin:30px 0 0;max-width:var(--col);border:1px solid var(--rule);border-radius:10px;
+  background:var(--surface);box-shadow:var(--shadow);overflow:hidden;
+}
+.viz-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:11px 16px;border-bottom:1px solid var(--rule);background:var(--tint);
+}
+.viz-title{font-family:var(--f-ui);font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--pen)}
+.viz-badge{
+  font-family:var(--f-mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-faint);border:1px solid var(--rule-strong);border-radius:20px;padding:2px 9px;white-space:nowrap;
+}
+.viz-stage{padding:14px 14px 4px;display:flex;justify-content:center;overflow-x:auto}
+.viz-stage svg{display:block;max-width:100%;height:auto;touch-action:none;filter:var(--glow)}
+.viz-ctrls{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:11px 20px;padding:12px 16px 14px;
+}
+.ctl{display:flex;flex-direction:column;gap:3px;font-family:var(--f-ui)}
+.ctl .cl{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;letter-spacing:.02em;color:var(--ink-faint)}
+.ctl .cv{font-family:var(--f-mono);color:var(--pen);letter-spacing:0}
+.ctl input[type=range]{width:100%;accent-color:var(--pen);cursor:pointer;height:18px}
+.viz-btns{display:flex;flex-wrap:wrap;gap:8px;grid-column:1/-1}
+.viz-btns button{
+  font-family:var(--f-ui);font-size:12px;font-weight:600;letter-spacing:.01em;
+  color:var(--ink-soft);background:var(--paper);border:1px solid var(--rule-strong);border-radius:5px;
+  padding:6px 12px;cursor:pointer;transition:color .15s,border-color .15s,background .15s;
+}
+.viz-btns button:hover{color:var(--pen);border-color:var(--pen-soft)}
+.viz-btns button[aria-pressed="true"]{background:var(--tint-2);color:var(--pen);border-color:var(--pen-soft)}
+.viz-out{
+  padding:9px 16px;border-top:1px solid var(--rule);background:var(--surface-2);
+  font-family:var(--f-mono);font-size:11.5px;line-height:1.7;color:var(--ink-soft);
+  display:flex;flex-wrap:wrap;gap:4px 20px;
+}
+.viz-out b{color:var(--ink);font-weight:500}
+.viz figcaption{
+  font-family:var(--f-mono);font-size:11.5px;color:var(--ink-faint);line-height:1.55;
+  padding:10px 16px;border-top:1px solid var(--rule);
+}
+.viz figcaption b{color:var(--ink-soft);font-weight:500}
+svg .grid{stroke:var(--grid);stroke-width:1;fill:none}
+svg .c1{stroke:var(--v1);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+svg .c2{stroke:var(--v2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+svg .c3{stroke:var(--v3);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+svg .c4{stroke:var(--v4);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+svg .f1{fill:var(--v1)} svg .f2{fill:var(--v2)} svg .f3{fill:var(--v3)} svg .f4{fill:var(--v4)}
+svg .grab{cursor:grab}
+svg .grab:active{cursor:grabbing}
+
 /* ---------- responsive ---------- */
 .rail-toggle{display:none}
 @media (max-width:900px){
@@ -347,12 +491,17 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
     border:1px solid var(--rule-strong);border-radius:5px;padding:8px;cursor:pointer;
   }
   .rail.closed .rail-tools,.rail.closed .toc-scroll{display:none}
-  main{padding:0 20px 90px}
+  /* the rail is static at this width, so scrolling main breaks no sticky */
+  main{padding:0 20px 90px;overflow-x:auto}
   body{font-size:16.5px}
+  .viz-ctrls{grid-template-columns:1fr;padding:10px 12px 12px}
+  .viz-stage{padding:10px 8px 2px}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 @media print{
-  .rail,.top{display:none}
+  .rail,.top,.prog,.viz-ctrls,.alink{display:none}
+  .reveal{opacity:1;transform:none}
+  .viz{break-inside:avoid;box-shadow:none}
   .shell{display:block}
   body{background:#fff;color:#000;font-size:11pt}
   main{padding:0;max-width:none}
@@ -363,6 +512,7 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
 </style>
 </head>
 <body>
+<div class="prog" id="prog" aria-hidden="true"></div>
 <div class="shell">
 
 <aside class="rail" id="rail">
@@ -372,8 +522,12 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   </div>
   <button class="rail-toggle" id="railToggle" aria-expanded="true">Contents</button>
   <div class="rail-tools">
-    <input id="filter" type="search" placeholder="Filter contents…" aria-label="Filter contents">
-    <button class="tbtn" id="themeBtn" title="Switch theme" aria-label="Switch theme">◐</button>
+    <input id="filter" type="search" placeholder="Filter contents…  ( / )" aria-label="Filter contents">
+  </div>
+  <div class="themes" id="themes" role="group" aria-label="Colour theme">
+    <button type="button" data-set="light" aria-pressed="false">Paper</button>
+    <button type="button" data-set="bright" aria-pressed="false">Bright</button>
+    <button type="button" data-set="dark" aria-pressed="false">Dark</button>
   </div>
   <div class="toc-scroll">
     <ul class="toc" id="toc"></ul>
@@ -425,6 +579,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Learning Problems</h2>
   <p class="desc">Notation, and the four shapes a machine-learning problem takes: regression, classification, dimensionality reduction, density estimation.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w1" id="viz-w1">
+    <div class="viz-head"><span class="viz-title">Fitting a line by hand</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Drag any data point, or move \(w\) and \(b\), and watch the squared loss respond. <b>Fit</b> jumps to the least-squares optimum — the line no other \((w,b)\) can beat.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w1l3" data-lec="Lecture 03 · Notations &amp; Supervised Learning">
@@ -597,6 +758,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Calculus for Machine&nbsp;Learning</h2>
   <p class="desc">Sets and metric spaces, sequences and convergence, continuity and differentiability, linear and quadratic approximation, gradients and descent directions.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w2" id="viz-w2">
+    <div class="viz-head"><span class="viz-title">Linear and quadratic approximation</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>The tangent line and the fitted parabola at \(a\). Slide \(a\) along the curve: the linear approximation tracks \(f\) to first order, the quadratic one hugs it far longer.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w2l1" data-lec="Lecture 01 · Basic Sets, Metric Spaces &amp; Sequences">
@@ -859,6 +1027,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Four Fundamental Subspaces &amp; Projections</h2>
   <p class="desc">Column space, null space, row space and left null space; orthogonality between them; projection onto a line and onto a subspace; least squares.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w3" id="viz-w3">
+    <div class="viz-head"><span class="viz-title">Projection onto a line</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Drag \(b\). Its projection \(p=\frac{a^{\mathsf T}b}{a^{\mathsf T}a}a\) slides along the line and the error \(e=b-p\) stays perpendicular to it — that right angle is the whole of least squares.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w3l1" data-lec="Lecture 01 · Four Fundamental Subspaces">
@@ -1139,6 +1314,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Regression, Eigenvalues &amp; Diagonalization</h2>
   <p class="desc">Linear, polynomial and ridge regression; eigenvalues and eigenvectors; diagonalization; the Fibonacci sequence solved by diagonalization; orthogonal diagonalization.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w4" id="viz-w4">
+    <div class="viz-head"><span class="viz-title">Eigenvectors, seen</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Every unit vector \(x\) is sent to \(Ax\); the unit circle becomes an ellipse. Drag \(x\) — on an eigenvector, \(Ax\) lies along \(x\) and only its length changes.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w4l1" data-lec="Lecture 01 · Linear, Polynomial &amp; Ridge Regression">
@@ -1353,6 +1535,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Complex Matrices</h2>
   <p class="desc">The complex counterpart of \(\mathbb R^n\): inner products over \(\mathbb C^n\), Hermitian and unitary matrices, Schur's theorem and the spectral theorem.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w5" id="viz-w5">
+    <div class="viz-head"><span class="viz-title">Where the eigenvalues live</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>A rotation is unitary and its eigenvalues sit on the unit circle; a symmetric matrix is Hermitian and its eigenvalues fall on the real axis. Pick a kind and vary its parameter.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w5l1" data-lec="Lecture 01 · Complex Matrices">
@@ -1567,6 +1756,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>SVD &amp; Positive Definiteness</h2>
   <p class="desc">Singular value decomposition of any real matrix; quadratic forms, stationary points, and the five tests for positive definiteness.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w6" id="viz-w6">
+    <div class="viz-head"><span class="viz-title">The SVD, geometrically</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>\(A\) takes the unit circle to an ellipse. The right singular vectors \(v_1,v_2\) are the orthogonal pair that stays orthogonal; \(\sigma_1,\sigma_2\) are the semi-axes they map to.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w6l1" data-lec="Lecture 01 · Singular Value Decomposition">
@@ -1714,6 +1910,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Principal Component Analysis</h2>
   <p class="desc">Projecting data onto a lower-dimensional subspace — minimising reconstruction error, maximising projected variance, and handling the case \(d\gg n\).</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w7" id="viz-w7">
+    <div class="viz-head"><span class="viz-title">Principal components of a cloud</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Change the correlation and spread. The first principal component is the direction of greatest variance; the bar shows how much of the total variance the first component keeps.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w7l1" data-lec="Lecture 01 · Principal Component Analysis (PCA)">
@@ -1817,6 +2020,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Unconstrained Optimization</h2>
   <p class="desc">The general form of an optimization problem, why direction alone is not enough, step sizes that converge, and gradient descent in one and many variables.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w8" id="viz-w8">
+    <div class="viz-head"><span class="viz-title">Gradient descent, step by step</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Click anywhere on the contours to drop a starting point. Small steps crawl, well-chosen steps converge, and past \(\eta=2/\lambda_{\max}\) the iterates diverge.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w8l2" data-lec="Lecture 02 · General Form of an Optimization Problem">
@@ -2000,6 +2210,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Constrained Optimization &amp; Convexity</h2>
   <p class="desc">Descent and feasible directions, the Lagrange multiplier condition, projected gradient descent, and the foundations of convex sets and convex functions.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w9" id="viz-w9">
+    <div class="viz-head"><span class="viz-title">The Lagrange condition</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Drag the point around the constraint curve \(g(x)=0\). The constrained optimum is where \(\nabla f\) and \(\nabla g\) become parallel — nowhere else can you move along the curve and still descend.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w9l1" data-lec="Lecture 01 · Constrained Optimization (Part 01)">
@@ -2415,6 +2632,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Convexity, Duality &amp; KKT</h2>
   <p class="desc">Optimality conditions for convex functions, linear regression as a convex problem, the Lagrangian, weak and strong duality, and the KKT conditions.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w10" id="viz-w10">
+    <div class="viz-head"><span class="viz-title">Weak duality and the gap</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>For each \(\lambda\ge 0\), minimising the Lagrangian gives a lower bound \(d(\lambda)\le p^\ast\). Slide \(\lambda\): the best bound is the dual optimum, and here it closes the gap exactly.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w10l1" data-lec="Lecture 01 · Additional Properties of Convex Functions">
@@ -2600,6 +2824,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>Continuous Random Variables</h2>
   <p class="desc">Densities and distribution functions, conditional PDFs, expectation and variance, joint and independent random variables, transformations, and the standard distributions.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w11" id="viz-w11">
+    <div class="viz-head"><span class="viz-title">Density and distribution</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>\(P(a\le X\le b)\) is the area under the PDF, and the same number is a rise on the CDF. Drag the handles and watch both readings agree.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w11l1" data-lec="Lecture 01 · Continuous Random Variables">
@@ -3002,6 +3233,13 @@ svg .hatch{stroke:var(--ink-faint);stroke-width:.8}
   <h2>The Multivariate Normal</h2>
   <p class="desc">From \(d\) independent standard normals to the bi-variate normal by linear transform, and on to the general multivariate normal and its properties.</p>
   <div class="week-rule"></div>
+  <figure class="viz" data-viz="w12" id="viz-w12">
+    <div class="viz-head"><span class="viz-title">The bivariate normal</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Contours of constant density are ellipses of \(x^{\mathsf T}\Sigma^{-1}x\). Correlation tilts them; the marginals along each edge stay normal whatever \(\rho\) does.</figcaption>
+  </figure>
 </section>
 
 <section class="lec" id="w12l1" data-lec="Lecture 01 · Bi-variate &amp; Multi-variate Normal">
@@ -3199,13 +3437,82 @@ window.MathJax = {
     });
   });
 
-  /* ---------- theme ---------- */
+  /* ---------- theme: paper, bright, dark ---------- */
   var root = document.documentElement;
-  document.getElementById('themeBtn').addEventListener('click', function () {
-    var explicit = root.getAttribute('data-theme');
-    var dark = explicit ? explicit === 'dark'
-      : window.matchMedia('(prefers-color-scheme: dark)').matches;
-    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+  var themeBox = document.getElementById('themes');
+  var ORDER = ['light', 'bright', 'dark'];
+
+  function currentTheme() {
+    return root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+  function paint() {
+    var now = currentTheme();
+    themeBox.querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.set === now));
+    });
+  }
+  function setTheme(name) {
+    root.setAttribute('data-theme', name);
+    try { localStorage.setItem('mlf-theme', name); } catch (e) { }
+    paint();
+  }
+  try {
+    var saved = localStorage.getItem('mlf-theme');
+    if (ORDER.indexOf(saved) > -1) root.setAttribute('data-theme', saved);
+  } catch (e) { }
+  themeBox.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (b) setTheme(b.dataset.set);
+  });
+  paint();
+
+  /* ---------- reading progress ---------- */
+  var prog = document.getElementById('prog');
+
+  /* ---------- anchor links on lectures ---------- */
+  document.querySelectorAll('main section.lec').forEach(function (sec) {
+    var h = sec.querySelector('h3');
+    if (!h || !sec.id) return;
+    var a = document.createElement('a');
+    a.className = 'alink';
+    a.href = '#' + sec.id;
+    a.textContent = '§';
+    a.setAttribute('aria-label', 'Link to this lecture');
+    h.appendChild(a);
+  });
+
+  /* ---------- scroll reveal ---------- */
+  var motionOK = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (motionOK && 'IntersectionObserver' in window) {
+    var revealables = document.querySelectorAll('main .fig, main .viz, main .tw, main .callout');
+    revealables.forEach(function (n) { n.classList.add('reveal'); });
+    var rio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('in');
+        rio.unobserve(e.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.04 });
+    revealables.forEach(function (n) { rio.observe(n); });
+    // never leave content invisible if frames stop arriving
+    setTimeout(function () {
+      revealables.forEach(function (n) { n.classList.add('in'); });
+    }, 2500);
+  }
+
+  /* ---------- keyboard ---------- */
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var t = e.target, tag = t && t.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') {
+      if (e.key === 'Escape' && t.id === 'filter') { t.value = ''; t.dispatchEvent(new Event('input')); t.blur(); }
+      return;
+    }
+    if (e.key === '/') { e.preventDefault(); document.getElementById('filter').focus(); }
+    else if (e.key === 't' || e.key === 'T') {
+      setTheme(ORDER[(ORDER.indexOf(currentTheme()) + 1) % ORDER.length]);
+    }
   });
 
   /* ---------- mobile contents toggle ---------- */
@@ -3234,9 +3541,1227 @@ window.MathJax = {
     ticking = true;
     requestAnimationFrame(function () {
       top.classList.toggle('show', window.scrollY > 900);
+      var h = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.width = (h > 0 ? Math.min(100, window.scrollY / h * 100) : 0) + '%';
       ticking = false;
     });
   }, { passive: true });
+})();
+</script>
+
+<script>
+/* ============================================================
+   Interactive figures — one per week.
+   Every colour comes from a CSS custom property, so the plates
+   follow the paper / bright / dark themes without redrawing.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  var NS = 'http://www.w3.org/2000/svg';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function el(tag, attrs) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function add(parent, tag, attrs) { var e = el(tag, attrs); parent.appendChild(e); return e; }
+  function txt(parent, x, y, s, cls, anchor) {
+    var t = add(parent, 'text', { x: x, y: y, class: cls || 'lab', 'text-anchor': anchor || 'start' });
+    t.textContent = s;
+    return t;
+  }
+  function fmt(v, d) {
+    d = d == null ? 2 : d;
+    if (!isFinite(v)) return '∞';
+    if (Math.abs(v) < 5e-4) v = 0;
+    return v.toFixed(d);
+  }
+  function poly(pts) {
+    var s = '', i;
+    for (i = 0; i < pts.length; i++) s += (i ? 'L' : 'M') + pts[i][0].toFixed(2) + ' ' + pts[i][1].toFixed(2);
+    return s;
+  }
+
+  /* ---------- stage ---------- */
+  function stage(host, W, H) {
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H });
+    svg.style.width = '100%';
+    svg.style.maxWidth = W + 'px';
+    host.querySelector('.viz-stage').appendChild(svg);
+    return svg;
+  }
+  var markerSeq = 0;
+  function arrowheads(svg) {
+    var id = 'ah' + (++markerSeq), defs = add(svg, 'defs', null), names = {};
+    [1, 2, 3, 4].forEach(function (n) {
+      var m = add(defs, 'marker', {
+        id: id + '-' + n, viewBox: '0 0 10 10', refX: 8.4, refY: 5,
+        markerWidth: 5.4, markerHeight: 5.4, orient: 'auto-start-reverse'
+      });
+      add(m, 'path', { d: 'M0 0.6 L9.6 5 L0 9.4 Z', class: 'f' + n });
+      names[n] = 'url(#' + id + '-' + n + ')';
+    });
+    return names;
+  }
+  function mapper(b) {
+    return {
+      b: b,
+      X: function (v) { return b.x + (v - b.xmin) / (b.xmax - b.xmin) * b.w; },
+      Y: function (v) { return b.y + b.h - (v - b.ymin) / (b.ymax - b.ymin) * b.h; },
+      iX: function (p) { return b.xmin + (p - b.x) / b.w * (b.xmax - b.xmin); },
+      iY: function (p) { return b.ymin + (b.y + b.h - p) / b.h * (b.ymax - b.ymin); }
+    };
+  }
+  function gridlines(g, m, dx, dy) {
+    var b = m.b, v;
+    for (v = Math.ceil(b.xmin / dx) * dx; v <= b.xmax + 1e-9; v += dx)
+      add(g, 'line', { x1: m.X(v), y1: b.y, x2: m.X(v), y2: b.y + b.h, class: 'grid' });
+    for (v = Math.ceil(b.ymin / dy) * dy; v <= b.ymax + 1e-9; v += dy)
+      add(g, 'line', { x1: b.x, y1: m.Y(v), x2: b.x + b.w, y2: m.Y(v), class: 'grid' });
+  }
+  function zeroAxes(g, m) {
+    var b = m.b;
+    add(g, 'line', { x1: b.x, y1: m.Y(0), x2: b.x + b.w, y2: m.Y(0), class: 'ax' });
+    add(g, 'line', { x1: m.X(0), y1: b.y, x2: m.X(0), y2: b.y + b.h, class: 'ax' });
+  }
+  function frameBox(g, m) {
+    var b = m.b;
+    add(g, 'rect', { x: b.x, y: b.y, width: b.w, height: b.h, fill: 'none', class: 'grid' });
+  }
+  var clipSeq = 0;
+  function clipTo(svg, m) {
+    var id = 'clp' + (++clipSeq);
+    var defs = svg.querySelector('defs') || add(svg, 'defs', null);
+    var cp = add(defs, 'clipPath', { id: id });
+    add(cp, 'rect', { x: m.b.x, y: m.b.y, width: m.b.w, height: m.b.h });
+    return 'url(#' + id + ')';
+  }
+  function pt(svg, e) {
+    var r = svg.getBoundingClientRect(), vb = svg.viewBox.baseVal;
+    return { x: (e.clientX - r.left) / r.width * vb.width, y: (e.clientY - r.top) / r.height * vb.height };
+  }
+  function draggable(svg, handles) {
+    var active = null;
+    svg.addEventListener('pointerdown', function (e) {
+      var p = pt(svg, e), hs = handles(), best = null, bd = 1e9;
+      hs.forEach(function (h) {
+        var d = Math.hypot(p.x - h.x, p.y - h.y);
+        if (d < bd) { bd = d; best = h; }
+      });
+      if (best && bd < 30) {
+        active = best;
+        try { svg.setPointerCapture(e.pointerId); } catch (err) { }
+        e.preventDefault();
+        active.set(p.x, p.y);
+      }
+    });
+    svg.addEventListener('pointermove', function (e) {
+      if (!active) return;
+      var p = pt(svg, e);
+      active.set(p.x, p.y);
+      e.preventDefault();
+    });
+    ['pointerup', 'pointercancel'].forEach(function (t) {
+      svg.addEventListener(t, function () { active = null; });
+    });
+  }
+
+  /* ---------- controls ---------- */
+  function slider(host, o) {
+    var box = host.querySelector('.viz-ctrls');
+    var d = document.createElement('div'); d.className = 'ctl';
+    var lab = document.createElement('div'); lab.className = 'cl';
+    var nm = document.createElement('span'); nm.textContent = o.label;
+    var vv = document.createElement('span'); vv.className = 'cv';
+    lab.appendChild(nm); lab.appendChild(vv);
+    var i = document.createElement('input');
+    i.type = 'range'; i.min = o.min; i.max = o.max; i.step = o.step; i.value = o.value;
+    i.setAttribute('aria-label', o.label);
+    d.appendChild(lab); d.appendChild(i);
+    box.appendChild(d);
+    function show() { vv.textContent = (o.fmt || function (v) { return fmt(v); })(parseFloat(i.value)); }
+    i.addEventListener('input', function () { show(); o.on(parseFloat(i.value)); });
+    show();
+    return {
+      get: function () { return parseFloat(i.value); },
+      set: function (v) { i.value = v; show(); }
+    };
+  }
+  function buttons(host, list) {
+    var box = host.querySelector('.viz-ctrls');
+    var row = box.querySelector('.viz-btns');
+    if (!row) { row = document.createElement('div'); row.className = 'viz-btns'; box.appendChild(row); }
+    var made = [];
+    list.forEach(function (o) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = o.label;
+      if (o.pressed != null) b.setAttribute('aria-pressed', String(!!o.pressed));
+      b.addEventListener('click', function () {
+        if (o.group) made.forEach(function (m) { if (m.o.group === o.group) m.b.setAttribute('aria-pressed', String(m.o === o)); });
+        else if (o.pressed != null) b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+        o.on(b.getAttribute('aria-pressed') === 'true');
+      });
+      row.appendChild(b);
+      made.push({ b: b, o: o });
+    });
+    return made;
+  }
+  function readout(host) {
+    var box = host.querySelector('.viz-out');
+    return function (parts) { box.innerHTML = parts.join(''); };
+  }
+  function cell(k, v) { return '<span>' + k + ' <b>' + v + '</b></span>'; }
+
+  /* ---------- small numerics ---------- */
+  function rng(seed) {
+    return function () {
+      seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+      var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  function gauss(r) {
+    var u = 1 - r(), v = r();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  }
+  // eigen-decomposition of a symmetric 2x2 [[a,b],[b,c]]
+  function eigSym(a, b, c) {
+    var tr = a + c, det = a * c - b * b;
+    var disc = Math.sqrt(Math.max(0, tr * tr / 4 - det));
+    var l1 = tr / 2 + disc, l2 = tr / 2 - disc, th;
+    if (Math.abs(b) > 1e-12) th = Math.atan2(l1 - a, b);
+    else th = a >= c ? 0 : Math.PI / 2;
+    return { l1: l1, l2: l2, theta: th };
+  }
+  // eigenvalues of a general 2x2 (possibly complex)
+  function eigGen(a, b, c, d) {
+    var tr = a + d, det = a * d - b * c, disc = tr * tr / 4 - det;
+    if (disc >= 0) {
+      var s = Math.sqrt(disc);
+      return { real: true, l1: tr / 2 + s, l2: tr / 2 - s, im: 0 };
+    }
+    return { real: false, l1: tr / 2, l2: tr / 2, im: Math.sqrt(-disc) };
+  }
+  function eigVec(a, b, c, d, lam) {
+    var v = [b, lam - a];
+    if (Math.hypot(v[0], v[1]) < 1e-9) v = [lam - d, c];
+    if (Math.hypot(v[0], v[1]) < 1e-9) v = [1, 0];
+    var n = Math.hypot(v[0], v[1]);
+    return [v[0] / n, v[1] / n];
+  }
+  function erf(x) {
+    var s = x < 0 ? -1 : 1; x = Math.abs(x);
+    var t = 1 / (1 + 0.3275911 * x);
+    // Abramowitz & Stegun 7.1.26
+    var y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+    return s * y;
+  }
+  function normCdf(z) { return 0.5 * (1 + erf(z / Math.SQRT2)); }
+
+  /* ============================================================
+     WEEK 1 — least squares by hand
+     ============================================================ */
+  function w1(host) {
+    var W = 580, H = 352, m = mapper({ x: 46, y: 16, w: W - 70, h: H - 66, xmin: 0, xmax: 10, ymin: 0, ymax: 14 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gMid.setAttribute('clip-path', clipTo(svg, m));
+    gridlines(gBack, m, 1, 2);
+    frameBox(gBack, m);
+    var v;
+    for (v = 0; v <= 10; v += 2) txt(gBack, m.X(v), m.b.y + m.b.h + 15, String(v), 'tick', 'middle');
+    for (v = 0; v <= 14; v += 2) txt(gBack, m.b.x - 8, m.Y(v) + 3.5, String(v), 'tick', 'end');
+    txt(gBack, m.b.x + m.b.w / 2, m.b.y + m.b.h + 32, 'x', 'lab', 'middle');
+
+    var data = [[1, 2.1], [2, 3.9], [3, 6.2], [4, 7.2], [5, 9.4], [6, 11.5], [7, 13.0], [8.4, 13.6]];
+    var wv = 1.0, bv = 3.0, showRes = true;
+    var line = add(gMid, 'path', { class: 'c2' });
+    var best = add(gMid, 'path', { class: 'c3', 'stroke-dasharray': '5 4', opacity: .0 });
+    var resG = add(gMid, 'g');
+    var dots = data.map(function () { return add(gTop, 'circle', { r: 6, class: 'f1 grab' }); });
+
+    function ols() {
+      var n = data.length, sx = 0, sy = 0, sxx = 0, sxy = 0;
+      data.forEach(function (p) { sx += p[0]; sy += p[1]; sxx += p[0] * p[0]; sxy += p[0] * p[1]; });
+      var w = (n * sxy - sx * sy) / (n * sxx - sx * sx);
+      return { w: w, b: (sy - w * sx) / n };
+    }
+    function loss(w, b) {
+      var s = 0;
+      data.forEach(function (p) { var r = w * p[0] + b - p[1]; s += r * r; });
+      return s / data.length;
+    }
+    function draw() {
+      var y0 = wv * m.b.xmin + bv, y1 = wv * m.b.xmax + bv;
+      line.setAttribute('d', poly([[m.X(m.b.xmin), m.Y(y0)], [m.X(m.b.xmax), m.Y(y1)]]));
+      var o = ols();
+      best.setAttribute('d', poly([[m.X(0), m.Y(o.b)], [m.X(10), m.Y(o.w * 10 + o.b)]]));
+      best.setAttribute('opacity', .55);
+      while (resG.firstChild) resG.removeChild(resG.firstChild);
+      data.forEach(function (p, i) {
+        dots[i].setAttribute('cx', m.X(p[0]));
+        dots[i].setAttribute('cy', m.Y(p[1]));
+        if (!showRes) return;
+        add(resG, 'line', {
+          x1: m.X(p[0]), y1: m.Y(p[1]), x2: m.X(p[0]), y2: m.Y(wv * p[0] + bv),
+          class: 'c4', 'stroke-width': 4, opacity: .38, 'stroke-linecap': 'butt'
+        });
+      });
+      var o2 = ols();
+      out([
+        cell('f(x) =', fmt(wv) + '·x + ' + fmt(bv)),
+        cell('loss', fmt(loss(wv, bv), 3)),
+        cell('best possible', fmt(loss(o2.w, o2.b), 3)),
+        cell('excess', fmt(loss(wv, bv) - loss(o2.w, o2.b), 3))
+      ]);
+    }
+    var sw = slider(host, { label: 'slope  w', min: -0.5, max: 3, step: 0.01, value: wv, on: function (x) { wv = x; draw(); } });
+    var sb = slider(host, { label: 'intercept  b', min: -4, max: 8, step: 0.05, value: bv, on: function (x) { bv = x; draw(); } });
+    buttons(host, [
+      { label: 'Fit least squares', on: function () { var o = ols(); sw.set(o.w.toFixed(2)); sb.set(o.b.toFixed(2)); wv = parseFloat(o.w.toFixed(2)); bv = parseFloat(o.b.toFixed(2)); draw(); } },
+      { label: 'Residuals', pressed: true, on: function (p) { showRes = p; draw(); } }
+    ]);
+    draggable(svg, function () {
+      return data.map(function (p, i) {
+        return {
+          x: m.X(p[0]), y: m.Y(p[1]),
+          set: function (px, py) {
+            p[0] = Math.min(9.8, Math.max(0.2, m.iX(px)));
+            p[1] = Math.min(13.7, Math.max(0.3, m.iY(py)));
+            draw();
+          }
+        };
+      });
+    });
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 2 — linear and quadratic approximation
+     ============================================================ */
+  function w2(host) {
+    var W = 580, H = 340, m = mapper({ x: 44, y: 14, w: W - 66, h: H - 52, xmin: -3, xmax: 3, ymin: -3.4, ymax: 4.2 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    var clip = clipTo(svg, m);
+    gMid.setAttribute('clip-path', clip);
+    gTop.setAttribute('clip-path', clip);
+    gridlines(gBack, m, 1, 1);
+    zeroAxes(gBack, m);
+    frameBox(gBack, m);
+    var v;
+    for (v = -3; v <= 3; v++) if (v) txt(gBack, m.X(v), m.Y(0) + 14, String(v), 'tick', 'middle');
+
+    var fns = {
+      sine: { f: Math.sin, d: Math.cos, dd: function (x) { return -Math.sin(x); }, tex: 'sin x' },
+      exp: { f: function (x) { return Math.exp(x / 2); }, d: function (x) { return Math.exp(x / 2) / 2; }, dd: function (x) { return Math.exp(x / 2) / 4; }, tex: 'e^(x/2)' },
+      cubic: { f: function (x) { return 0.25 * x * x * x - x; }, d: function (x) { return 0.75 * x * x - 1; }, dd: function (x) { return 1.5 * x; }, tex: '0.25x³ − x' }
+    };
+    var key = 'sine', a = 0.7, h = 1.0;
+    var curve = add(gMid, 'path', { class: 'c1' });
+    var lin = add(gMid, 'path', { class: 'c2', 'stroke-dasharray': '6 4' });
+    var quad = add(gMid, 'path', { class: 'c3' });
+    var errL = add(gTop, 'line', { class: 'c2', 'stroke-width': 3, opacity: .55 });
+    var errQ = add(gTop, 'line', { class: 'c3', 'stroke-width': 3, opacity: .55 });
+    var pA = add(gTop, 'circle', { r: 5.5, class: 'f1 grab' });
+    var pB = add(gTop, 'circle', { r: 4.5, class: 'f1', opacity: .55 });
+    var tick = add(gTop, 'line', { class: 'dash' });
+    var labA = txt(gTop, 0, 0, 'a', 'lab', 'middle');
+
+    function clampY(y) { return Math.max(m.b.ymin, Math.min(m.b.ymax, y)); }
+    function sample(fn) {
+      var pts = [], i, x;
+      for (i = 0; i <= 240; i++) {
+        x = m.b.xmin + (m.b.xmax - m.b.xmin) * i / 240;
+        var y = fn(x);
+        if (!isFinite(y) || Math.abs(y) > 400) { pts.push(null); continue; }
+        pts.push([m.X(x), m.Y(y)]);
+      }
+      var d = '', pen = false;
+      pts.forEach(function (p) {
+        if (!p) { pen = false; return; }
+        d += (pen ? 'L' : 'M') + p[0].toFixed(2) + ' ' + p[1].toFixed(2);
+        pen = true;
+      });
+      return d;
+    }
+    function draw() {
+      var F = fns[key], fa = F.f(a), d1 = F.d(a), d2 = F.dd(a);
+      curve.setAttribute('d', sample(F.f));
+      lin.setAttribute('d', sample(function (x) { return fa + d1 * (x - a); }));
+      quad.setAttribute('d', sample(function (x) { return fa + d1 * (x - a) + 0.5 * d2 * (x - a) * (x - a); }));
+      pA.setAttribute('cx', m.X(a)); pA.setAttribute('cy', m.Y(clampY(fa)));
+      labA.setAttribute('x', m.X(a)); labA.setAttribute('y', m.Y(clampY(fa)) - 12);
+      var xb = Math.max(m.b.xmin, Math.min(m.b.xmax, a + h));
+      var tv = fa + d1 * (xb - a), qv = tv + 0.5 * d2 * (xb - a) * (xb - a), fv = F.f(xb);
+      pB.setAttribute('cx', m.X(xb)); pB.setAttribute('cy', m.Y(clampY(fv)));
+      tick.setAttribute('x1', m.X(xb)); tick.setAttribute('x2', m.X(xb));
+      tick.setAttribute('y1', m.b.y); tick.setAttribute('y2', m.b.y + m.b.h);
+      errL.setAttribute('x1', m.X(xb) - 5); errL.setAttribute('x2', m.X(xb) - 5);
+      errL.setAttribute('y1', m.Y(clampY(fv))); errL.setAttribute('y2', m.Y(clampY(tv)));
+      errQ.setAttribute('x1', m.X(xb) + 5); errQ.setAttribute('x2', m.X(xb) + 5);
+      errQ.setAttribute('y1', m.Y(clampY(fv))); errQ.setAttribute('y2', m.Y(clampY(qv)));
+      out([
+        cell('f', F.tex),
+        cell('f(a+h)', fmt(fv, 3)),
+        cell('linear error', fmt(Math.abs(fv - tv), 4)),
+        cell('quadratic error', fmt(Math.abs(fv - qv), 4))
+      ]);
+    }
+    slider(host, { label: 'expansion point  a', min: -2.8, max: 2.8, step: 0.02, value: a, on: function (x) { a = x; draw(); } });
+    slider(host, { label: 'offset  h', min: -2, max: 2, step: 0.02, value: h, on: function (x) { h = x; draw(); } });
+    buttons(host, [
+      { label: 'sin x', group: 'f', pressed: true, on: function () { key = 'sine'; draw(); } },
+      { label: 'eˣ′²', group: 'f', pressed: false, on: function () { key = 'exp'; draw(); } },
+      { label: 'cubic', group: 'f', pressed: false, on: function () { key = 'cubic'; draw(); } }
+    ]);
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 3 — projection onto a line
+     ============================================================ */
+  function w3(host) {
+    var W = 560, H = 360, m = mapper({ x: 20, y: 14, w: W - 40, h: H - 46, xmin: -6, xmax: 6, ymin: -4, ymax: 4 });
+    var svg = stage(host, W, H), out = readout(host), ar = arrowheads(svg);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gridlines(gBack, m, 1, 1);
+    zeroAxes(gBack, m);
+    frameBox(gBack, m);
+
+    var ang = 25 * Math.PI / 180, b = [2.4, 3.1];
+    var span = add(gMid, 'path', { class: 'grid', 'stroke-width': 1.6, 'stroke-dasharray': '7 5' });
+    var av = add(gMid, 'line', { class: 'c3', 'stroke-width': 2.4, 'marker-end': ar[3] });
+    var bv = add(gMid, 'line', { class: 'c2', 'stroke-width': 2.4, 'marker-end': ar[2] });
+    var pv = add(gMid, 'line', { class: 'c1', 'stroke-width': 3, 'marker-end': ar[1] });
+    var ev = add(gMid, 'line', { class: 'c4', 'stroke-width': 2, 'stroke-dasharray': '5 4' });
+    var sq = add(gMid, 'path', { class: 'ax', fill: 'none' });
+    var hb = add(gTop, 'circle', { r: 6.5, class: 'f2 grab' });
+    var hp = add(gTop, 'circle', { r: 4.5, class: 'f1' });
+    var la = txt(gTop, 0, 0, 'a', 'lab', 'middle');
+    var lb = txt(gTop, 0, 0, 'b', 'lab', 'middle');
+    var lp = txt(gTop, 0, 0, 'p', 'lab', 'middle');
+    var le = txt(gTop, 0, 0, 'e = b − p', 'lab', 'middle');
+
+    function draw() {
+      var a = [Math.cos(ang), Math.sin(ang)];
+      var t = (a[0] * b[0] + a[1] * b[1]);
+      var p = [t * a[0], t * a[1]], e = [b[0] - p[0], b[1] - p[1]];
+      var L = 7;
+      span.setAttribute('d', poly([[m.X(-L * a[0]), m.Y(-L * a[1])], [m.X(L * a[0]), m.Y(L * a[1])]]));
+      av.setAttribute('x1', m.X(0)); av.setAttribute('y1', m.Y(0));
+      av.setAttribute('x2', m.X(a[0] * 2)); av.setAttribute('y2', m.Y(a[1] * 2));
+      bv.setAttribute('x1', m.X(0)); bv.setAttribute('y1', m.Y(0));
+      bv.setAttribute('x2', m.X(b[0])); bv.setAttribute('y2', m.Y(b[1]));
+      pv.setAttribute('x1', m.X(0)); pv.setAttribute('y1', m.Y(0));
+      pv.setAttribute('x2', m.X(p[0])); pv.setAttribute('y2', m.Y(p[1]));
+      ev.setAttribute('x1', m.X(p[0])); ev.setAttribute('y1', m.Y(p[1]));
+      ev.setAttribute('x2', m.X(b[0])); ev.setAttribute('y2', m.Y(b[1]));
+      hb.setAttribute('cx', m.X(b[0])); hb.setAttribute('cy', m.Y(b[1]));
+      hp.setAttribute('cx', m.X(p[0])); hp.setAttribute('cy', m.Y(p[1]));
+      // right-angle mark at p, in the plane of a and e
+      var en = Math.hypot(e[0], e[1]) || 1, u = [e[0] / en, e[1] / en], s = 0.42;
+      var c0 = [p[0] + u[0] * s, p[1] + u[1] * s];
+      var c1 = [c0[0] + a[0] * s, c0[1] + a[1] * s];
+      var c2 = [p[0] + a[0] * s, p[1] + a[1] * s];
+      sq.setAttribute('d', poly([[m.X(c0[0]), m.Y(c0[1])], [m.X(c1[0]), m.Y(c1[1])], [m.X(c2[0]), m.Y(c2[1])]]));
+      la.setAttribute('x', m.X(a[0] * 2) + 12); la.setAttribute('y', m.Y(a[1] * 2) + 4);
+      lb.setAttribute('x', m.X(b[0]) + 14); lb.setAttribute('y', m.Y(b[1]) - 6);
+      lp.setAttribute('x', m.X(p[0]) - 6); lp.setAttribute('y', m.Y(p[1]) + 20);
+      le.setAttribute('x', (m.X(p[0]) + m.X(b[0])) / 2 + 30);
+      le.setAttribute('y', (m.Y(p[1]) + m.Y(b[1])) / 2);
+      out([
+        cell('aᵀb / aᵀa', fmt(t)),
+        cell('‖p‖', fmt(Math.hypot(p[0], p[1]))),
+        cell('‖e‖', fmt(en)),
+        cell('eᵀa', fmt(e[0] * a[0] + e[1] * a[1], 3))
+      ]);
+    }
+    slider(host, {
+      label: 'direction of  a', min: -80, max: 100, step: 0.5, value: 25,
+      fmt: function (v) { return fmt(v, 0) + '°'; },
+      on: function (v) { ang = v * Math.PI / 180; draw(); }
+    });
+    draggable(svg, function () {
+      return [{
+        x: m.X(b[0]), y: m.Y(b[1]),
+        set: function (px, py) {
+          b[0] = Math.max(-5.6, Math.min(5.6, m.iX(px)));
+          b[1] = Math.max(-3.6, Math.min(3.6, m.iY(py)));
+          draw();
+        }
+      }];
+    });
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 4 — eigenvectors of a 2x2
+     ============================================================ */
+  function w4(host) {
+    var W = 560, H = 360, m = mapper({ x: 20, y: 14, w: W - 40, h: H - 46, xmin: -3.6, xmax: 3.6, ymin: -2.4, ymax: 2.4 });
+    var svg = stage(host, W, H), out = readout(host), ar = arrowheads(svg);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gMid.setAttribute('clip-path', clipTo(svg, m));
+    gridlines(gBack, m, 1, 1);
+    zeroAxes(gBack, m);
+    frameBox(gBack, m);
+
+    var A = [1.2, 0.8, 0.5, 1.4], th = 0.9;
+    var circle = add(gMid, 'path', { class: 'grid', 'stroke-width': 1.5 });
+    var ellipse = add(gMid, 'path', { class: 'c3', opacity: .8 });
+    var e1 = add(gMid, 'path', { class: 'c4', 'stroke-dasharray': '6 5', 'stroke-width': 1.6 });
+    var e2 = add(gMid, 'path', { class: 'c4', 'stroke-dasharray': '6 5', 'stroke-width': 1.6 });
+    var xv = add(gMid, 'line', { class: 'c1', 'stroke-width': 2.4, 'marker-end': ar[1] });
+    var yv = add(gMid, 'line', { class: 'c2', 'stroke-width': 2.6, 'marker-end': ar[2] });
+    var hx = add(gTop, 'circle', { r: 6, class: 'f1 grab' });
+    var lx = txt(gTop, 0, 0, 'x', 'lab', 'middle');
+    var ly = txt(gTop, 0, 0, 'Ax', 'lab', 'middle');
+
+    function mul(v) { return [A[0] * v[0] + A[1] * v[1], A[2] * v[0] + A[3] * v[1]]; }
+    function draw() {
+      var i, pts = [], qts = [], t;
+      for (i = 0; i <= 160; i++) {
+        t = i / 160 * 2 * Math.PI;
+        var u = [Math.cos(t), Math.sin(t)], q = mul(u);
+        pts.push([m.X(u[0]), m.Y(u[1])]);
+        qts.push([m.X(q[0]), m.Y(q[1])]);
+      }
+      circle.setAttribute('d', poly(pts) + 'Z');
+      ellipse.setAttribute('d', poly(qts) + 'Z');
+      var eg = eigGen(A[0], A[1], A[2], A[3]), note;
+      [e1, e2].forEach(function (n) { n.setAttribute('d', ''); });
+      if (eg.real) {
+        [[eg.l1, e1], [eg.l2, e2]].forEach(function (pair) {
+          var v = eigVec(A[0], A[1], A[2], A[3], pair[0]), L = 4;
+          pair[1].setAttribute('d', poly([[m.X(-L * v[0]), m.Y(-L * v[1])], [m.X(L * v[0]), m.Y(L * v[1])]]));
+        });
+        note = cell('λ', fmt(eg.l1) + ',  ' + fmt(eg.l2));
+      } else {
+        note = cell('λ', fmt(eg.l1) + ' ± ' + fmt(eg.im) + 'i — no real eigenvector');
+      }
+      var x = [Math.cos(th), Math.sin(th)], y = mul(x);
+      xv.setAttribute('x1', m.X(0)); xv.setAttribute('y1', m.Y(0));
+      xv.setAttribute('x2', m.X(x[0])); xv.setAttribute('y2', m.Y(x[1]));
+      yv.setAttribute('x1', m.X(0)); yv.setAttribute('y1', m.Y(0));
+      yv.setAttribute('x2', m.X(y[0])); yv.setAttribute('y2', m.Y(y[1]));
+      hx.setAttribute('cx', m.X(x[0])); hx.setAttribute('cy', m.Y(x[1]));
+      lx.setAttribute('x', m.X(x[0] * 1.16)); lx.setAttribute('y', m.Y(x[1] * 1.16) + 4);
+      ly.setAttribute('x', m.X(y[0] * 1.12)); ly.setAttribute('y', m.Y(y[1] * 1.12) + 4);
+      var cross = Math.abs(x[0] * y[1] - x[1] * y[0]) / (Math.hypot(y[0], y[1]) || 1);
+      out([
+        cell('A', '[' + fmt(A[0], 1) + ' ' + fmt(A[1], 1) + '; ' + fmt(A[2], 1) + ' ' + fmt(A[3], 1) + ']'),
+        note,
+        cell('‖Ax‖/‖x‖', fmt(Math.hypot(y[0], y[1]))),
+        cell(cross < 0.03 ? '✓ Ax ∥ x' : 'off-axis by', cross < 0.03 ? 'eigenvector' : fmt(Math.asin(Math.min(1, cross)) * 180 / Math.PI, 0) + '°')
+      ]);
+    }
+    ['a₁₁', 'a₁₂', 'a₂₁', 'a₂₂'].forEach(function (lbl, i) {
+      slider(host, { label: lbl, min: -2, max: 2, step: 0.05, value: A[i], on: function (v) { A[i] = v; draw(); } });
+    });
+    draggable(svg, function () {
+      return [{
+        x: m.X(Math.cos(th)), y: m.Y(Math.sin(th)),
+        set: function (px, py) { th = Math.atan2(m.iY(py), m.iX(px)); draw(); }
+      }];
+    });
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 5 — eigenvalues of unitary vs Hermitian matrices
+     ============================================================ */
+  function w5(host) {
+    var W = 580, H = 320;
+    var left = mapper({ x: 22, y: 16, w: 250, h: 250, xmin: -2.2, xmax: 2.2, ymin: -2.2, ymax: 2.2 });
+    var right = mapper({ x: 312, y: 16, w: 250, h: 250, xmin: -2.2, xmax: 2.2, ymin: -2.2, ymax: 2.2 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    [left, right].forEach(function (m) {
+      gridlines(gBack, m, 1, 1); zeroAxes(gBack, m); frameBox(gBack, m);
+    });
+    txt(gBack, left.b.x + left.b.w / 2, H - 12, 'eigenvalues in the complex plane', 'tick', 'middle');
+    txt(gBack, right.b.x + right.b.w / 2, H - 12, 'image of the unit circle', 'tick', 'middle');
+    txt(gBack, left.X(0) + 6, left.b.y + 12, 'Im', 'tick', 'start');
+    txt(gBack, left.b.x + left.b.w - 4, left.Y(0) - 6, 'Re', 'tick', 'end');
+
+    var gL = add(gMid, 'g', { 'clip-path': clipTo(svg, left) });
+    var gR = add(gMid, 'g', { 'clip-path': clipTo(svg, right) });
+    var unit = add(gL, 'path', { class: 'grid', 'stroke-width': 1.6, 'stroke-dasharray': '5 4' });
+    var realAxis = add(gL, 'line', {
+      x1: left.X(-2.1), y1: left.Y(0), x2: left.X(2.1), y2: left.Y(0),
+      class: 'c3', 'stroke-width': 2.5, opacity: .28
+    });
+    var lam1 = add(gTop, 'circle', { r: 6.5, class: 'f2' });
+    var lam2 = add(gTop, 'circle', { r: 6.5, class: 'f2' });
+    var srcCircle = add(gR, 'path', { class: 'grid', 'stroke-width': 1.5, 'stroke-dasharray': '4 4' });
+    var image = add(gR, 'path', { class: 'c1' });
+
+    var mode = 'unitary', s = 0.6;
+    function matrix() {
+      if (mode === 'unitary') { var c = Math.cos(s * 2), n = Math.sin(s * 2); return [c, -n, n, c]; }
+      if (mode === 'hermitian') return [1, s, s, 1];
+      return [1, s, -s, 1];
+    }
+    function draw() {
+      var A = matrix(), i, t, pts = [], qts = [], cir = [];
+      for (i = 0; i <= 180; i++) {
+        t = i / 180 * 2 * Math.PI;
+        var u = [Math.cos(t), Math.sin(t)];
+        cir.push([left.X(u[0]), left.Y(u[1])]);
+        pts.push([right.X(u[0]), right.Y(u[1])]);
+        qts.push([right.X(A[0] * u[0] + A[1] * u[1]), right.Y(A[2] * u[0] + A[3] * u[1])]);
+      }
+      unit.setAttribute('d', poly(cir) + 'Z');
+      srcCircle.setAttribute('d', poly(pts) + 'Z');
+      image.setAttribute('d', poly(qts) + 'Z');
+      var eg = eigGen(A[0], A[1], A[2], A[3]);
+      var p1, p2, kind;
+      if (eg.real) { p1 = [eg.l1, 0]; p2 = [eg.l2, 0]; }
+      else { p1 = [eg.l1, eg.im]; p2 = [eg.l1, -eg.im]; }
+      lam1.setAttribute('cx', left.X(p1[0])); lam1.setAttribute('cy', left.Y(p1[1]));
+      lam2.setAttribute('cx', left.X(p2[0])); lam2.setAttribute('cy', left.Y(p2[1]));
+      kind = mode === 'unitary' ? 'unitary — |λ| = 1, circle preserved'
+        : mode === 'hermitian' ? 'Hermitian — λ real'
+          : 'neither — λ complex, off the unit circle';
+      out([
+        cell('matrix', kind),
+        cell('λ₁', fmt(p1[0]) + (Math.abs(p1[1]) > 1e-6 ? (p1[1] > 0 ? ' + ' : ' − ') + fmt(Math.abs(p1[1])) + 'i' : '')),
+        cell('λ₂', fmt(p2[0]) + (Math.abs(p2[1]) > 1e-6 ? (p2[1] > 0 ? ' + ' : ' − ') + fmt(Math.abs(p2[1])) + 'i' : '')),
+        cell('|λ₁|', fmt(Math.hypot(p1[0], p1[1])))
+      ]);
+    }
+    slider(host, { label: 'parameter', min: -1.5, max: 1.5, step: 0.01, value: s, on: function (v) { s = v; draw(); } });
+    buttons(host, [
+      { label: 'Unitary R(θ)', group: 'k', pressed: true, on: function () { mode = 'unitary'; draw(); } },
+      { label: 'Hermitian', group: 'k', pressed: false, on: function () { mode = 'hermitian'; draw(); } },
+      { label: 'Neither', group: 'k', pressed: false, on: function () { mode = 'general'; draw(); } }
+    ]);
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 6 — SVD as circle to ellipse
+     ============================================================ */
+  function w6(host) {
+    var W = 580, H = 320;
+    var left = mapper({ x: 22, y: 16, w: 250, h: 250, xmin: -2.4, xmax: 2.4, ymin: -2.4, ymax: 2.4 });
+    var right = mapper({ x: 312, y: 16, w: 250, h: 250, xmin: -3.4, xmax: 3.4, ymin: -3.4, ymax: 3.4 });
+    var svg = stage(host, W, H), out = readout(host), ar = arrowheads(svg);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    [left, right].forEach(function (m) { gridlines(gBack, m, 1, 1); zeroAxes(gBack, m); frameBox(gBack, m); });
+    txt(gBack, left.b.x + left.b.w / 2, H - 12, 'unit circle,  v₁ ⟂ v₂', 'tick', 'middle');
+    txt(gBack, right.b.x + right.b.w / 2, H - 12, 'image under A,  σ₁u₁ ⟂ σ₂u₂', 'tick', 'middle');
+
+    var A = [1.4, 0.9, 0.3, 1.1];
+    var gL = add(gMid, 'g', { 'clip-path': clipTo(svg, left) });
+    var gR = add(gMid, 'g', { 'clip-path': clipTo(svg, right) });
+    var c0 = add(gL, 'path', { class: 'grid', 'stroke-width': 1.6 });
+    var c1 = add(gR, 'path', { class: 'c1' });
+    var v1 = add(gL, 'line', { class: 'c2', 'stroke-width': 2.4, 'marker-end': ar[2] });
+    var v2 = add(gL, 'line', { class: 'c3', 'stroke-width': 2.4, 'marker-end': ar[3] });
+    var u1 = add(gR, 'line', { class: 'c2', 'stroke-width': 2.4, 'marker-end': ar[2] });
+    var u2 = add(gR, 'line', { class: 'c3', 'stroke-width': 2.4, 'marker-end': ar[3] });
+    var t1 = txt(gTop, 0, 0, 'v₁', 'lab', 'middle');
+    var t2 = txt(gTop, 0, 0, 'v₂', 'lab', 'middle');
+    var t3 = txt(gTop, 0, 0, 'σ₁u₁', 'lab', 'middle');
+    var t4 = txt(gTop, 0, 0, 'σ₂u₂', 'lab', 'middle');
+
+    function draw() {
+      var a = A[0], b = A[1], c = A[2], d = A[3];
+      // A^T A
+      var p = a * a + c * c, q = a * b + c * d, r = b * b + d * d;
+      var e = eigSym(p, q, r);
+      var s1 = Math.sqrt(Math.max(0, e.l1)), s2 = Math.sqrt(Math.max(0, e.l2));
+      var V1 = [Math.cos(e.theta), Math.sin(e.theta)], V2 = [-V1[1], V1[0]];
+      var AV1 = [a * V1[0] + b * V1[1], c * V1[0] + d * V1[1]];
+      var AV2 = [a * V2[0] + b * V2[1], c * V2[0] + d * V2[1]];
+      var i, t, pts = [], qts = [];
+      for (i = 0; i <= 180; i++) {
+        t = i / 180 * 2 * Math.PI;
+        var u = [Math.cos(t), Math.sin(t)];
+        pts.push([left.X(u[0]), left.Y(u[1])]);
+        qts.push([right.X(a * u[0] + b * u[1]), right.Y(c * u[0] + d * u[1])]);
+      }
+      c0.setAttribute('d', poly(pts) + 'Z');
+      c1.setAttribute('d', poly(qts) + 'Z');
+      function arrow(node, m, v) {
+        node.setAttribute('x1', m.X(0)); node.setAttribute('y1', m.Y(0));
+        node.setAttribute('x2', m.X(v[0])); node.setAttribute('y2', m.Y(v[1]));
+      }
+      arrow(v1, left, V1); arrow(v2, left, V2);
+      arrow(u1, right, AV1); arrow(u2, right, AV2);
+      t1.setAttribute('x', left.X(V1[0] * 1.22)); t1.setAttribute('y', left.Y(V1[1] * 1.22) + 4);
+      t2.setAttribute('x', left.X(V2[0] * 1.22)); t2.setAttribute('y', left.Y(V2[1] * 1.22) + 4);
+      t3.setAttribute('x', right.X(AV1[0] * 1.16)); t3.setAttribute('y', right.Y(AV1[1] * 1.16) + 4);
+      t4.setAttribute('x', right.X(AV2[0] * 1.2)); t4.setAttribute('y', right.Y(AV2[1] * 1.2) + 4);
+      out([
+        cell('σ₁', fmt(s1)),
+        cell('σ₂', fmt(s2)),
+        cell('det A', fmt(a * d - b * c)),
+        cell('condition σ₁/σ₂', s2 > 1e-6 ? fmt(s1 / s2) : '∞  (singular)')
+      ]);
+    }
+    ['a₁₁', 'a₁₂', 'a₂₁', 'a₂₂'].forEach(function (lbl, i) {
+      slider(host, { label: lbl, min: -2, max: 2, step: 0.05, value: A[i], on: function (v) { A[i] = v; draw(); } });
+    });
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 7 — principal components
+     ============================================================ */
+  function w7(host) {
+    var W = 580, H = 350, m = mapper({ x: 22, y: 14, w: 380, h: H - 48, xmin: -4, xmax: 4, ymin: -3, ymax: 3 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gridlines(gBack, m, 1, 1); zeroAxes(gBack, m); frameBox(gBack, m);
+
+    var N = 140, base = [], r = rng(20240607), i;
+    for (i = 0; i < N; i++) base.push([gauss(r), gauss(r)]);
+    var rho = 0.75, sx = 1.5, sy = 0.7, showProj = true;
+
+    var pc1 = add(gMid, 'line', { class: 'c2', 'stroke-width': 2.6 });
+    var pc2 = add(gMid, 'line', { class: 'c3', 'stroke-width': 2.2 });
+    var projG = add(gMid, 'g');
+    var dotsG = add(gTop, 'g');
+    var dots = [];
+    for (i = 0; i < N; i++) dots.push(add(dotsG, 'circle', { r: 3, class: 'f1', opacity: .55 }));
+    var l1 = txt(gTop, 0, 0, 'PC₁', 'lab', 'middle');
+    var l2 = txt(gTop, 0, 0, 'PC₂', 'lab', 'middle');
+
+    // variance bar
+    var bx = 432, by = 40, bw = 118, bh = 210;
+    add(gBack, 'rect', { x: bx, y: by, width: bw, height: bh, class: 'grid', fill: 'none' });
+    txt(gBack, bx + bw / 2, by - 12, 'variance kept', 'tick', 'middle');
+    var barFill = add(gMid, 'rect', { x: bx + 1, y: by, width: bw - 2, height: 0, class: 'f2', opacity: .55 });
+    var barTxt = txt(gTop, bx + bw / 2, by + bh + 18, '', 'tick', 'middle');
+    var barTxt2 = txt(gTop, bx + bw / 2, by + bh / 2, '', 'lab', 'middle');
+
+    function draw() {
+      var L = [[sx, 0], [rho * sy, Math.sqrt(Math.max(1e-6, 1 - rho * rho)) * sy]];
+      var pts = base.map(function (z) {
+        return [L[0][0] * z[0] + L[0][1] * z[1], L[1][0] * z[0] + L[1][1] * z[1]];
+      });
+      var mx = 0, my = 0;
+      pts.forEach(function (p) { mx += p[0]; my += p[1]; });
+      mx /= N; my /= N;
+      var cxx = 0, cxy = 0, cyy = 0;
+      pts.forEach(function (p) {
+        var u = p[0] - mx, v = p[1] - my;
+        cxx += u * u; cxy += u * v; cyy += v * v;
+      });
+      cxx /= N - 1; cxy /= N - 1; cyy /= N - 1;
+      var e = eigSym(cxx, cxy, cyy);
+      var d1 = [Math.cos(e.theta), Math.sin(e.theta)], d2 = [-d1[1], d1[0]];
+      var a1 = 2 * Math.sqrt(Math.max(0, e.l1)), a2 = 2 * Math.sqrt(Math.max(0, e.l2));
+      pts.forEach(function (p, k) {
+        dots[k].setAttribute('cx', m.X(p[0])); dots[k].setAttribute('cy', m.Y(p[1]));
+      });
+      function seg(node, c, d, a) {
+        node.setAttribute('x1', m.X(c[0] - d[0] * a)); node.setAttribute('y1', m.Y(c[1] - d[1] * a));
+        node.setAttribute('x2', m.X(c[0] + d[0] * a)); node.setAttribute('y2', m.Y(c[1] + d[1] * a));
+      }
+      seg(pc1, [mx, my], d1, a1); seg(pc2, [mx, my], d2, a2);
+      l1.setAttribute('x', m.X(mx + d1[0] * (a1 + .45))); l1.setAttribute('y', m.Y(my + d1[1] * (a1 + .45)) + 4);
+      l2.setAttribute('x', m.X(mx + d2[0] * (a2 + .4))); l2.setAttribute('y', m.Y(my + d2[1] * (a2 + .4)) + 4);
+      while (projG.firstChild) projG.removeChild(projG.firstChild);
+      if (showProj) pts.forEach(function (p) {
+        var u = p[0] - mx, v = p[1] - my, t = u * d1[0] + v * d1[1];
+        add(projG, 'line', {
+          x1: m.X(p[0]), y1: m.Y(p[1]),
+          x2: m.X(mx + t * d1[0]), y2: m.Y(my + t * d1[1]),
+          class: 'grid', 'stroke-width': 1
+        });
+      });
+      var frac = e.l1 / (e.l1 + e.l2);
+      barFill.setAttribute('height', bh * frac);
+      barFill.setAttribute('y', by + bh * (1 - frac));
+      barTxt.textContent = 'PC₁ alone';
+      barTxt2.textContent = fmt(frac * 100, 1) + '%';
+      out([
+        cell('λ₁', fmt(e.l1)),
+        cell('λ₂', fmt(e.l2)),
+        cell('PC₁ direction', fmt(e.theta * 180 / Math.PI, 1) + '°'),
+        cell('variance kept by PC₁', fmt(frac * 100, 1) + '%')
+      ]);
+    }
+    slider(host, { label: 'correlation  ρ', min: -0.97, max: 0.97, step: 0.01, value: rho, on: function (v) { rho = v; draw(); } });
+    slider(host, { label: 'spread in x', min: 0.3, max: 2.2, step: 0.02, value: sx, on: function (v) { sx = v; draw(); } });
+    slider(host, { label: 'spread in y', min: 0.15, max: 2.2, step: 0.02, value: sy, on: function (v) { sy = v; draw(); } });
+    buttons(host, [{ label: 'Projections onto PC₁', pressed: true, on: function (p) { showProj = p; draw(); } }]);
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 8 — gradient descent
+     ============================================================ */
+  function w8(host) {
+    var W = 580, H = 360, m = mapper({ x: 22, y: 14, w: W - 44, h: H - 46, xmin: -4.4, xmax: 4.4, ymin: -3, ymax: 3 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gridlines(gBack, m, 1, 1); zeroAxes(gBack, m); frameBox(gBack, m);
+    svg.style.cursor = 'crosshair';
+
+    var a = 1.0, bq = 0.25, eta = 0.35, start = [-3.4, 2.2];
+    var clip = clipTo(svg, m);
+    var contours = add(gBack, 'g', { 'clip-path': clip });
+    gMid.setAttribute('clip-path', clip);
+    gTop.setAttribute('clip-path', clip);
+    var pathN = add(gMid, 'path', { class: 'c2', 'stroke-width': 2 });
+    var dotsG = add(gTop, 'g');
+    var head = add(gTop, 'circle', { r: 6, class: 'f2' });
+    var startDot = add(gTop, 'circle', { r: 5, class: 'f4' });
+    add(gTop, 'circle', { cx: m.X(0), cy: m.Y(0), r: 4, class: 'f3' });
+    txt(gTop, m.X(0) + 10, m.Y(0) + 14, 'minimum', 'lab', 'start');
+    var timer = null, iterates = [], step = 0;
+
+    function f(p) { return 0.5 * (a * p[0] * p[0] + bq * p[1] * p[1]); }
+    function drawContours() {
+      while (contours.firstChild) contours.removeChild(contours.firstChild);
+      [0.15, 0.5, 1.1, 2, 3.2, 4.8, 7].forEach(function (c) {
+        var rx = Math.sqrt(2 * c / a), ry = Math.sqrt(2 * c / bq);
+        add(contours, 'ellipse', {
+          cx: m.X(0), cy: m.Y(0),
+          rx: m.X(rx) - m.X(0), ry: m.Y(0) - m.Y(ry),
+          class: 'grid', 'stroke-width': 1.2, fill: 'none'
+        });
+      });
+    }
+    function run() {
+      if (timer) { clearInterval(timer); timer = null; }
+      iterates = [start.slice()];
+      var p = start.slice(), k;
+      for (k = 0; k < 70; k++) {
+        p = [p[0] * (1 - eta * a), p[1] * (1 - eta * bq)];
+        iterates.push(p.slice());
+        if (Math.abs(p[0]) > 60 || Math.abs(p[1]) > 60) break;
+        if (Math.hypot(p[0], p[1]) < 1e-3) break;
+      }
+      step = 0;
+      if (reduce) { step = iterates.length - 1; render(); return; }
+      timer = setInterval(function () {
+        step++;
+        if (step >= iterates.length - 1) { step = iterates.length - 1; clearInterval(timer); timer = null; }
+        render();
+      }, 90);
+      render();
+    }
+    function render() {
+      var shown = iterates.slice(0, step + 1);
+      var cl = shown.map(function (p) {
+        return [m.X(Math.max(-9, Math.min(9, p[0]))), m.Y(Math.max(-9, Math.min(9, p[1])))];
+      });
+      pathN.setAttribute('d', poly(cl));
+      while (dotsG.firstChild) dotsG.removeChild(dotsG.firstChild);
+      shown.forEach(function (p, i) {
+        if (i === shown.length - 1) return;
+        add(dotsG, 'circle', {
+          cx: m.X(Math.max(-9, Math.min(9, p[0]))), cy: m.Y(Math.max(-9, Math.min(9, p[1]))),
+          r: 3, class: 'f2', opacity: .5
+        });
+      });
+      var last = shown[shown.length - 1];
+      head.setAttribute('cx', m.X(Math.max(-9, Math.min(9, last[0]))));
+      head.setAttribute('cy', m.Y(Math.max(-9, Math.min(9, last[1]))));
+      startDot.setAttribute('cx', m.X(start[0])); startDot.setAttribute('cy', m.Y(start[1]));
+      var lmax = Math.max(a, bq), diverges = eta > 2 / lmax;
+      out([
+        cell('step', step + ' / ' + (iterates.length - 1)),
+        cell('f(xₖ)', diverges && step > 6 ? 'blowing up' : fmt(f(last), 4)),
+        cell('η limit  2/λmax', fmt(2 / lmax)),
+        cell('status', diverges ? '✗ η too large — diverging' : (eta < 0.12 ? 'converging, slowly' : '✓ converging'))
+      ]);
+    }
+    slider(host, {
+      label: 'step size  η', min: 0.02, max: 3.2, step: 0.01, value: eta,
+      on: function (v) { eta = v; run(); }
+    });
+    slider(host, { label: 'curvature in x', min: 0.2, max: 2.5, step: 0.02, value: a, on: function (v) { a = v; drawContours(); run(); } });
+    slider(host, { label: 'curvature in y', min: 0.05, max: 2.5, step: 0.02, value: bq, on: function (v) { bq = v; drawContours(); run(); } });
+    buttons(host, [{ label: 'Replay', on: function () { run(); } }]);
+    svg.addEventListener('pointerdown', function (e) {
+      var p = pt(svg, e);
+      if (p.x < m.b.x || p.x > m.b.x + m.b.w || p.y < m.b.y || p.y > m.b.y + m.b.h) return;
+      start = [m.iX(p.x), m.iY(p.y)];
+      run();
+    });
+    drawContours();
+    run();
+  }
+
+  /* ============================================================
+     WEEK 9 — the Lagrange condition on a constraint curve
+     ============================================================ */
+  function w9(host) {
+    var W = 560, H = 360, m = mapper({ x: 20, y: 14, w: W - 40, h: H - 46, xmin: -4.2, xmax: 4.2, ymin: -2.7, ymax: 2.7 });
+    var svg = stage(host, W, H), out = readout(host), ar = arrowheads(svg);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gridlines(gBack, m, 1, 1); zeroAxes(gBack, m); frameBox(gBack, m);
+
+    var C = [2.6, 1.9], AA = 2.8, BB = 1.6, t = 0.9;
+    var clip = clipTo(svg, m);
+    var levels = add(gBack, 'g', { 'clip-path': clip });
+    gMid.setAttribute('clip-path', clip);
+    var curve = add(gMid, 'path', { class: 'c3', 'stroke-width': 2.4 });
+    var live = add(gMid, 'circle', { r: 8, class: 'grid', 'stroke-width': 2, fill: 'none' });
+    var gf = add(gMid, 'line', { class: 'c2', 'stroke-width': 2.4, 'marker-end': ar[2] });
+    var gg = add(gMid, 'line', { class: 'c4', 'stroke-width': 2.4, 'marker-end': ar[4] });
+    var tan = add(gMid, 'line', { class: 'dash' });
+    var hp = add(gTop, 'circle', { r: 6.5, class: 'f1 grab' });
+    var cDot = add(gTop, 'circle', { cx: m.X(C[0]), cy: m.Y(C[1]), r: 4.5, class: 'f2' });
+    txt(gTop, m.X(C[0]) + 10, m.Y(C[1]) - 8, 'unconstrained min', 'lab', 'start');
+    var lf = txt(gTop, 0, 0, '∇f', 'lab', 'middle');
+    var lg = txt(gTop, 0, 0, '∇g', 'lab', 'middle');
+
+    function P(u) { return [AA * Math.cos(u), BB * Math.sin(u)]; }
+    function fval(p) { return (p[0] - C[0]) * (p[0] - C[0]) + (p[1] - C[1]) * (p[1] - C[1]); }
+    function optimum() {
+      var bestU = 0, bestV = 1e9, i, u;
+      for (i = 0; i < 4000; i++) {
+        u = i / 4000 * 2 * Math.PI;
+        var v = fval(P(u));
+        if (v < bestV) { bestV = v; bestU = u; }
+      }
+      return bestU;
+    }
+    function drawStatic() {
+      var i, pts = [];
+      for (i = 0; i <= 240; i++) { var p = P(i / 240 * 2 * Math.PI); pts.push([m.X(p[0]), m.Y(p[1])]); }
+      curve.setAttribute('d', poly(pts) + 'Z');
+    }
+    function draw() {
+      var p = P(t), r = Math.sqrt(fval(p));
+      while (levels.firstChild) levels.removeChild(levels.firstChild);
+      [0.5, 1.1, 1.8, 2.6, 3.6].forEach(function (rr) {
+        add(levels, 'circle', { cx: m.X(C[0]), cy: m.Y(C[1]), r: m.X(rr) - m.X(0), class: 'grid', fill: 'none' });
+      });
+      live.setAttribute('cx', m.X(C[0])); live.setAttribute('cy', m.Y(C[1]));
+      live.setAttribute('r', Math.max(0, m.X(r) - m.X(0)));
+      var Gf = [2 * (p[0] - C[0]), 2 * (p[1] - C[1])];
+      var Gg = [2 * p[0] / (AA * AA), 2 * p[1] / (BB * BB)];
+      function unit(v, L) { var n = Math.hypot(v[0], v[1]) || 1; return [v[0] / n * L, v[1] / n * L]; }
+      var uf = unit(Gf, 1.15), ug = unit(Gg, 1.15);
+      function arrow(node, from, d) {
+        node.setAttribute('x1', m.X(from[0])); node.setAttribute('y1', m.Y(from[1]));
+        node.setAttribute('x2', m.X(from[0] + d[0])); node.setAttribute('y2', m.Y(from[1] + d[1]));
+      }
+      arrow(gf, p, uf); arrow(gg, p, ug);
+      var tg = [-Gg[1], Gg[0]], ut = unit(tg, 0.95);
+      tan.setAttribute('x1', m.X(p[0] - ut[0])); tan.setAttribute('y1', m.Y(p[1] - ut[1]));
+      tan.setAttribute('x2', m.X(p[0] + ut[0])); tan.setAttribute('y2', m.Y(p[1] + ut[1]));
+      hp.setAttribute('cx', m.X(p[0])); hp.setAttribute('cy', m.Y(p[1]));
+      lf.setAttribute('x', m.X(p[0] + uf[0] * 1.3)); lf.setAttribute('y', m.Y(p[1] + uf[1] * 1.3) + 4);
+      lg.setAttribute('x', m.X(p[0] + ug[0] * 1.3)); lg.setAttribute('y', m.Y(p[1] + ug[1] * 1.3) + 4);
+      var nf = Math.hypot(Gf[0], Gf[1]) || 1, ng = Math.hypot(Gg[0], Gg[1]) || 1;
+      var sinA = Math.abs(Gf[0] * Gg[1] - Gf[1] * Gg[0]) / (nf * ng);
+      var cosA = (Gf[0] * Gg[0] + Gf[1] * Gg[1]) / (nf * ng);
+      var angle = Math.atan2(sinA, cosA) * 180 / Math.PI;
+      var lam = -(Gf[0] * Gg[0] + Gf[1] * Gg[1]) / (ng * ng);
+      out([
+        cell('f at the point', fmt(fval(p), 3)),
+        cell('angle ∠(∇f, ∇g)', fmt(angle, 1) + '°'),
+        cell('λ = −∇fᵀ∇g/‖∇g‖²', fmt(lam)),
+        cell('status', angle < 3 || angle > 177 ? '✓ gradients parallel — stationary' : 'can still descend along the curve')
+      ]);
+    }
+    slider(host, {
+      label: 'position on the curve', min: 0, max: 360, step: 0.5, value: t * 180 / Math.PI,
+      fmt: function (v) { return fmt(v, 0) + '°'; },
+      on: function (v) { t = v * Math.PI / 180; draw(); }
+    });
+    var sl = host.querySelector('.viz-ctrls input');
+    buttons(host, [{
+      label: 'Snap to the optimum', on: function () {
+        var u = optimum() * 180 / Math.PI;
+        sl.value = u; sl.dispatchEvent(new Event('input'));
+      }
+    }]);
+    draggable(svg, function () {
+      var p = P(t);
+      return [{
+        x: m.X(p[0]), y: m.Y(p[1]),
+        set: function (px, py) {
+          var u = Math.atan2(m.iY(py) / BB, m.iX(px) / AA);
+          if (u < 0) u += 2 * Math.PI;
+          sl.value = u * 180 / Math.PI; sl.dispatchEvent(new Event('input'));
+        }
+      }];
+    });
+    drawStatic();
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 10 — the Lagrangian, weak duality and the gap
+     ============================================================ */
+  function w10(host) {
+    var W = 580, H = 330;
+    var left = mapper({ x: 32, y: 16, w: 232, h: 246, xmin: -0.6, xmax: 3, ymin: -1.2, ymax: 5 });
+    var right = mapper({ x: 328, y: 16, w: 232, h: 246, xmin: 0, xmax: 6, ymin: -1.2, ymax: 2 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    [left, right].forEach(function (m) { gridlines(gBack, m, 1, 1); frameBox(gBack, m); });
+    add(gBack, 'line', { x1: left.b.x, y1: left.Y(0), x2: left.b.x + left.b.w, y2: left.Y(0), class: 'ax' });
+    add(gBack, 'line', { x1: right.b.x, y1: right.Y(0), x2: right.b.x + right.b.w, y2: right.Y(0), class: 'ax' });
+    txt(gBack, left.b.x + left.b.w / 2, H - 12, 'f(x) = x²   subject to   x ≥ 1', 'tick', 'middle');
+    txt(gBack, right.b.x + right.b.w / 2, H - 12, 'the dual function d(λ)', 'tick', 'middle');
+
+    // feasible region x >= 1
+    add(gBack, 'rect', {
+      x: left.X(1), y: left.b.y, width: left.b.x + left.b.w - left.X(1), height: left.b.h,
+      fill: 'var(--tint)', stroke: 'none'
+    });
+    add(gBack, 'line', { x1: left.X(1), y1: left.b.y, x2: left.X(1), y2: left.b.y + left.b.h, class: 'c3', 'stroke-dasharray': '5 4' });
+    txt(gBack, left.X(1) + 6, left.b.y + 14, 'feasible', 'tick', 'start');
+
+    var lam = 1.0;
+    var gL = add(gMid, 'g', { 'clip-path': clipTo(svg, left) });
+    var gR = add(gMid, 'g', { 'clip-path': clipTo(svg, right) });
+    var fcurve = add(gL, 'path', { class: 'c1' });
+    var Lcurve = add(gL, 'path', { class: 'c2' });
+    var pstarL = add(gL, 'line', { class: 'grid', 'stroke-width': 1.4, 'stroke-dasharray': '4 4' });
+    var Lmin = add(gL, 'circle', { r: 5.5, class: 'f2' });
+    var pstarDot = add(gL, 'circle', { r: 5, class: 'f1' });
+    var dcurve = add(gR, 'path', { class: 'c3' });
+    var pline = add(gR, 'line', { class: 'c1', 'stroke-dasharray': '5 4', 'stroke-width': 1.6 });
+    var dDot = add(gR, 'circle', { r: 6, class: 'f3' });
+    var gapLine = add(gR, 'line', { class: 'c4', 'stroke-width': 4, opacity: .5 });
+    txt(gBack, right.b.x + 8, right.Y(1) - 7, 'p* = 1', 'tick', 'start');
+
+    function draw() {
+      var i, x, pts = [], qts = [], ds = [];
+      for (i = 0; i <= 200; i++) {
+        x = left.b.xmin + (left.b.xmax - left.b.xmin) * i / 200;
+        var fy = x * x, Ly = x * x + lam * (1 - x);
+        if (fy <= left.b.ymax) pts.push([left.X(x), left.Y(fy)]);
+        if (Ly <= left.b.ymax && Ly >= left.b.ymin) qts.push([left.X(x), left.Y(Ly)]);
+      }
+      fcurve.setAttribute('d', poly(pts));
+      Lcurve.setAttribute('d', poly(qts));
+      var xstar = lam / 2, d = lam - lam * lam / 4;
+      Lmin.setAttribute('cx', left.X(xstar));
+      Lmin.setAttribute('cy', left.Y(Math.max(left.b.ymin, xstar * xstar + lam * (1 - xstar))));
+      pstarDot.setAttribute('cx', left.X(1)); pstarDot.setAttribute('cy', left.Y(1));
+      pstarL.setAttribute('x1', left.b.x); pstarL.setAttribute('y1', left.Y(1));
+      pstarL.setAttribute('x2', left.b.x + left.b.w); pstarL.setAttribute('y2', left.Y(1));
+      for (i = 0; i <= 200; i++) {
+        var l = 6 * i / 200;
+        ds.push([right.X(l), right.Y(l - l * l / 4)]);
+      }
+      dcurve.setAttribute('d', poly(ds));
+      pline.setAttribute('x1', right.b.x); pline.setAttribute('y1', right.Y(1));
+      pline.setAttribute('x2', right.b.x + right.b.w); pline.setAttribute('y2', right.Y(1));
+      dDot.setAttribute('cx', right.X(lam)); dDot.setAttribute('cy', right.Y(d));
+      gapLine.setAttribute('x1', right.X(lam)); gapLine.setAttribute('x2', right.X(lam));
+      gapLine.setAttribute('y1', right.Y(d)); gapLine.setAttribute('y2', right.Y(1));
+      out([
+        cell('λ', fmt(lam)),
+        cell('minimiser of L', 'x = ' + fmt(xstar)),
+        cell('d(λ)', fmt(d, 3)),
+        cell('gap p* − d(λ)', fmt(1 - d, 3) + (Math.abs(1 - d) < 5e-3 ? '  ✓ closed at λ = 2' : ''))
+      ]);
+    }
+    slider(host, { label: 'multiplier  λ', min: 0, max: 6, step: 0.01, value: lam, on: function (v) { lam = v; draw(); } });
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 11 — PDF and CDF of a continuous random variable
+     ============================================================ */
+  function w11(host) {
+    var W = 580, H = 400;
+    var top = mapper({ x: 40, y: 12, w: W - 62, h: 168, xmin: -1, xmax: 7, ymin: 0, ymax: 1.5 });
+    var bot = mapper({ x: 40, y: 214, w: W - 62, h: 140, xmin: -1, xmax: 7, ymin: 0, ymax: 1.08 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gridlines(gBack, bot, 1, 0.25); frameBox(gBack, bot);
+    var topAxis = add(gBack, 'g');
+    txt(gBack, top.b.x - 6, top.b.y + 12, 'pdf', 'tick', 'end');
+    txt(gBack, bot.b.x - 6, bot.b.y + 12, 'cdf', 'tick', 'end');
+    var v;
+    for (v = -1; v <= 7; v++) txt(gBack, bot.X(v), bot.b.y + bot.b.h + 15, String(v), 'tick', 'middle');
+    txt(gBack, bot.b.x - 8, bot.Y(1) + 4, '1', 'tick', 'end');
+
+    var kind = 'normal', par = 1.0, A = 1.6, B = 3.8;
+    var clipT = clipTo(svg, top), clipB = clipTo(svg, bot);
+    var fill = add(gBack, 'path', { fill: 'var(--tint-2)', stroke: 'none', 'clip-path': clipT });
+    var pdf = add(gMid, 'path', { class: 'c1', 'clip-path': clipT });
+    var cdf = add(gMid, 'path', { class: 'c3', 'clip-path': clipB });
+    var lineA = add(gMid, 'line', { class: 'c2', 'stroke-dasharray': '4 4' });
+    var lineB = add(gMid, 'line', { class: 'c2', 'stroke-dasharray': '4 4' });
+    var lineA2 = add(gMid, 'line', { class: 'c2', 'stroke-dasharray': '4 4' });
+    var lineB2 = add(gMid, 'line', { class: 'c2', 'stroke-dasharray': '4 4' });
+    var riseL = add(gMid, 'line', { class: 'c4', 'stroke-width': 4, opacity: .55 });
+    var fa = add(gTop, 'circle', { r: 4.5, class: 'f3' });
+    var fb = add(gTop, 'circle', { r: 4.5, class: 'f3' });
+    var hA = add(gTop, 'circle', { r: 7, class: 'f2 grab' });
+    var hB = add(gTop, 'circle', { r: 7, class: 'f2 grab' });
+
+    function pdfAt(x) {
+      if (kind === 'normal') return Math.exp(-(x - 3) * (x - 3) / (2 * par * par)) / (par * Math.sqrt(2 * Math.PI));
+      if (kind === 'exp') return x < 0 ? 0 : par * Math.exp(-par * x);
+      return (x >= 0 && x <= par * 3) ? 1 / (par * 3) : 0;
+    }
+    function cdfAt(x) {
+      if (kind === 'normal') return normCdf((x - 3) / par);
+      if (kind === 'exp') return x < 0 ? 0 : 1 - Math.exp(-par * x);
+      return x < 0 ? 0 : (x > par * 3 ? 1 : x / (par * 3));
+    }
+    function stats() {
+      if (kind === 'normal') return [3, par * par];
+      if (kind === 'exp') return [1 / par, 1 / (par * par)];
+      var c = par * 3; return [c / 2, c * c / 12];
+    }
+    function draw() {
+      var i, x, p = [], q = [], area = [], peak = 0;
+      for (i = 0; i <= 320; i++) {
+        x = top.b.xmin + (top.b.xmax - top.b.xmin) * i / 320;
+        peak = Math.max(peak, pdfAt(x));
+      }
+      top.b.ymax = Math.max(0.45, peak * 1.22);
+      var dy = top.b.ymax <= 0.6 ? 0.2 : (top.b.ymax <= 1.3 ? 0.5 : 1);
+      while (topAxis.firstChild) topAxis.removeChild(topAxis.firstChild);
+      gridlines(topAxis, top, 1, dy);
+      frameBox(topAxis, top);
+      for (i = 1; i * dy <= top.b.ymax; i++)
+        txt(topAxis, top.b.x - 8, top.Y(i * dy) + 4, fmt(i * dy, dy < 1 ? 1 : 0), 'tick', 'end');
+      for (i = 0; i <= 320; i++) {
+        x = top.b.xmin + (top.b.xmax - top.b.xmin) * i / 320;
+        p.push([top.X(x), top.Y(pdfAt(x))]);
+        q.push([bot.X(x), bot.Y(cdfAt(x))]);
+      }
+      pdf.setAttribute('d', poly(p));
+      cdf.setAttribute('d', poly(q));
+      var lo = Math.min(A, B), hi = Math.max(A, B);
+      area = [[top.X(lo), top.Y(0)]];
+      for (i = 0; i <= 160; i++) {
+        x = lo + (hi - lo) * i / 160;
+        area.push([top.X(x), top.Y(Math.min(top.b.ymax, pdfAt(x)))]);
+      }
+      area.push([top.X(hi), top.Y(0)]);
+      fill.setAttribute('d', poly(area) + 'Z');
+      function vline(node, m, x) {
+        node.setAttribute('x1', m.X(x)); node.setAttribute('x2', m.X(x));
+        node.setAttribute('y1', m.b.y); node.setAttribute('y2', m.b.y + m.b.h);
+      }
+      vline(lineA, top, lo); vline(lineB, top, hi);
+      vline(lineA2, bot, lo); vline(lineB2, bot, hi);
+      fa.setAttribute('cx', bot.X(lo)); fa.setAttribute('cy', bot.Y(cdfAt(lo)));
+      fb.setAttribute('cx', bot.X(hi)); fb.setAttribute('cy', bot.Y(cdfAt(hi)));
+      riseL.setAttribute('x1', bot.X(hi) + 8); riseL.setAttribute('x2', bot.X(hi) + 8);
+      riseL.setAttribute('y1', bot.Y(cdfAt(lo))); riseL.setAttribute('y2', bot.Y(cdfAt(hi)));
+      hA.setAttribute('cx', top.X(lo)); hA.setAttribute('cy', top.b.y + top.b.h);
+      hB.setAttribute('cx', top.X(hi)); hB.setAttribute('cy', top.b.y + top.b.h);
+      var st = stats();
+      out([
+        cell('P(a ≤ X ≤ b)', fmt(cdfAt(hi) - cdfAt(lo), 4)),
+        cell('F(a), F(b)', fmt(cdfAt(lo), 3) + ',  ' + fmt(cdfAt(hi), 3)),
+        cell('E[X]', fmt(st[0])),
+        cell('Var(X)', fmt(st[1]))
+      ]);
+    }
+    var ps = slider(host, {
+      label: 'shape parameter', min: 0.32, max: 1.4, step: 0.01, value: par,
+      on: function (v) { par = v; draw(); }
+    });
+    buttons(host, [
+      { label: 'Normal', group: 'd', pressed: true, on: function () { kind = 'normal'; draw(); } },
+      { label: 'Exponential', group: 'd', pressed: false, on: function () { kind = 'exp'; draw(); } },
+      { label: 'Uniform', group: 'd', pressed: false, on: function () { kind = 'uniform'; draw(); } }
+    ]);
+    draggable(svg, function () {
+      return [
+        { x: top.X(A), y: top.b.y + top.b.h, set: function (px) { A = Math.max(-0.9, Math.min(6.9, top.iX(px))); draw(); } },
+        { x: top.X(B), y: top.b.y + top.b.h, set: function (px) { B = Math.max(-0.9, Math.min(6.9, top.iX(px))); draw(); } }
+      ];
+    });
+    draw();
+  }
+
+  /* ============================================================
+     WEEK 12 — the bivariate normal
+     ============================================================ */
+  function w12(host) {
+    var W = 560, H = 380, m = mapper({ x: 62, y: 58, w: 360, h: 268, xmin: -4, xmax: 4, ymin: -3, ymax: 3 });
+    var svg = stage(host, W, H), out = readout(host);
+    var gBack = add(svg, 'g'), gMid = add(svg, 'g'), gTop = add(svg, 'g');
+    gridlines(gBack, m, 1, 1); zeroAxes(gBack, m); frameBox(gBack, m);
+    txt(gBack, m.b.x + m.b.w / 2, H - 10, 'contours of constant density, with the two marginals', 'tick', 'middle');
+
+    var sx = 1.4, sy = 0.9, rho = 0.6;
+    var gIn = add(gMid, 'g', { 'clip-path': clipTo(svg, m) });
+    var ell = [1, 2, 3].map(function () { return add(gIn, 'path', { class: 'c1', fill: 'var(--tint)', opacity: .9 }); });
+    var ax1 = add(gIn, 'line', { class: 'c2', 'stroke-width': 2.2 });
+    var ax2 = add(gIn, 'line', { class: 'c3', 'stroke-width': 2.2 });
+    var mx = add(gMid, 'path', { class: 'c4' });
+    var my = add(gMid, 'path', { class: 'c4' });
+
+    function draw() {
+      var cxy = rho * sx * sy;
+      var e = eigSym(sx * sx, cxy, sy * sy);
+      var d1 = [Math.cos(e.theta), Math.sin(e.theta)], d2 = [-d1[1], d1[0]];
+      var r1 = Math.sqrt(Math.max(1e-9, e.l1)), r2 = Math.sqrt(Math.max(1e-9, e.l2));
+      [1, 2, 3].forEach(function (k, idx) {
+        var pts = [], i, t;
+        for (i = 0; i <= 140; i++) {
+          t = i / 140 * 2 * Math.PI;
+          var u = k * r1 * Math.cos(t), v = k * r2 * Math.sin(t);
+          var X = u * d1[0] + v * d2[0], Y = u * d1[1] + v * d2[1];
+          pts.push([m.X(X), m.Y(Y)]);
+        }
+        ell[idx].setAttribute('d', poly(pts) + 'Z');
+        ell[idx].setAttribute('opacity', 0.9 - idx * 0.22);
+        ell[idx].setAttribute('fill', idx === 0 ? 'var(--tint-2)' : 'none');
+      });
+      function seg(node, d, L) {
+        node.setAttribute('x1', m.X(-d[0] * L)); node.setAttribute('y1', m.Y(-d[1] * L));
+        node.setAttribute('x2', m.X(d[0] * L)); node.setAttribute('y2', m.Y(d[1] * L));
+      }
+      seg(ax1, d1, 2 * r1); seg(ax2, d2, 2 * r2);
+      var i, x, p = [], q = [];
+      for (i = 0; i <= 200; i++) {
+        x = -4 + 8 * i / 200;
+        p.push([m.X(x), m.b.y - 6 - 40 * Math.exp(-x * x / (2 * sx * sx))]);
+      }
+      mx.setAttribute('d', poly(p));
+      for (i = 0; i <= 200; i++) {
+        var y = -3 + 6 * i / 200;
+        q.push([m.b.x - 8 - 40 * Math.exp(-y * y / (2 * sy * sy)), m.Y(y)]);
+      }
+      my.setAttribute('d', poly(q));
+      out([
+        cell('Σ', '[' + fmt(sx * sx) + ' ' + fmt(cxy) + '; ' + fmt(cxy) + ' ' + fmt(sy * sy) + ']'),
+        cell('det Σ', fmt(sx * sx * sy * sy - cxy * cxy, 3)),
+        cell('axis lengths', fmt(r1) + ',  ' + fmt(r2)),
+        cell('tilt', fmt(e.theta * 180 / Math.PI, 1) + '°')
+      ]);
+    }
+    slider(host, { label: 'σ₁', min: 0.35, max: 2.2, step: 0.01, value: sx, on: function (v) { sx = v; draw(); } });
+    slider(host, { label: 'σ₂', min: 0.25, max: 2.2, step: 0.01, value: sy, on: function (v) { sy = v; draw(); } });
+    slider(host, { label: 'correlation  ρ', min: -0.95, max: 0.95, step: 0.01, value: rho, on: function (v) { rho = v; draw(); } });
+    draw();
+  }
+
+  /* ---------- mount, lazily ---------- */
+  var builders = { w1: w1, w2: w2, w3: w3, w4: w4, w5: w5, w6: w6, w7: w7, w8: w8, w9: w9, w10: w10, w11: w11, w12: w12 };
+  var pending = [].slice.call(document.querySelectorAll('.viz'));
+  function build(node) {
+    if (node.dataset.built) return;
+    node.dataset.built = '1';
+    var fn = builders[node.dataset.viz];
+    if (!fn) return;
+    try { fn(node); } catch (err) {
+      node.querySelector('.viz-out').textContent = 'This figure could not be drawn in your browser.';
+    }
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([node]);
+  }
+  function buildAll() { pending.forEach(build); }
+  if ('requestIdleCallback' in window) requestIdleCallback(buildAll, { timeout: 1200 });
+  else setTimeout(buildAll, 0);
 })();
 </script>
 
