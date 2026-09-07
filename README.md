@@ -2,7 +2,7 @@
 
 The complete handwritten lecture notebook for **Machine Learning Foundations** — Weeks 1–12, 60 lectures — typeset as a single self-contained HTML book, with every diagram redrawn as a vector figure.
 
-**Read it:** https://ammarhashmi.github.io/machine-learning-foundations/
+**Read it:** https://ammar-iitm.github.io/machine-learning-foundations/
 
 ## What's in it
 
