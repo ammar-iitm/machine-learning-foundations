@@ -52,10 +52,6 @@ Three of them — **Paper** (the notebook's own off-white), **Bright** (a high-k
 | 11 | Continuous random variables |
 | 12 | The multivariate normal |
 
-## Errata
-
-Fourteen places where the notebook's working did not close have been corrected. Each carries a **Corrected** marker at the point of the fix with a note explaining what the notebook had and why the corrected line is right, and all fourteen are collected in the Errata section at the end of the book.
-
 ## Building
 
 There is no build step. `index.html` is a single self-contained file; MathJax and the web fonts load from a CDN. Open it directly, or serve the folder with any static host.

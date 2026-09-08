@@ -41,8 +41,6 @@
   --hl-yellow:rgba(246,221,88,.85);
   --hl-orange:rgba(244,166,80,.80);
   --tint:rgba(34,69,143,.055);
-  --fix:#a3512b;
-  --fix-bg:rgba(163,81,43,.07);
   --tint-2:rgba(34,69,143,.10);
   --shadow:0 1px 2px rgba(27,35,51,.05), 0 8px 24px -14px rgba(27,35,51,.28);
 
@@ -77,8 +75,6 @@
     --hl-orange:rgba(244,166,80,.24);
     --tint:rgba(147,178,255,.06);
     --tint-2:rgba(147,178,255,.11);
-    --fix:#e0a077;
-    --fix-bg:rgba(224,160,119,.10);
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
     --v1:#93b2ff;
     --v2:#ff8fb3;
@@ -103,8 +99,6 @@
   --hl-orange:rgba(244,166,80,.24);
   --tint:rgba(147,178,255,.06);
   --tint-2:rgba(147,178,255,.11);
-  --fix:#e0a077;
-  --fix-bg:rgba(224,160,119,.10);
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -16px rgba(0,0,0,.8);
   --v1:#93b2ff;
   --v2:#ff8fb3;
@@ -130,8 +124,6 @@
   --hl-orange:rgba(255,133,51,.60);
   --tint:rgba(109,40,217,.055);
   --tint-2:rgba(109,40,217,.13);
-  --fix:#d1345b;
-  --fix-bg:rgba(209,52,91,.07);
   --shadow:0 1px 2px rgba(80,40,160,.07), 0 10px 30px -16px rgba(80,40,160,.42);
   --v1:#6d28d9;
   --v2:#e0117f;
@@ -307,23 +299,6 @@ mjx-container[display="true"]{margin:14px 0 !important;overflow-x:auto;overflow-
 .box.ex .lbl{color:var(--pen-soft)}
 .box.q{background:var(--surface);border-left-color:var(--hl-orange);border-left-width:3px;box-shadow:var(--shadow)}
 .box.q .lbl{color:var(--ink-soft)}
-.box.fix{border-left:2px solid var(--fix);background:var(--fix-bg)}
-.box.fix .lbl{color:var(--fix)}
-.chip{
-  display:inline-block;font-family:var(--f-ui);font-size:9px;font-weight:600;letter-spacing:.13em;
-  text-transform:uppercase;color:var(--fix);border:1px solid var(--fix);border-radius:3px;
-  padding:1px 6px;margin-left:8px;vertical-align:2px;white-space:nowrap;
-}
-.errata{margin-top:88px;padding-top:26px;border-top:1px solid var(--rule-strong);max-width:var(--col)}
-.errata h5{font-family:var(--f-display);font-size:23px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
-.errata > p{color:var(--ink-soft);font-style:italic}
-.errata ol{padding-left:20px;margin-top:18px}
-.errata li{margin:14px 0}
-.errata .where{
-  display:block;font-family:var(--f-ui);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--fix);margin-bottom:2px;
-}
-.errata .was{color:var(--ink-soft)}
 
 /* boxed final answers — the notebook double-boxes its results */
 .res{
@@ -569,7 +544,6 @@ svg .grab:active{cursor:grabbing}
 
 <section class="callout">
   <p style="margin-top:0"><strong>How this book is arranged.</strong> The order of the original notebook is preserved exactly: twelve weeks, each split into the lectures as they were numbered in the margin. Statements, examples and every line of arithmetic follow the notebook, set in proper mathematical type. Yellow marks a lecture heading and orange a week heading, as the highlighters did in the original.</p>
-  <p>Where the notebook's arithmetic did not close, the working has been <strong>corrected</strong>. Every correction carries a <span class="chip" style="margin-left:0">Corrected</span> chip and a short note saying what the notebook had and why the corrected line is right, so you can study the fix as well as the result. All fourteen are collected in the <a href="#errata">Errata</a> at the end.</p>
   <p class="small">Boxed results <span class="res" style="display:inline-block;margin:0;padding:2px 10px;text-align:left">like this</span> are the answers the notebook itself boxed.</p>
 </section>
 
@@ -702,7 +676,7 @@ svg .grab:active{cursor:grabbing}
 </section>
 
 <section class="lec" id="w1l6" data-lec="Lecture 06 · Density Estimation">
-  <h3><span class="lno">Lecture 06</span><span class="hl">Density Estimation</span><span class="chip">Corrected</span></h3>
+  <h3><span class="lno">Lecture 06</span><span class="hl">Density Estimation</span></h3>
   <p>It is a <em class="term">probabilistic model</em>.</p>
   <p>Data \(\{x^1,x^2,x^3,\dots,x^n\}\), \(x^i\in\mathbb R^{d}\). Probability mapping \(P:\mathbb R^{d}\to\mathbb R_{+}\) such that the sum of all is one.</p>
   <p>Our goal is to have \(P(x)\) large for \(x\in\)&nbsp;Data, otherwise low.</p>
@@ -738,16 +712,13 @@ svg .grab:active{cursor:grabbing}
     <figcaption><b>Fig. 1.1</b> — The four data points \(x^1=[2.3]\), \(x^2=[2.6]\), \(x^3=[4.6]\), \(x^4=[4.9]\) on the line.</figcaption>
   </figure>
 
-  <div class="box ex"><span class="lbl">Example — three candidate densities<span class="chip">Corrected</span></span>
+  <div class="box ex"><span class="lbl">Example — three candidate densities</span>
     <div class="eq">\[ P^1(x)=\begin{cases}\tfrac1{10},&x\in[0,10]\\[2pt]0,&\text{otherwise}\end{cases} \qquad P^2(x)=\begin{cases}\tfrac15,&x\in[0,5]\\[2pt]0,&\text{otherwise}\end{cases} \qquad P^3(x)=\begin{cases}\tfrac15,&x\in[3,8]\\[2pt]0,&\text{otherwise}\end{cases} \]</div>
     <p>All four points lie inside the support of \(P^1\) and of \(P^2\); only \(x^3=4.6\) and \(x^4=4.9\) lie inside the support \([3,8]\) of \(P^3\).</p>
     <div class="eq">\[ \text{loss }P^1=-4\log\tfrac1{10}=4\log 10\approx 9.21 \]</div>
     <div class="eq">\[ \text{loss }P^2=-4\log\tfrac15=4\log 5\approx 6.44 \]</div>
     <div class="eq">\[ \text{loss }P^3=-2\log\tfrac15-2\log 0=\infty \]</div>
     <p>\(P^2\) has the least loss amongst \(P^1,P^2\) and \(P^3\) ⇒ \(P^2\) is the best model amongst these 3 alternatives.</p>
-    <div class="box fix"><span class="lbl">Corrected</span>
-      <p style="margin-top:0">The notebook records \(\text{loss }P^3=-2\log\frac15\approx3.22\), which is <em>smaller</em> than \(\text{loss }P^2\) and would have made \(P^3\) the winner — contradicting the conclusion on the same line. The two points \(x^1=2.3\) and \(x^2=2.6\) fall outside \([3,8]\), so \(P^3(x^1)=P^3(x^2)=0\) and each contributes \(-\log 0=+\infty\). Counting all four points gives \(\text{loss }P^3=\infty\), and \(P^2\) is indeed the best of the three.</p>
-    </div>
   </div>
 </section>
 
@@ -1489,7 +1460,7 @@ svg .grab:active{cursor:grabbing}
 </section>
 
 <section class="lec" id="w4l5" data-lec="Lecture 05 · Orthogonally Diagonalizable Matrix">
-  <h3><span class="lno">Lecture 05</span><span class="hl">Orthogonally Diagonalizable Matrix</span><span class="chip">Corrected</span></h3>
+  <h3><span class="lno">Lecture 05</span><span class="hl">Orthogonally Diagonalizable Matrix</span></h3>
   <p>For \(A\) as a real symmetric matrix, with \(n\times n\) dimension, we can write the following —</p>
   <ol>
     <li>Eigenvalues of \(A\) are real.</li>
@@ -1520,9 +1491,6 @@ svg .grab:active{cursor:grabbing}
     <div class="eq">\[ \begin{bmatrix}-2/\sqrt5&1/\sqrt5\\1/\sqrt5&2/\sqrt5\end{bmatrix}\begin{bmatrix}2&0\\0&-3\end{bmatrix}\begin{bmatrix}-2/\sqrt5&1/\sqrt5\\1/\sqrt5&2/\sqrt5\end{bmatrix}=QDQ^{\mathsf T} \]</div>
     <div class="eq">\[ \begin{bmatrix}-4/\sqrt5&-3/\sqrt5\\2/\sqrt5&-6/\sqrt5\end{bmatrix}\begin{bmatrix}-2/\sqrt5&1/\sqrt5\\1/\sqrt5&2/\sqrt5\end{bmatrix} =\frac15\begin{bmatrix}8-3&-4-6\\-4-6&2-12\end{bmatrix} =\frac15\begin{bmatrix}5&-10\\-10&-10\end{bmatrix} \]</div>
     <div class="res">\( QDQ^{\mathsf T}=\begin{bmatrix}1&-2\\-2&-2\end{bmatrix}=A\qquad\text{Hence Proved.} \)</div>
-    <div class="box fix"><span class="lbl">Corrected</span>
-      <p style="margin-top:0">The notebook uses \(D=\begin{bmatrix}-3&amp;0\\0&amp;2\end{bmatrix}\) with this \(Q\), and the working line \(\begin{bmatrix}6/\sqrt5&amp;2/\sqrt5\\-3/\sqrt5&amp;4/\sqrt5\end{bmatrix}\) that follows from it. That pairing gives \(QDQ^{\mathsf T}=\begin{bmatrix}-2&amp;2\\2&amp;1\end{bmatrix}\), not \(A\). In \(A=QDQ^{\mathsf T}\) the diagonal of \(D\) must follow the column order of \(Q\): \(q_1\) is the unit eigenvector for \(\lambda=2\), so \(2\) sits first.</p>
-    </div>
   </div>
   <div class="box note"><span class="lbl">Remark</span>
     <p style="margin-top:0">A "real-symmetric" matrix is always diagonalizable.</p>
@@ -1599,7 +1567,7 @@ svg .grab:active{cursor:grabbing}
 </section>
 
 <section class="lec" id="w5l2" data-lec="Lecture 02 · Hermitian Matrix">
-  <h3><span class="lno">Lecture 02</span><span class="hl">Hermitian Matrix</span><span class="chip">Corrected</span></h3>
+  <h3><span class="lno">Lecture 02</span><span class="hl">Hermitian Matrix</span></h3>
   <p>The matrix \(A=\begin{bmatrix}2&amp;3-3i\\3+3i&amp;5\end{bmatrix}\). We can see \(A^{\ast}=\bar A^{\mathsf T}=A\). Hence, \(A\) is a Hermitian matrix.</p>
   <div class="box thm"><span class="lbl">Properties</span>
     <p style="margin-top:0"><strong>①</strong> Diagonal entries of a Hermitian matrix are always real values.</p>
@@ -1623,9 +1591,6 @@ svg .grab:active{cursor:grabbing}
     <p>From here we get the inference that both eigenvalues are real numbers, and also we verify that</p>
     <div class="eq">\[ \bar x_1^{\mathsf T}x_2=[1\ \ 1-i]\begin{bmatrix}-1+i\\1\end{bmatrix}=0 \]</div>
     <p>Thus we see that the eigenvectors for the matrix are <strong>orthogonal</strong>.</p>
-    <div class="box fix"><span class="lbl">Corrected</span>
-      <p style="margin-top:0">The notebook labels the first row operation \(R_1\to R_1+(3+3i)R_2\); that multiplier leaves \(\begin{bmatrix}-6+18i&amp;-6-6i\end{bmatrix}\), not a zero row. The multiplier that clears row 1 is \(\frac{6}{3+3i}=1-i\), giving \(\begin{bmatrix}-6&amp;3-3i\end{bmatrix}+(1-i)\begin{bmatrix}3+3i&amp;-3\end{bmatrix}=\begin{bmatrix}0&amp;0\end{bmatrix}\). The eigenvectors themselves are unchanged.</p>
-    </div>
   </div>
 
   <div class="box note"><span class="lbl">Remarks</span>
@@ -1656,7 +1621,7 @@ svg .grab:active{cursor:grabbing}
 </section>
 
 <section class="lec" id="w5l4" data-lec="Lecture 04 · Schur's Theorem">
-  <h3><span class="lno">Lecture 04</span><span class="hl">Diagonalization of Hermitian &amp; Schur's Theorem</span><span class="chip">Corrected</span></h3>
+  <h3><span class="lno">Lecture 04</span><span class="hl">Diagonalization of Hermitian &amp; Schur's Theorem</span></h3>
   <div class="box"><span class="lbl">Definition of diagonalization</span>
     <p style="margin-top:0">A matrix \(A\) is <em class="term">unitarily diagonalizable</em> if there exists a matrix \(U\) such that</p>
     <div class="eq">\[ A=UDU^{\ast},\quad\text{where }D\text{ is a diagonal matrix (diagonalization)},\qquad U^{\ast}=U^{-1}\ \text{(unitarily)} \]</div>
@@ -1703,9 +1668,6 @@ svg .grab:active{cursor:grabbing}
     <p>⇒ eigenvector for \(\lambda=-3\):</p>
     <div class="eq">\[ (B+3I)x=\begin{bmatrix}0&0\\\sqrt6&0\end{bmatrix}\begin{bmatrix}x_1\\x_2\end{bmatrix}=\begin{bmatrix}0\\0\end{bmatrix} \ \Longrightarrow\ \sqrt6\,x_1=0\ \Longrightarrow\ x_1=0 \]</div>
     <div class="eq">\[ v=\begin{bmatrix}0\\1\end{bmatrix}\ \text{is the eigenvector corresponding to }\lambda=-3 \]</div>
-    <div class="box fix"><span class="lbl">Corrected</span>
-      <p style="margin-top:0">The notebook gives the characteristic polynomial of \(B\) as \(9-\lambda^{2}\), i.e. \(\lambda=\pm3\). \(B\) is lower triangular, so \(\det(B-\lambda I)=(-3-\lambda)^{2}\) and \(-3\) is a repeated eigenvalue; \(+3\) is not an eigenvalue of \(B\). The eigenvector \(v=\begin{bmatrix}0\\1\end{bmatrix}\) and everything after it are unaffected, and the diagonal \((1,-3,-3)\) of the final \(T\) matches the eigenvalues \(\lambda=1,-3,-3\) of \(A\) found at the start.</p>
-    </div>
     <div class="eq">\[ \text{orthogonal basis for }B\ \Rightarrow\ \{e_2,e_1\}=\left\{\begin{pmatrix}0\\1\end{pmatrix},\begin{pmatrix}1\\0\end{pmatrix}\right\} \]</div>
     <p>Unitary matrix \(P=\begin{bmatrix}0&amp;1\\1&amp;0\end{bmatrix}\). Now find \(P^{\ast}BP\):</p>
     <div class="eq">\[ \begin{bmatrix}0&1\\1&0\end{bmatrix}\begin{bmatrix}-3&0\\\sqrt6&-3\end{bmatrix}\begin{bmatrix}0&1\\1&0\end{bmatrix} \ \Longrightarrow\ \begin{bmatrix}\sqrt6&-3\\-3&0\end{bmatrix}\begin{bmatrix}0&1\\1&0\end{bmatrix}=\begin{bmatrix}-3&\sqrt6\\0&-3\end{bmatrix} \]</div>
@@ -1794,7 +1756,7 @@ svg .grab:active{cursor:grabbing}
 </section>
 
 <section class="lec" id="w6l2" data-lec="Lecture 02 · SVD — Worked Example">
-  <h3><span class="lno">Lecture 02</span><span class="hl">SVD — Worked Example</span><span class="chip">Corrected</span></h3>
+  <h3><span class="lno">Lecture 02</span><span class="hl">SVD — Worked Example</span></h3>
   <p>Find SVD for the matrix \(A=\begin{bmatrix}\sqrt2&amp;1\\0&amp;\sqrt2\end{bmatrix}\).</p>
   <p>Eigenvalues of matrix \(A=\sqrt2\), repeated eigenvalues ⇒ non-diagonalizable. Corresponding to this eigenvector:</p>
   <div class="eq">\[ (A-\sqrt2 I)=\begin{bmatrix}0&1\\0&0\end{bmatrix}\ \Longrightarrow\ \text{the eigenvector}=\begin{bmatrix}1\\0\end{bmatrix} \]</div>
@@ -1832,9 +1794,6 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ Q_1\Sigma Q_2^{\mathsf T}=\frac1{\sqrt3}\begin{bmatrix}-1&\sqrt2\\\sqrt2&1\end{bmatrix}\begin{bmatrix}1&0\\0&2\end{bmatrix}\begin{bmatrix}-\sqrt2&1\\1&\sqrt2\end{bmatrix}\frac1{\sqrt3} \]</div>
   <div class="eq">\[ Q_1\Sigma Q_2^{\mathsf T}=\frac13\begin{bmatrix}-1&2\sqrt2\\\sqrt2&2\end{bmatrix}\begin{bmatrix}-\sqrt2&1\\1&\sqrt2\end{bmatrix} =\frac13\begin{bmatrix}\sqrt2+2\sqrt2&-1+4\\-2+2&\sqrt2+2\sqrt2\end{bmatrix} =\frac13\begin{bmatrix}3\sqrt2&3\\0&3\sqrt2\end{bmatrix} \]</div>
   <div class="res">\( Q_1\Sigma Q_2^{\mathsf T}=\begin{bmatrix}\sqrt2&1\\0&\sqrt2\end{bmatrix}=A \quad\text{Hence Verified — Singular Value Decomposition} \)</div>
-  <div class="box fix"><span class="lbl">Corrected</span>
-    <p style="margin-top:0">The notebook writes \(\Sigma=\begin{bmatrix}2&amp;0\\0&amp;1\end{bmatrix}\) and the working line \(\frac13\begin{bmatrix}-2&amp;\sqrt2\\2\sqrt2&amp;1\end{bmatrix}\), which multiplies out to \(\begin{bmatrix}\sqrt2&amp;0\\-1&amp;\sqrt2\end{bmatrix}\) rather than \(A\). In \(A=Q_1\Sigma Q_2^{\mathsf T}\) the singular values must sit in the same order as the columns of \(Q_2\): the first column of \(Q_2\) is the eigenvector for \(\lambda=1\), so \(\sigma_1=1\) and \(\sigma_2=2\). The final answer the notebook reaches, \(\frac13\begin{bmatrix}3\sqrt2&amp;3\\0&amp;3\sqrt2\end{bmatrix}=A\), is the one this ordering produces.</p>
-  </div>
 </section>
 
 <section class="lec" id="w6l3" data-lec="Lecture 03 · Positive Definiteness">
@@ -3160,7 +3119,7 @@ svg .grab:active{cursor:grabbing}
 </section>
 
 <section class="lec" id="w11l7" data-lec="Lecture 07 · Some Standard Distributions">
-  <h3><span class="lno">Lecture 07</span><span class="hl">Some Standard Distributions</span><span class="chip">Corrected</span></h3>
+  <h3><span class="lno">Lecture 07</span><span class="hl">Some Standard Distributions</span></h3>
 
   <h4>Uniform distribution</h4>
   <div class="eq">\[ X\sim\text{unif}(a,b)\qquad f_X(x)=\begin{cases}\tfrac1{b-a},&x\in[a,b]\\0,&\text{otherwise}\end{cases} \]</div>
@@ -3204,9 +3163,6 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ Z\sim\text{Normal}(0,1)\ \Longrightarrow\ f_Z(z)=\frac1{\sqrt{2\pi}}\exp\left(\frac{-z^{2}}{2}\right) \]</div>
   <div class="eq">\[ \int_{-\infty}^{\infty}\frac1{\sqrt{2\pi}}\exp\left(\frac{-z^{2}}{2}\right)dz =\frac1{\sqrt{2\pi}}\underbrace{\int_{-\infty}^{\infty}e^{-z^{2}/2}\,dz}_{=\ \sqrt{2\pi}}=1 \]</div>
   <div class="eq">\[ F_Z(z)=\int_{-\infty}^{z}\frac1{\sqrt{2\pi}}e^{-t^{2}/2}\,dt\ ;\qquad F_Z(-\infty)=0,\quad F_Z(\infty)=1 \]</div>
-  <div class="box fix"><span class="lbl">Corrected</span>
-    <p style="margin-top:0">The notebook concludes \(F_Z(z)=\sqrt{2\pi}\). The value \(\sqrt{2\pi}\) is the Gaussian integral \(\int_{-\infty}^{\infty}e^{-z^{2}/2}dz\) on its own; the \(\frac1{\sqrt{2\pi}}\) in front of it is exactly what cancels it, so the total area is \(1\) — which is what makes \(f_Z\) a density. A CDF also integrates up to \(z\), not to \(\infty\), and never exceeds \(1\).</p>
-  </div>
 
   <figure class="fig">
     <div class="plate">
@@ -3284,57 +3240,6 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ \text{iii)}\quad X_i\ \text{and}\ X_j\ \text{are independent}\iff \Sigma_{ij}=0 \]</div>
 </section>
 
-<section class="errata" id="errata">
-  <h5>Errata</h5>
-  <p>Fourteen places where the notebook's working has been corrected, in book order.</p>
-  <ol>
-    <li><span class="where">Week 01 · Lecture 06 · Density estimation</span>
-      <span class="was">Notebook:</span> \(\text{loss }P^3=-2\log\frac15\). Two of the four data points lie outside the support \([3,8]\), so each contributes \(-\log 0\). <strong>Corrected to \(\text{loss }P^3=\infty\)</strong>, which is what makes the notebook's own conclusion — that \(P^2\) is best — come out right.</li>
-
-    <li><span class="where">Week 01 · Lecture 05 · Dimensionality reduction</span>
-      <span class="was">Notebook:</span> working data \(x^i\in\mathbb R\). <strong>Corrected to \(x^i\in\mathbb R^{d}\)</strong>, to match the encoder \(f:\mathbb R^{d}\to\mathbb R^{d'}\) on the next line.</li>
-
-    <li><span class="where">Week 02 · Lecture 01 · Vector space</span>
-      <span class="was">Notebook:</span> \(\lVert x\rVert=x^{\mathsf T}x=\sum x_i^{2}\). <strong>Corrected to \(\lVert x\rVert^{2}=x^{\mathsf T}x\)</strong> — the sum of squares is the square of the norm.</li>
-
-    <li><span class="where">Week 02 · Lecture 03 · Linear approximation of \((0.99)^{7}\)</span>
-      The scan reads \((1-0.1)^{7}=1-(0.1)(7)\), which gives \(0.3\). <strong>Read as \((1-0.01)^{7}=1-(0.01)(7)\)</strong>, since \(0.99=1-0.01\) and this is what yields the notebook's own boxed answer, \(0.93\).</li>
-
-    <li><span class="where">Week 02 · Lecture 04 · Quadratic approximation of \((1.1)^{7}\)</span>
-      The general line is written \(f(x)\approx1+rx+r(r-1)x^{2}\), dropping the \(\tfrac12\). <strong>Restored as \(1+rx+\tfrac12r(r-1)x^{2}\)</strong> — the factor is present in the notebook's own numerical line \(1+7(0.1)+\tfrac12\cdot7\cdot6\cdot(0.01)=1.91\).</li>
-
-    <li><span class="where">Week 02 · Lecture 06 · Gradients and linear approximation</span>
-      <span class="was">Notebook:</span> \(f(x)\approx f(v)+\nabla f(v)(x-v)\). <strong>Corrected to \(\nabla f(v)^{\mathsf T}(x-v)\)</strong>, the transpose the notebook uses two lines later.</li>
-
-    <li><span class="where">Week 03 · Lecture 03 · Projection matrix</span>
-      <span class="was">Notebook:</span> \(P=\frac{aa^{\mathsf T}}{a^{\mathsf T}a}=\frac{aa^{\mathsf T}}{\lVert a\rVert}\). <strong>Corrected to \(\frac{aa^{\mathsf T}}{\lVert a\rVert^{2}}\)</strong>, since \(a^{\mathsf T}a=\lVert a\rVert^{2}\).</li>
-
-    <li><span class="where">Week 04 · Lecture 03 · Diagonalization of \(\begin{bmatrix}1&amp;4\\2&amp;3\end{bmatrix}\)</span>
-      The intermediate product reads \(\begin{bmatrix}5&amp;10\\-1&amp;-1\end{bmatrix}\). <strong>Corrected to \(\begin{bmatrix}5&amp;10\\1&amp;-1\end{bmatrix}\)</strong>, which is what \(\begin{bmatrix}1&amp;2\\-1&amp;1\end{bmatrix}\begin{bmatrix}1&amp;4\\2&amp;3\end{bmatrix}\) gives, and what produces the notebook's \(D=\begin{bmatrix}5&amp;0\\0&amp;-1\end{bmatrix}\).</li>
-
-    <li><span class="where">Week 04 · Lecture 05 · Orthogonal diagonalization</span>
-      <span class="was">Notebook:</span> \(D=\begin{bmatrix}-3&amp;0\\0&amp;2\end{bmatrix}\) with \(Q\) whose first column is the eigenvector for \(\lambda=2\). <strong>Corrected to \(D=\begin{bmatrix}2&amp;0\\0&amp;-3\end{bmatrix}\)</strong> — the diagonal of \(D\) must follow the column order of \(Q\); the whole product is rewritten and now returns \(A\).</li>
-
-    <li><span class="where">Week 05 · Lecture 02 · Hermitian eigenvectors</span>
-      <span class="was">Notebook:</span> \(R_1\to R_1+(3+3i)R_2\), which does not clear the row. <strong>Corrected to \(R_1\to R_1+(1-i)R_2\)</strong>, and the matching \(R_2\to R_2-(1+i)R_1\) supplied for \(\lambda=-1\). Eigenvectors unchanged.</li>
-
-    <li><span class="where">Week 05 · Lecture 04 · Schur's theorem, worked example</span>
-      <span class="was">Notebook:</span> characteristic polynomial of \(B=\begin{bmatrix}-3&amp;0\\\sqrt6&amp;-3\end{bmatrix}\) as \(9-\lambda^{2}\), giving \(\lambda=\pm3\). <strong>Corrected to \((\lambda+3)^{2}\), so \(\lambda=-3\) repeated</strong> — consistent with the diagonal \((1,-3,-3)\) of the final upper-triangular \(T\).</li>
-
-    <li><span class="where">Week 06 · Lecture 01 · SVD</span>
-      <span class="was">Notebook:</span> \(y_i\in\mathbb R^{n}\), and \(\lVert Ax_j\rVert=\lambda_j\). <strong>Corrected to \(y_i\in\mathbb R^{m}\)</strong> (since \(Ax_i\in\mathbb R^{m}\) for an \(m\times n\) matrix) <strong>and \(\lVert Ax_j\rVert^{2}=\lambda_j\)</strong>.</li>
-
-    <li><span class="where">Week 06 · Lecture 02 · SVD, worked example</span>
-      <span class="was">Notebook:</span> \(\Sigma=\begin{bmatrix}2&amp;0\\0&amp;1\end{bmatrix}\) against a \(Q_2\) whose first column belongs to \(\lambda=1\). <strong>Corrected to \(\Sigma=\begin{bmatrix}1&amp;0\\0&amp;2\end{bmatrix}\)</strong>; the product is rewritten and reaches the notebook's own final answer, \(\frac13\begin{bmatrix}3\sqrt2&amp;3\\0&amp;3\sqrt2\end{bmatrix}=A\).</li>
-
-    <li><span class="where">Week 06 · Lecture 03 · Positive definiteness</span>
-      <span class="was">Notebook:</span> \(\frac{\partial f}{\partial x}=4x+y\), \(\frac{\partial f}{\partial y}=4x+2y\), and \(ax^{2}+2bxy+cx^{2}=v^{\mathsf T}Av\). <strong>Corrected to \(4x+2y\), \(2x+2y\) and \(cy^{2}\)</strong> — the partials now match \(f=2x^{2}+2xy+y^{2}\) and the second derivatives \(f_{xx}=4,\ f_{yy}=2,\ f_{xy}=2\) the notebook then quotes.</li>
-
-    <li><span class="where">Week 11 · Lecture 07 · Standard normal</span>
-      <span class="was">Notebook:</span> \(F_Z(z)=\sqrt{2\pi}\), and \(E[Z]=1\) used for both mean and variance. <strong>Corrected to total area \(=1\)</strong> (the \(\frac1{\sqrt{2\pi}}\) cancels the Gaussian integral), the CDF written as \(\int_{-\infty}^{z}\), and <strong>\(E[Z]=0\), \(\operatorname{Var}[Z]=1\)</strong> in the standardisation \(X=\sigma Z+\mu\).</li>
-  </ol>
-  <p class="small" style="margin-top:22px">One passage could not be resolved from the scan and is left as transcribed: the orthogonal-subspaces example in <strong>Week 03 · Lecture 02</strong>, where \(W=\begin{pmatrix}0\\-1\\2\end{pmatrix}\) as read is not orthogonal to \(U\).</p>
-</section>
 
 <div class="endnote">
   <h5>Colophon</h5>
@@ -3402,10 +3307,7 @@ window.MathJax = {
     toc.appendChild(li);
   });
 
-  var eli = document.createElement('li');
-  eli.className = 'wk';
-  eli.innerHTML = '<a href="#errata"><span class="n">—</span><span>Errata</span></a>';
-  toc.appendChild(eli);
+
 
   /* ---------- scroll spy ---------- */
   var current = null;
