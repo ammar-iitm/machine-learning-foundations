@@ -35,6 +35,15 @@ Each week opens with a plate you can manipulate. They are drawn from scratch in 
 
 Three of them — **Paper** (the notebook's own off-white), **Bright** (a high-key violet-and-magenta reading mode) and **Dark** — in the sidebar, or press <kbd>t</kbd> to cycle. Your choice is remembered. Press <kbd>/</kbd> to jump to the contents filter.
 
+## Study tools
+
+- **Full-text search** over all 60 lectures, with match counts and snippets (`/` focuses the box)
+- **Progress tracking** — mark a lecture done; a ring in the sidebar counts 0/60. Saved in your browser
+- **Bookmarks** — star a lecture and it appears in a Bookmarked group at the top of the contents
+- **Self-check** — 48 reveal-answer questions, four per week, all drawn from the notebook's own worked examples
+- **Steppers** — 11 of the longer derivations can be walked one line at a time
+- **22 interactive figures** — one per week plus ten more on specific lectures
+
 ## Contents
 
 | Week | Topic |
