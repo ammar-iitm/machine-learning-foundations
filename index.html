@@ -451,6 +451,108 @@ svg .f1{fill:var(--v1)} svg .f2{fill:var(--v2)} svg .f3{fill:var(--v3)} svg .f4{
 svg .grab{cursor:grab}
 svg .grab:active{cursor:grabbing}
 
+/* ================= study tools ================= */
+.rail-sum{
+  display:flex;align-items:center;gap:10px;margin:12px 0 2px;padding:9px 10px;
+  border:1px solid var(--rule);border-radius:7px;background:var(--paper);font-family:var(--f-ui);
+}
+.rail-sum svg{flex:0 0 auto}
+.rail-sum .pt{display:flex;flex-direction:column;gap:1px;min-width:0}
+.rail-sum .pn{font-size:12.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.rail-sum .pl{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-faint)}
+.rail-sum button{
+  margin-left:auto;font-family:var(--f-ui);font-size:10px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-faint);background:none;border:1px solid var(--rule-strong);border-radius:4px;
+  padding:3px 7px;cursor:pointer;
+}
+.rail-sum button:hover{color:var(--pen);border-color:var(--pen-soft)}
+.ring-bg{fill:none;stroke:var(--rule-strong);stroke-width:3.4}
+.ring-fg{fill:none;stroke:var(--pen);stroke-width:3.4;stroke-linecap:round;transition:stroke-dasharray .35s ease}
+
+.results{margin-top:10px;border-top:1px solid var(--rule);padding-top:8px;display:none}
+.results.on{display:block}
+.results .rh{
+  font-family:var(--f-ui);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:6px;
+}
+.results a{
+  display:block;text-decoration:none;padding:6px 8px;border-radius:5px;border-left:2px solid transparent;
+  color:var(--ink-soft);font-family:var(--f-ui);
+}
+.results a:hover{background:var(--tint);border-left-color:var(--pen-soft)}
+.results .rt{display:block;font-size:11.5px;font-weight:600;color:var(--ink);line-height:1.35}
+.results .rs{display:block;font-size:11px;line-height:1.5;color:var(--ink-faint);margin-top:2px}
+.results .rs mark{background:var(--hl-yellow);color:var(--ink);padding:0 1px;border-radius:2px}
+.results .none{font-family:var(--f-ui);font-size:11.5px;color:var(--ink-faint);padding:4px 8px}
+
+.lmark{display:inline-flex;gap:4px;margin-left:10px;vertical-align:2px}
+.lmark button{
+  width:22px;height:22px;display:grid;place-items:center;cursor:pointer;
+  background:none;border:1px solid var(--rule-strong);border-radius:5px;color:var(--ink-faint);
+  font-size:11px;line-height:1;padding:0;transition:color .15s,border-color .15s,background .15s;
+}
+.lmark button:hover{color:var(--pen);border-color:var(--pen-soft)}
+.lmark button[aria-pressed="true"]{background:var(--tint-2);color:var(--pen);border-color:var(--pen-soft)}
+.lmark button.star[aria-pressed="true"]{color:#c8921f;border-color:#c8921f}
+.toc ul a .tick{color:var(--pen);font-size:10px;margin-right:4px;opacity:0}
+.toc ul a.done .tick{opacity:1}
+.toc ul a.done{color:var(--ink-faint)}
+.toc ul a .fav{color:#c8921f;font-size:10px;margin-right:3px;opacity:0}
+.toc ul a.fav-on .fav{opacity:1}
+
+/* ================= self-check ================= */
+.quiz{margin:46px 0 0;max-width:var(--col);border-top:3px double var(--rule-strong);padding-top:20px}
+.quiz > h4{margin:0 0 2px;font-size:19px}
+.quiz > p.qsub{margin:0 0 4px;font-family:var(--f-ui);font-size:11.5px;color:var(--ink-faint)}
+.quiz details{
+  margin-top:10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);
+  overflow:hidden;
+}
+.quiz details[open]{border-color:var(--pen-soft)}
+.quiz summary{
+  list-style:none;cursor:pointer;padding:12px 16px;display:flex;gap:11px;align-items:baseline;
+  font-size:16px;line-height:1.5;
+}
+.quiz summary::-webkit-details-marker{display:none}
+.quiz summary:hover{background:var(--tint)}
+.quiz summary .qn{
+  flex:0 0 auto;font-family:var(--f-mono);font-size:10.5px;color:var(--pen);
+  border:1px solid var(--pen-soft);border-radius:4px;padding:1px 6px;
+}
+.quiz summary .qx{
+  margin-left:auto;flex:0 0 auto;font-family:var(--f-ui);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-faint);white-space:nowrap;
+}
+.quiz details[open] summary .qx::after{content:'Hide'}
+.quiz details:not([open]) summary .qx::after{content:'Answer'}
+.quiz .qa{padding:2px 16px 14px;border-top:1px dashed var(--rule-strong);margin-top:0}
+.quiz .qa > :first-child{margin-top:12px}
+.quiz .qa .eq{overflow-x:auto}
+
+/* ================= steppers ================= */
+.stepbar{
+  display:flex;align-items:center;gap:8px;margin:14px 0 0;font-family:var(--f-ui);flex-wrap:wrap;
+}
+.stepbar button{
+  font-size:11.5px;font-weight:600;color:var(--ink-soft);background:var(--paper);
+  border:1px solid var(--rule-strong);border-radius:5px;padding:5px 11px;cursor:pointer;
+}
+.stepbar button:hover:not(:disabled){color:var(--pen);border-color:var(--pen-soft)}
+.stepbar button:disabled{opacity:.4;cursor:default}
+.stepbar .sc{font-family:var(--f-mono);font-size:11px;color:var(--ink-faint);font-variant-numeric:tabular-nums}
+.stepping .eq{transition:opacity .25s ease}
+.stepping .eq.dim{opacity:.16}
+.stepping .eq.cur{
+  position:relative;
+}
+.stepping .eq.cur::before{
+  content:'';position:absolute;left:-14px;top:4px;bottom:4px;width:2px;background:var(--pen);border-radius:2px;
+}
+@media (max-width:900px){
+  .stepping .eq.cur::before{left:-8px}
+  .lmark{margin-left:6px}
+}
+
 /* ---------- responsive ---------- */
 .rail-toggle{display:none}
 @media (max-width:900px){
@@ -647,6 +749,14 @@ svg .grab:active{cursor:grabbing}
   <div class="box note"><span class="lbl">Note</span>
     <p style="margin-top:0">Algorithms are always derived with the help of training data or test data. However, the algorithm formed should justify the current data and give us results — this is called <em class="term">test data</em>. For getting the best model out of the test-data outcomes, <em class="term">validation data</em> is used.</p>
   </div>
+  <figure class="viz" data-viz="xc1" id="viz-xc1">
+    <div class="viz-head"><span class="viz-title">Where you put the boundary</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Slide the threshold and watch the 0/1 loss. Rings mark the points the rule gets wrong — \(f\) can reach zero, \(g\) cannot.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w1l5" data-lec="Lecture 05 · Unsupervised Learning">
@@ -722,6 +832,27 @@ svg .grab:active{cursor:grabbing}
   </div>
 </section>
 
+
+<section class="quiz" data-quiz="w1" id="quiz-w1">
+  <h4>Self-check — Week 01</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>For the five points of the regression example, why is \(f=2x_1\) preferred over \(g=x_1+3\)?</span><span class="qx"></span></summary>
+    <div class="qa"><p>Both are scored with the squared loss \(\text{Loss}=\frac1n\sum(f(x^i)-y^i)^2\).</p><div class="eq">\[ \text{Loss}(f)=\tfrac15\bigl[(2.1-2)^2+(3.9-4)^2+(6.2-6)^2+(11.5-12)^2+(13.9-14)^2\bigr] \]</div><div class="eq">\[ \text{Loss}(g)=\tfrac15\bigl[(2.1-4)^2+(3.9-5)^2+(6.2-6)^2+(11.5-9)^2+(13.9-10)^2\bigr] \]</div><p>Every residual of \(f\) is at most \(0.5\), while \(g\) misses by up to \(3.9\). The loss of \(g\) is higher, so \(f\) is the more preferred model.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>In the classification example, \(f=\operatorname{sign}(2-x_1)\) and \(g=\operatorname{sign}(x_1-2x_2)\) over six points. What loss does each get, and which point separates them?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \text{Loss}=\frac1n\sum_{i=1}^{n}\mathbb I\bigl(f(x^i)\neq y^i\bigr) \]</div><p>\(f\) classifies all six correctly, so \(\text{Loss}(f)=\tfrac16(0)=0\). \(g\) differs on \([0,1]\), where \(y=+1\) but \(g=-1\), giving \(\text{Loss}(g)=\tfrac16(1)=\tfrac16\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>What makes \(\tilde f,\tilde g\) a better encoder–decoder pair than \(f,g\) in the dimensionality-reduction example?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ f(x)=x_1-x_2,\quad g(u)=[u,u] \qquad \tilde f(x)=\frac{x_1+x_2}{2},\quad \tilde g(u)=[u,u] \]</div><p>The pair is judged by \(\text{Loss}=\frac1n\sum\lVert g(f(x^i))-x^i\rVert^2\). The difference \(x_1-x_2\) throws away the size of the point and keeps only its imbalance, so \(g(f(x))\) lands near \([\pm0.2,\pm0.2]\) for every input. The mean \(\tfrac{x_1+x_2}{2}\) keeps the position, and \(\tilde g(\tilde f(x))\) reproduces each point almost exactly.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>Among \(P^1=\tfrac1{10}\) on \([0,10]\), \(P^2=\tfrac15\) on \([0,5]\) and \(P^3=\tfrac15\) on \([3,8]\), which is the best density for the data \(2.3,2.6,4.6,4.9\)?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \text{Loss}=\frac1n\sum_{i=1}^{n}-\log\bigl(P(x^i)\bigr) \]</div><p>\(P^2\) is the best of the three. It covers all four points and is the tightest support that does, so each \(-\log\frac15\) is smaller than the corresponding \(-\log\frac1{10}\) under \(P^1\). \(P^3\) looks tempting but its support \([3,8]\) excludes \(2.3\) and \(2.6\), where \(P^3(x)=0\) and \(-\log 0\) is infinite.</p></div>
+  </details>
+</section>
 
 <!-- ============================ WEEK 02 ============================ -->
 <section class="week" id="w2" data-week="Week 02" data-title="Calculus for Machine Learning">
@@ -818,6 +949,14 @@ svg .grab:active{cursor:grabbing}
     <div class="eq">\[ \lim_{x\to2^{+}}\frac{f(x)-f(2)}{x-2}=\lim_{x\to2^{-}}\frac{f(x)-f(2)}{x-2}=4 \]</div>
     <p>⇒ \(f(x)\) is differentiable at \(x=2\) and \(f'(2)=4\).</p>
   </div>
+  <figure class="viz" data-viz="xc2" id="viz-xc2">
+    <div class="viz-head"><span class="viz-title">Continuity, then differentiability</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>The right piece is fixed at \(4x+2\). Move the left piece: matching heights buys continuity, matching slopes buys differentiability — and the first does not imply the second.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w2l3" data-lec="Lecture 03 · Linear Approximations">
@@ -992,6 +1131,27 @@ svg .grab:active{cursor:grabbing}
   <div class="res">\( \text{Descent directions}=\{u\in\mathbb R^{d}:\ \nabla f(v)^{\mathsf T}u\lt 0\} \)</div>
 </section>
 
+<section class="quiz" data-quiz="w2" id="quiz-w2">
+  <h4>Self-check — Week 02</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>\(f(x)=\begin{cases}4x+2,&x\ge2\\2x+6,&x\lt2\end{cases}\) — is it continuous at \(x=2\)? Is it differentiable there?</span><span class="qx"></span></summary>
+    <div class="qa"><p>Continuous: LHL \(=2(2)+6=10\) and RHL \(=4(2)+2=10\), both equal to \(f(2)=10\).</p><p>But not differentiable:</p><div class="eq">\[ \lim_{x\to2^{+}}\frac{f(x)-f(2)}{x-2}=4 \qquad \lim_{x\to2^{-}}\frac{f(x)-f(2)}{x-2}=2 \]</div><p>The two one-sided limits disagree, so the derivative does not exist at \(x=2\) — continuity alone is not enough.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>Give the linear approximations of \(\sin x\), \(e^{x}\), \(\ln(1+x)\) and \((1+x)^{r}\) about \(x=0\).</span><span class="qx"></span></summary>
+    <div class="qa"><p>All four come from \(f(x)\approx f(0)+f'(0)x\):</p><div class="eq">\[ \sin x\approx x \qquad e^{x}\approx 1+x \]</div><div class="eq">\[ \ln(1+x)\approx x \qquad (1+x)^{r}\approx 1+rx \]</div></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Compute \((1.1)^{7}\) by quadratic approximation about \(x=0\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ (1+x)^{r}\approx 1+rx+\tfrac12 r(r-1)x^{2} \]</div><div class="eq">\[ r=7,\ x=0.1:\quad 1+7(0.1)+\tfrac12\cdot7\cdot6\cdot(0.01)=1+0.7+0.21 \]</div><div class="res ans">\( (1.1)^{7}=1.91 \)</div></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>For \(f(x_1,x_2)=x_1^{2}+x_2^{2}\), write the linear approximation about \((6,2)\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \nabla f(x)=[2x_1,\ 2x_2]\ \Rightarrow\ \nabla f(v)=\begin{bmatrix}12\\4\end{bmatrix},\qquad f(v)=40 \]</div><div class="eq">\[ f(x)\approx 40+[12,\,4]\begin{bmatrix}x_1-6\\x_2-2\end{bmatrix}=40+12x_1-72+4x_2-8 \]</div><div class="res ans">\( f(x)\approx 12x_1+4x_2-40 \)</div><p>Geometrically this is the tangent plane to the graph at \((v,f(v))\).</p></div>
+  </details>
+</section>
+
 <!-- ============================ WEEK 03 ============================ -->
 <section class="week" id="w3" data-week="Week 03" data-title="Four Fundamental Subspaces &amp; Projections">
   <span class="week-tag">Week 03</span>
@@ -1049,7 +1209,7 @@ svg .grab:active{cursor:grabbing}
     <p style="margin-top:0">We can use Gaussian elimination to find the null space of matrix \(A\); i.e. solve \(Ax=0\).</p>
   </div>
 
-  <div class="box ex"><span class="lbl">Example — Gaussian elimination</span>
+  <div class="box ex" data-step><span class="lbl">Example — Gaussian elimination</span>
     <div class="eq">\[ A=\begin{bmatrix}1&2&2&2\\2&4&6&8\\3&6&8&10\end{bmatrix} \xrightarrow[\;R_3\to R_3-3R_1\;]{\;R_2\to R_2-2R_1\;} \begin{bmatrix}1&2&2&2\\0&0&2&4\\0&0&2&4\end{bmatrix} \xrightarrow{\;R_3\to R_3-R_2\;} \underbrace{\begin{bmatrix}\boxed{1}&2&2&2\\0&0&\boxed{2}&4\\0&0&0&0\end{bmatrix}}_{U} \]</div>
     <p>So now we need to solve \(Ux=0\), with \(x_1\) and \(x_3\) = pivot points, and \(x_2\) and \(x_4\) = free variables.</p>
     <p><strong>1.</strong>&nbsp; Set \(x_2=0\) and \(x_4=1\):</p>
@@ -1095,6 +1255,14 @@ svg .grab:active{cursor:grabbing}
     <p>Find a linear combination of rows that gives output as zero.</p>
     <div class="res ans">\( [1\ \ 1\ \ -1]\in N(A^{\mathsf T}) \)</div>
   </div>
+  <figure class="viz" data-viz="xc3" id="viz-xc3">
+    <div class="viz-head"><span class="viz-title">Elimination, one row at a time</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Each click applies the next row operation. Boxed entries are the pivots, and rank plus nullity stays at 4 throughout.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w3l2" data-lec="Lecture 02 · Orthogonal Vectors &amp; Subspaces">
@@ -1256,7 +1424,7 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ \text{So,}\quad(\hat\theta',\hat\theta'')=\arg\min\lVert b-A\Theta\rVert^{2} \]</div>
   <p>When \(A\Theta=b\) has a solution: \(\lVert A\Theta-b\rVert^{2}=0\ \Rightarrow\ \lVert A\Theta-b\rVert=0\).</p>
 
-  <div class="box q"><span class="lbl">Question</span>
+  <div class="box q" data-step><span class="lbl">Question</span>
     <p style="margin-top:0">Given \(A=\begin{bmatrix}-1&amp;1&amp;2\\1&amp;1&amp;1\end{bmatrix}^{\mathsf T}\) and \(b=\begin{bmatrix}1&amp;1&amp;3\end{bmatrix}^{\mathsf T}\). Find the best fit line for the given.</p>
     <p>System of equations of the form \(A\Theta=b\):</p>
     <div class="eq">\[ \begin{bmatrix}-1&1\\1&1\\2&1\end{bmatrix}\begin{bmatrix}\theta'\\\theta''\end{bmatrix}=\begin{bmatrix}1\\1\\3\end{bmatrix} \]</div>
@@ -1278,6 +1446,27 @@ svg .grab:active{cursor:grabbing}
   </div>
 </section>
 
+
+<section class="quiz" data-quiz="w3" id="quiz-w3">
+  <h4>Self-check — Week 03</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>For \(A=\begin{bmatrix}1&1&2\\2&1&3\\3&1&4\\4&1&5\end{bmatrix}\), what are \(C(A)\) and \(N(A)\)?</span><span class="qx"></span></summary>
+    <div class="qa"><p>Column 3 is column 1 plus column 2, so only two columns are independent:</p><div class="eq">\[ C(A)=\operatorname{span}(\text{col}_1,\text{col}_2)\ \text{— a 2-D subspace of }\mathbb R^{4} \]</div><p>That dependence is exactly what the null space records:</p><div class="eq">\[ \begin{bmatrix}x_1\\x_2\\x_3\end{bmatrix}=\begin{bmatrix}1\\1\\-1\end{bmatrix}\in N(A) \]</div><p>a line in \(\mathbb R^{3}\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>State the rank–nullity theorem and give the rank and nullity of \(A=\begin{bmatrix}1&2&2&2\\2&4&6&8\\3&6&8&10\end{bmatrix}\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \text{Rank}+\text{nullity}=n\ (\text{no. of columns}) \]</div><p>Elimination leaves pivots in columns 1 and 3, with \(x_2,x_4\) free. So \(\text{Rank}(A)=2\) and \(\text{nullity}(A)=2\), and \(2+2=4\) columns. Also \(\dim(C(A))=\text{Rank}\) and \(\dim(N(A))=\text{nullity}\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Which two orthogonality relations hold among the four fundamental subspaces?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ R(A)\perp N(A)\quad\text{i.e.}\quad C(A^{\mathsf T})\perp N(A) \]</div><div class="eq">\[ C(A)\perp N(A^{\mathsf T}) \]</div><p>Row space against null space; column space against left null space.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>Given \(A=\begin{bmatrix}-1&1\\1&1\\2&1\end{bmatrix}\) and \(b=[1\ \ 1\ \ 3]^{\mathsf T}\), find the best fit line and verify the error is orthogonal to the columns.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ A^{\mathsf T}A=\begin{bmatrix}6&2\\2&3\end{bmatrix},\qquad A^{\mathsf T}b=\begin{bmatrix}6\\5\end{bmatrix} \]</div><div class="eq">\[ 6\hat\theta'+2\hat\theta''=6,\quad 2\hat\theta'+3\hat\theta''=5\ \Rightarrow\ \hat\theta'=\tfrac47,\ \hat\theta''=\tfrac97 \]</div><div class="res">best fit line \(\ \tfrac47x_i+\tfrac97=y_i\)</div><p>Projections \(\tfrac57,\tfrac{13}7,\tfrac{17}7\) give \(e=\bigl[\tfrac27,-\tfrac67,\tfrac47\bigr]\). Dotting with \((-1,1,2)\) gives \(-\tfrac27-\tfrac67+\tfrac87=0\), and with \((1,1,1)\) gives \(\tfrac27-\tfrac67+\tfrac47=0\).</p></div>
+  </details>
+</section>
 
 <!-- ============================ WEEK 04 ============================ -->
 <section class="week" id="w4" data-week="Week 04" data-title="Regression, Eigenvalues &amp; Diagonalization">
@@ -1329,6 +1518,14 @@ svg .grab:active{cursor:grabbing}
   <p>Repeating the calculation via least squares we get the solution:</p>
   <div class="eq">\[ (A^{\mathsf T}A+\lambda I)\,\Theta_{\text{reg}}=A^{\mathsf T}y \qquad\Longrightarrow\qquad \Theta_{\text{reg}}=(A^{\mathsf T}A+\lambda I)^{-1}A^{\mathsf T}y \]</div>
   <p>\((A^{\mathsf T}A+\lambda I)\) is invertible even if \(A\) is not full rank.</p>
+  <figure class="viz" data-viz="xc4" id="viz-xc4">
+    <div class="viz-head"><span class="viz-title">What λ buys and what it costs</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>The dashed line is plain least squares. Raising \(\lambda\) shrinks \(\lVert\Theta\rVert^2\) and tilts the fit away from the data — the trade ridge regression makes.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w4l2" data-lec="Lecture 02 · Eigenvalues &amp; Eigenvectors">
@@ -1369,7 +1566,7 @@ svg .grab:active{cursor:grabbing}
     <p>and this will give \(n\) eigenvalues. Now, for a given eigenvalue, \((A-\lambda I)x=0\), i.e. \(x\in N(A-\lambda I)\), solving this by use of Gaussian elimination. Thus we will get various values of eigenvectors for various eigenvalues.</p>
   </div>
 
-  <div class="box ex"><span class="lbl">Example</span>
+  <div class="box ex" data-step><span class="lbl">Example</span>
     <p style="margin-top:0">Find eigenvalues and eigenvectors for \(A=\begin{bmatrix}3&amp;1\\1&amp;3\end{bmatrix}\).</p>
     <div class="eq">\[ \det(A-\lambda I)=0\ \Rightarrow\ \begin{vmatrix}3-\lambda&1\\1&3-\lambda\end{vmatrix}=0\ \Rightarrow\ \lambda^{2}-6\lambda+9-1=0 \]</div>
     <div class="eq">\[ \lambda^{2}-6\lambda+8=0\ \Rightarrow\ \lambda^{2}-2\lambda-4\lambda+8=0\ \Rightarrow\ \underline{\lambda=2}\ \ \underline{\lambda=4} \]</div>
@@ -1411,7 +1608,7 @@ svg .grab:active{cursor:grabbing}
     <p style="margin-top:0">If \(\lambda_1,\lambda_2,\lambda_3,\dots,\lambda_n\) are distinct eigenvalues, then their corresponding eigenvectors \(\{x_1,x_2,\dots,x_n\}\) are linearly independent.</p>
   </div>
 
-  <div class="box ex"><span class="lbl">Example</span>
+  <div class="box ex" data-step><span class="lbl">Example</span>
     <p style="margin-top:0">Check for diagonalization for \(A=\begin{bmatrix}1&amp;4\\2&amp;3\end{bmatrix}\).</p>
     <div class="eq">\[ \det(A-\lambda I)=0\ \Rightarrow\ \begin{vmatrix}1-\lambda&4\\2&3-\lambda\end{vmatrix}=0 \]</div>
     <div class="eq">\[ \lambda^{2}-4\lambda+3-8=0\ \Rightarrow\ \lambda^{2}-4\lambda-5=0\ \Rightarrow\ \lambda=5\ \text{and}\ \lambda=-1 \]</div>
@@ -1475,7 +1672,7 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ Q=\begin{bmatrix}\vert&\vert& &\vert\\ q_1&q_2&\cdots&q_n\\ \vert&\vert& &\vert\end{bmatrix};\quad\text{where } q_1=\frac{x_1}{\lVert x_1\rVert},\ q_2=\frac{x_2}{\lVert x_2\rVert} \]</div>
   <p class="small">\(\{x_1,x_2,\dots,x_n\}\) are eigenvectors.</p>
 
-  <div class="box q"><span class="lbl">Question</span>
+  <div class="box q" data-step><span class="lbl">Question</span>
     <p style="margin-top:0">Check orthogonal diagonalizability for \(A=\begin{bmatrix}1&amp;-2\\-2&amp;-2\end{bmatrix}\).</p>
     <p>For characteristic equation, \(\det(A-\lambda I)=0\):</p>
     <div class="eq">\[ \begin{vmatrix}1-\lambda&-2\\-2&-2-\lambda\end{vmatrix}=0\ \Rightarrow\ \lambda^{2}-2+\lambda-4=0\ \Rightarrow\ \lambda^{2}+\lambda-6=0\ \Rightarrow\ \underline{\lambda=2\ \text{or}\ \lambda=-3} \]</div>
@@ -1495,6 +1692,27 @@ svg .grab:active{cursor:grabbing}
   <div class="box note"><span class="lbl">Remark</span>
     <p style="margin-top:0">A "real-symmetric" matrix is always diagonalizable.</p>
   </div>
+</section>
+
+<section class="quiz" data-quiz="w4" id="quiz-w4">
+  <h4>Self-check — Week 04</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>Derive the normal equation for linear regression from \(L(\Theta)=\tfrac12(A\Theta-y)^{\mathsf T}(A\Theta-y)\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \nabla_\Theta L(\Theta)=0\ \Rightarrow\ A^{\mathsf T}(A\Theta-y)=0\ \Rightarrow\ A^{\mathsf T}A\Theta-A^{\mathsf T}y=0 \]</div><div class="res">\( A^{\mathsf T}A\Theta=A^{\mathsf T}y \)</div><p>\(\Theta=(A^{\mathsf T}A)^{-1}A^{\mathsf T}y\) only when \(A\) is full rank, so that \(A^{\mathsf T}A\) is invertible.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>Find the eigenvalues and eigenvectors of \(A=\begin{bmatrix}3&1\\1&3\end{bmatrix}\), and check them against the trace and determinant.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \lambda^{2}-6\lambda+9-1=0\ \Rightarrow\ \lambda^{2}-6\lambda+8=0\ \Rightarrow\ \lambda=2,\ 4 \]</div><div class="eq">\[ x_1=\begin{bmatrix}1\\-1\end{bmatrix}\ (\lambda=2),\qquad x_2=\begin{bmatrix}1\\1\end{bmatrix}\ (\lambda=4) \]</div><p>Check: \(\lambda_1+\lambda_2=6=\operatorname{trace}(A)\) and \(\lambda_1\lambda_2=8=\det(A)\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>What does ridge regression change, and why is that useful?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \min_\Theta\left\{\frac12\sum_{i=1}^{n}(x_i^{\mathsf T}\Theta-y_i)^{2}+\lambda\lVert\Theta\rVert^{2}\right\} \]</div><div class="eq">\[ (A^{\mathsf T}A+\lambda I)\Theta_{\text{reg}}=A^{\mathsf T}y\ \Rightarrow\ \Theta_{\text{reg}}=(A^{\mathsf T}A+\lambda I)^{-1}A^{\mathsf T}y \]</div><p>\((A^{\mathsf T}A+\lambda I)\) is invertible even when \(A\) is not full rank, so the solution exists where plain least squares fails.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>How does diagonalization give a closed form for the \(k^{\text{th}}\) Fibonacci number?</span><span class="qx"></span></summary>
+    <div class="qa"><p>Write \(u_k=\begin{bmatrix}F_{k+1}\\F_k\end{bmatrix}\) so that \(u_{k+1}=Au_k\) with \(A=\begin{bmatrix}1&1\\1&0\end{bmatrix}\), hence \(u_k=A^{k}u_0\). Expanding \(u_0\) in eigenvectors gives \(u_k=c_1\lambda_1^{k}x_1+c_2\lambda_2^{k}x_2\) with \(\lambda^{2}-\lambda-1=0\):</p><div class="eq">\[ F_k=\frac1{\sqrt5}\left[\left(\frac{1+\sqrt5}{2}\right)^{k}-\left(\frac{1-\sqrt5}{2}\right)^{k}\right] \]</div><p>The second term shrinks with \(k\), leaving \(F_k\approx\frac1{\sqrt5}\left(\frac{1+\sqrt5}{2}\right)^{k}\).</p></div>
+  </details>
 </section>
 
 <!-- ============================ WEEK 05 ============================ -->
@@ -1575,7 +1793,7 @@ svg .grab:active{cursor:grabbing}
     <p><strong>③</strong> For \(A\) being a Hermitian matrix, the eigenvectors corresponding to different eigenvalues are orthogonal, i.e. \(Ax=\lambda_1x\) and \(Ay=\lambda_2y\); then for \(\lambda_1\neq\lambda_2\), \(x^{\mathsf T}y=x\cdot y=0\).</p>
   </div>
 
-  <div class="box ex"><span class="lbl">Example</span>
+  <div class="box ex" data-step><span class="lbl">Example</span>
     <p style="margin-top:0">Find the eigenvalues and eigenvectors for the matrix \(A=\begin{bmatrix}2&amp;(3-3i)\\(3+3i)&amp;5\end{bmatrix}\).</p>
     <p>For eigenvalues we know \(\det(A-\lambda I)=0\):</p>
     <div class="eq">\[ \begin{vmatrix}(2-\lambda)&(3-3i)\\(3+3i)&(5-\lambda)\end{vmatrix}=0 \]</div>
@@ -1650,7 +1868,7 @@ svg .grab:active{cursor:grabbing}
   <div class="res">\( U^{\ast}AU=T=U_2^{\ast}U_1^{\ast}AU_1U_2 \quad\Longrightarrow\quad A=UTU^{\ast}\qquad\text{Hence Proved!} \)</div>
   <p class="small">[This proof can be extended to the general case of any matrix of \(n\gt3\).]</p>
 
-  <div class="box ex"><span class="lbl">Example — upper triangularize a matrix</span>
+  <div class="box ex" data-step><span class="lbl">Example — upper triangularize a matrix</span>
     <p style="margin-top:0">Upper triangularize the matrix \(A=\begin{bmatrix}5&amp;8&amp;16\\5&amp;0&amp;9\\-3&amp;-5&amp;-10\end{bmatrix}\).</p>
     <p>For the characteristic polynomial, \(\det(A-\lambda I)=0\):</p>
     <div class="eq">\[ (5-\lambda)\bigl[10\lambda+\lambda^{2}+45\bigr]-8(-50\lambda+27)+16(-25-3\lambda) \]</div>
@@ -1686,7 +1904,7 @@ svg .grab:active{cursor:grabbing}
   <p>Also, if \(T=T^{\ast}\ \Rightarrow\ T_{ii}=\overline{T_{ii}}\) ⇒ the elements on the diagonal are real elements.</p>
   <div class="res">\( U^{\ast}AU=D\ ;\quad D\text{ is a diagonal matrix, with real entries} \)</div>
 
-  <div class="box ex"><span class="lbl">Example</span>
+  <div class="box ex" data-step><span class="lbl">Example</span>
     <p style="margin-top:0">Find the matrix \(D\) for the matrix \(A=\begin{bmatrix}2&amp;1-i\\1+i&amp;3\end{bmatrix}\).</p>
     <div class="eq">\[ \text{Characteristic eq}^{\text{n}}:\ \lambda^{2}-5\lambda+6-2=0\ \Rightarrow\ \lambda^{2}-5\lambda+4=0\ \Rightarrow\ \underline{\lambda=1,\ 4} \]</div>
     <p><strong>For \(\lambda=1\):</strong></p>
@@ -1711,6 +1929,27 @@ svg .grab:active{cursor:grabbing}
   </div>
 </section>
 
+
+<section class="quiz" data-quiz="w5" id="quiz-w5">
+  <h4>Self-check — Week 05</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>Why does \(\mathbb C^{n}\) need a different inner product from \(\mathbb R^{n}\)?</span><span class="qx"></span></summary>
+    <div class="qa"><p>In \(\mathbb R^{n}\), \(\lVert x\rVert^{2}=x^{\mathsf T}x\). Over \(\mathbb C\) that sum of squares can be zero or negative for a non-zero vector, so it cannot measure length. The conjugate is used instead:</p><div class="eq">\[ x\cdot y=\bar x^{\mathsf T}y=\sum_{i=1}^{n}\bar x_i y_i,\qquad \lVert x\rVert^{2}=x^{\ast}x \]</div><p>For \(x=\begin{bmatrix}1\\i\end{bmatrix}\): \(x^{\ast}x=[1\ \ -i]\begin{bmatrix}1\\i\end{bmatrix}=1+1=2\), so \(\lVert x\rVert=\sqrt2\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>State three properties of a Hermitian matrix, and verify them on \(A=\begin{bmatrix}2&3-3i\\3+3i&5\end{bmatrix}\).</span><span class="qx"></span></summary>
+    <div class="qa"><p>Diagonal entries are real; all eigenvalues are real; eigenvectors for distinct eigenvalues are orthogonal.</p><div class="eq">\[ \lambda^{2}-7\lambda-8=0\ \Rightarrow\ \lambda=8,\ -1\quad\text{(both real)} \]</div><div class="eq">\[ x_1=\begin{bmatrix}1\\1+i\end{bmatrix},\qquad x_2=\begin{bmatrix}-1+i\\1\end{bmatrix} \]</div><div class="eq">\[ \bar x_1^{\mathsf T}x_2=[1\ \ 1-i]\begin{bmatrix}-1+i\\1\end{bmatrix}=0 \]</div></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>What is a unitary matrix, and why does it leave lengths unchanged?</span><span class="qx"></span></summary>
+    <div class="qa"><p>A square matrix with orthonormal columns, so \(U^{\ast}U=I\) and \(U^{\ast}=U^{-1}\). Then</p><div class="eq">\[ \lVert Ux\rVert^{2}=(Ux)^{\ast}Ux=x^{\ast}U^{\ast}Ux=x^{\ast}x=\lVert x\rVert^{2} \]</div><p>Its eigenvalues all satisfy \(|\lambda|=1\), and eigenvectors for different eigenvalues are orthogonal.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>Schur's theorem says \(A=UTU^{\ast}\) for any square \(A\). Why does \(T\) become diagonal when \(A\) is Hermitian?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ T^{\ast}=(U^{\ast}AU)^{\ast}=U^{\ast}A^{\ast}U=U^{\ast}AU=T \]</div><p>\(T\) is upper triangular and \(T^{\ast}\) is lower triangular, so \(T=T^{\ast}\) forces every off-diagonal entry to vanish. And \(T_{ii}=\overline{T_{ii}}\) makes the diagonal real — the spectral theorem.</p></div>
+  </details>
+</section>
 
 <!-- ============================ WEEK 06 ============================ -->
 <section class="week" id="w6" data-week="Week 06" data-title="SVD &amp; Positive Definiteness">
@@ -1845,6 +2084,14 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ [x_1,\dots,x_n]\begin{bmatrix}a_{11}&\cdots&a_{1n}\\\vdots&\ddots&\vdots\\a_{n1}&\cdots&a_{nn}\end{bmatrix}\begin{bmatrix}x_1\\\vdots\\x_n\end{bmatrix}=\sum_{i=1}^{n}\sum_{j=1}^{n}a_{ij}x_ix_j \]</div>
   <div class="eq">\[ \text{for } v=\begin{bmatrix}x_1\\\vdots\\x_n\end{bmatrix};\quad f(v)=a_{11}x_1^{2}+2a_{12}x_1x_2+\cdots+a_{nn}x_n^{2} \]</div>
   <p>So, for \(\begin{bmatrix}0\\\vdots\\0\end{bmatrix}=v\ \Rightarrow\ f(v)=0\ \Rightarrow\ \begin{bmatrix}0\\\vdots\\0\end{bmatrix}\) is the stationary point for the function \(f(v)\).</p>
+  <figure class="viz" data-viz="xc5" id="viz-xc5">
+    <div class="viz-head"><span class="viz-title">Definite, semi-definite, or saddle</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Contours of \(ax^2+2bxy+cy^2\). Watch \(ac\) against \(b^2\): closed ellipses mean definite, open hyperbolas mean a saddle at the origin.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w6l4" data-lec="Lecture 04 · Positive Definite Matrices">
@@ -1861,6 +2108,27 @@ svg .grab:active{cursor:grabbing}
       <li>We could write \(v^{\mathsf T}Sv\gt0\) for \(v\in\mathbb R^{n}\) and \(v\neq0\), then the matrix \(S\) is a positive definite matrix.</li>
     </ol>
   </div>
+</section>
+
+<section class="quiz" data-quiz="w6" id="quiz-w6">
+  <h4>Self-check — Week 06</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>Why can every real \(m\times n\) matrix be decomposed as \(A=Q_1\Sigma Q_2^{\mathsf T}\), even when it cannot be diagonalized?</span><span class="qx"></span></summary>
+    <div class="qa"><p>The argument never uses the eigenvectors of \(A\). It uses \(A^{\mathsf T}A\), which is \(n\times n\) and real-symmetric, so it always has an orthonormal basis of eigenvectors \(\{x_1,\dots,x_n\}\) with \(\lambda_i\ge0\). Setting \(\sigma_i=\sqrt{\lambda_i}\) and \(y_i=\tfrac1{\sigma_i}Ax_i\) builds an orthonormal set on the other side, extended to a basis of \(\mathbb R^{m}\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>Find the SVD of \(A=\begin{bmatrix}\sqrt2&1\\0&\sqrt2\end{bmatrix}\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ A^{\mathsf T}A=\begin{bmatrix}2&\sqrt2\\\sqrt2&3\end{bmatrix},\qquad \lambda^{2}-5\lambda+4=0\ \Rightarrow\ \lambda=1,\ 4 \]</div><div class="eq">\[ Q_2=\frac1{\sqrt3}\begin{bmatrix}-\sqrt2&1\\1&\sqrt2\end{bmatrix},\qquad \Sigma=\begin{bmatrix}1&0\\0&2\end{bmatrix},\qquad Q_1=\frac1{\sqrt3}\begin{bmatrix}-1&\sqrt2\\\sqrt2&1\end{bmatrix} \]</div><p>Note \(A\) has the single repeated eigenvalue \(\sqrt2\) with only one eigenvector, so it is not diagonalizable — yet the SVD exists.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>For \(f(x,y)=ax^{2}+2bxy+cy^{2}\), give the four definiteness tests and the saddle condition.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ f\gt0:\ a\gt0,\ ac\gt b^{2} \qquad f\ge0:\ a\gt0,\ ac=b^{2} \]</div><div class="eq">\[ f\lt0:\ a\lt0,\ ac\gt b^{2} \qquad f\le0:\ a\lt0,\ ac=b^{2} \]</div><p>If \(ac\lt b^{2}\) there is a saddle point at \((0,0)\). Every such quadratic has a stationary point at the origin.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>List the five tests for a positive definite matrix.</span><span class="qx"></span></summary>
+    <div class="qa"><p>1. All eigenvalues are positive, \(\lambda_i\gt0\).<br>2. Every upper-left determinant is \(\gt0\).<br>3. Every pivot is positive.<br>4. \(S=A^{\mathsf T}A\) can be written with \(A\) having independent columns.<br>5. \(v^{\mathsf T}Sv\gt0\) for all \(v\in\mathbb R^{n}\), \(v\neq0\).</p></div>
+  </details>
 </section>
 
 <!-- ============================ WEEK 07 ============================ -->
@@ -1914,7 +2182,7 @@ svg .grab:active{cursor:grabbing}
   <p>Let this basis be \(\{u_1,\dots,u_m,u_{m+1},\dots,u_d\}\) corresponding to eigenvalues \(\{\lambda_1,\dots,\lambda_d\}\) such that \(\lambda_1\gt\lambda_2\cdots\gt\lambda_d\).</p>
   <p>Now, to minimize \(J^{\ast}=\sum_{j=m+1}^{d}u_j^{\mathsf T}Cu_j\) over \(\{u_{m+1},\dots,u_d\}\), choose \(u_{m+1},\dots,u_d\) to be the \((d-m)\) eigenvectors corresponding to the \(d-m\) least eigenvalues \(\{\lambda_{m+1},\dots,\lambda_d\}\). The remaining \(u_1,\dots,u_m\) are chosen to be the top-\(m\) eigenvectors for \(C\).</p>
 
-  <div class="box ex"><span class="lbl">Example</span>
+  <div class="box ex" data-step><span class="lbl">Example</span>
     <p style="margin-top:0">Consider the dataset \(D=\left\{\begin{pmatrix}-1\\-1\end{pmatrix},\begin{pmatrix}0\\0\end{pmatrix},\begin{pmatrix}1\\1\end{pmatrix}\right\}\). Project \(D\) on \(m=1\) dimensional sub-space.</p>
     <div class="eq">\[ \bar x=\frac13\sum_{i=1}^{3}x_i=\begin{pmatrix}0\\0\end{pmatrix} \]</div>
     <div class="eq">\[ C=\frac13\sum_{i=1}^{3}(x_i-\bar x)(x_i-\bar x)^{\mathsf T} =\frac13\left\{\begin{pmatrix}-1\\-1\end{pmatrix}(-1,-1)+\begin{pmatrix}0\\0\end{pmatrix}(0\ \ 0)+\begin{pmatrix}1\\1\end{pmatrix}(1\ \ 1)\right\} \]</div>
@@ -1972,6 +2240,27 @@ svg .grab:active{cursor:grabbing}
   <p>So instead of working with the \(d\times d\) matrix \(C=\frac1n A^{\mathsf T}A\) to find its eigenvalues / eigenvectors, it is enough to find eigenvalues / eigenvectors of \(\frac1n AA^{\mathsf T}\), because \(\frac1n AA^{\mathsf T}\) is the desired \(n\times n\) matrix that we needed.</p>
 </section>
 
+
+<section class="quiz" data-quiz="w7" id="quiz-w7">
+  <h4>Self-check — Week 07</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>What two things does PCA try to do at once, and what single matrix decides both?</span><span class="qx"></span></summary>
+    <div class="qa"><p>Minimise reconstruction error and maximise the variance of the projected data. Both are settled by the covariance matrix</p><div class="eq">\[ C=\frac1n\sum_{i=1}^{n}(x_i-\bar x)(x_i-\bar x)^{\mathsf T} \]</div><p>Discarded directions cost \(J^{\ast}=\sum_{j=m+1}^{d}u_j^{\mathsf T}Cu_j\), so you drop the smallest eigenvalues and keep the top-\(m\) eigenvectors of \(C\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>For \(D=\{(-1,-1),(0,0),(1,1)\}\) projected onto one dimension, find \(C\), the principal direction and the reconstruction error.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \bar x=\begin{pmatrix}0\\0\end{pmatrix},\qquad C=\frac23\begin{bmatrix}1&1\\1&1\end{bmatrix} \]</div><div class="eq">\[ \lambda_1=\tfrac43\ \text{with}\ u_1=\tfrac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix},\qquad \lambda_2=0 \]</div><p>Every point already lies on that line, so \(\tilde x_i=x_i\) for all three and \(J^{\ast}=0\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Show that maximising \(\frac{u^{\mathsf T}Cu}{u^{\mathsf T}u}\) is an eigenvalue problem.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \frac{\partial}{\partial u^{(i)}}\left(\frac{u^{\mathsf T}Cu}{u^{\mathsf T}u}\right)=u^{\mathsf T}u\cdot2(Cu)^{(i)}-(u^{\mathsf T}Cu)\cdot2u^{(i)}=0 \]</div><div class="eq">\[ u^{\mathsf T}u\,Cu=(u^{\mathsf T}Cu)u\iff Cu=\left[\frac{u^{\mathsf T}Cu}{u^{\mathsf T}u}\right]u\iff Cu=\lambda u \]</div><p>So the maximiser is an eigenvector and the maximum value is the largest eigenvalue. In the example above the projected variance is \(\tfrac43\) — exactly \(\lambda_1\).</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>When \(d\gg n\), why work with \(\tfrac1n AA^{\mathsf T}\) instead of \(C=\tfrac1n A^{\mathsf T}A\)?</span><span class="qx"></span></summary>
+    <div class="qa"><p>\(C\) is \(d\times d\) and \(\operatorname{rank}(C)\le n\), so \(d-n\) of its eigenvalues are zero and carry no information. Any eigenvalue \(\lambda_i\gt0\) of \(C\) is also an eigenvalue of \(\tfrac1n AA^{\mathsf T}\), which is only \(n\times n\) — the same useful spectrum from a far smaller matrix.</p></div>
+  </details>
+</section>
 
 <!-- ============================ WEEK 08 ============================ -->
 <section class="week" id="w8" data-week="Week 08" data-title="Unconstrained Optimization">
@@ -2059,6 +2348,14 @@ svg .grab:active{cursor:grabbing}
     <div class="eq">\[ \sum_{t=0}^{\infty}\eta_t=\sum_{t=0}^{\infty}\frac1{t+1}=1+\frac12+\frac13+\frac14+\cdots=\infty \]</div>
     <p>So this STEP-SIZE will help us to reach the optimum value of the function. Thus it helps us to define the algorithm.</p>
   </div>
+  <figure class="viz" data-viz="xc6" id="viz-xc6">
+    <div class="viz-head"><span class="viz-title">Which step size actually arrives</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>All three start at \(x_0=10\) chasing the minimum at 5. \(\eta=1/2^t\) stalls because its steps sum to 2; \(\eta=1/(t+1)\) gets there because they sum to infinity.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w8l5" data-lec="Lecture 05 · Gradient Descent Algorithm">
@@ -2161,6 +2458,27 @@ svg .grab:active{cursor:grabbing}
   <div class="box note"><span class="lbl">Note</span>
     <p style="margin-top:0">\(-\nabla f(x)\) gives the direction of steepest descent, thus "Gradient descent" is also called the <em class="term">Steepest Descent</em> algorithm.</p>
   </div>
+</section>
+
+<section class="quiz" data-quiz="w8" id="quiz-w8">
+  <h4>Self-check — Week 08</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>Starting from \(x_0=10\) on \(f(x)=(x-5)^2\) with \(x_{t+1}=x_t+d\), \(d=-f'(x)\), what goes wrong?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ x_1=10-2(10-5)=0,\qquad x_2=0+(-2)(0-5)=10 \]</div><p>The iterates oscillate between 0 and 10 forever. The <em>direction</em> was right each time — the problem is the <em>amount</em>, which is why a step size \(\eta_t\) is introduced.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>Why does \(\eta_t=\tfrac1{2^{t}}\) fail as a step size while \(\eta_t=\tfrac1{t+1}\) works?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \sum_{t=0}^{\infty}\frac1{2^{t}}=1+\tfrac12+\tfrac14+\cdots=2 \]</div><div class="eq">\[ \sum_{t=0}^{\infty}\frac1{t+1}=1+\tfrac12+\tfrac13+\cdots=\infty \]</div><p>The total distance the first can ever travel is bounded by 2, so a target further away is unreachable. The harmonic steps shrink but still sum to infinity, so any point can be reached.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Use the Taylor expansion to show why \(d=-f'(x)\) is the right choice.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ f(x+\eta d)\approx f(x)+\eta d\,f'(x)\ \Rightarrow\ f(x+\eta d)-f(x)\approx\eta d\,f'(x) \]</div><p>We want that difference negative, and \(\eta\gt0\), so we need \(d\,f'(x)\lt0\). Choosing \(d=-f'(x)\) gives \(-[f'(x)]^{2}\lt0\), which always holds.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>Find \(\nabla f(1,3)\) for \(f(x_1,x_2)=x_1^{2}+4x_2+8x_2^{2}\), and state the multivariate update.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \nabla f(x_1,x_2)=\begin{bmatrix}2x_1\\4+16x_2\end{bmatrix}\ \Rightarrow\ \nabla f(1,3)=\begin{bmatrix}2\\52\end{bmatrix} \]</div><div class="eq">\[ \vec x_{t+1}=\vec x_t+\eta\bigl(-\nabla f(x_t)\bigr) \]</div><p>\(-\nabla f(x)\) is the direction of steepest descent, which is why gradient descent is also called steepest descent.</p></div>
+  </details>
 </section>
 
 <!-- ============================ WEEK 09 ============================ -->
@@ -2309,7 +2627,7 @@ svg .grab:active{cursor:grabbing}
     <li>\(\nabla f(x^{\ast})=-\lambda\nabla g(x^{\ast})\) for some \(\lambda\) &nbsp;[no sign constraint]</li>
   </ol>
 
-  <div class="box ex"><span class="lbl">Example</span>
+  <div class="box ex" data-step><span class="lbl">Example</span>
     <p style="margin-top:0">\(f(x)=x_1^{2}+2x_2+4x_2^{2}\) and \(g(x)=x_1^{2}+x_2^{2}-1\).</p>
     <div class="eq">\[ \nabla f(x_1,x_2)=\begin{bmatrix}2x_1\\2+8x_2\end{bmatrix} \qquad\text{and}\qquad \nabla g(x_1,x_2)=\begin{bmatrix}2x_1\\2x_2\end{bmatrix} \]</div>
     <div class="eq">\[ \text{Now; }\nabla f(x^{\ast})=-\lambda\nabla g(x^{\ast})\ \Longrightarrow\ \begin{bmatrix}2x_1\\2+8x_2\end{bmatrix}=-\lambda\begin{bmatrix}2x_1\\2x_2\end{bmatrix} \]</div>
@@ -2459,6 +2777,14 @@ svg .grab:active{cursor:grabbing}
     </div>
     <figcaption><b>Fig. 9.7</b> — Convex Hull (CH) is a set of all possible linear convex combinations of a convex set. The shaded region depicts the entire region of the convex hull; it is itself a convex set, denoted \(CH\{x_1,x_2,x_3,x_4\}\).</figcaption>
   </figure>
+  <figure class="viz" data-viz="xc8" id="viz-xc8">
+    <div class="viz-head"><span class="viz-title">The convex hull</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Drag any point. Filled points are hull vertices; hollow ones sit inside, and every one of those is a convex combination \(\sum\lambda_ix_i\) of the vertices.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w9l6" data-lec="Lecture 06 · Convex Functions">
@@ -2559,6 +2885,14 @@ svg .grab:active{cursor:grabbing}
     <div class="eq">\[ f(x)=x^{2}\ \Rightarrow\ f'(x)=2x\ \Rightarrow\ f''(x)=2 \]</div>
     <p>for a +ve semi-definite matrix; \(a\gt0\) and \(ac=b^{2}\) &nbsp;[\(0=0\)]. So, clearly \(f(x)=x^{2}\) is a convex function.</p>
   </div>
+  <figure class="viz" data-viz="xc7" id="viz-xc7">
+    <div class="viz-head"><span class="viz-title">The chord test</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>Drag the two endpoints. On a convex function the chord never dips below the curve; switch curves and it does.</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w9l7" data-lec="Lecture 07 · Properties of Convex Functions">
@@ -2584,6 +2918,27 @@ svg .grab:active{cursor:grabbing}
   </figure>
 </section>
 
+
+<section class="quiz" data-quiz="w9" id="quiz-w9">
+  <h4>Self-check — Week 09</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>What are descent and feasible directions, and what must be true of them at an optimal \(x^{\ast}\)?</span><span class="qx"></span></summary>
+    <div class="qa"><p>A descent direction reduces \(f\) — a property of the objective, \(d^{\mathsf T}\nabla f(x)\lt0\). A feasible direction keeps the constraint \(g(x)\le0\) satisfied for some step — a property of \(g\).</p><p>At an optimum, <strong>no descent direction may be feasible</strong>. If some direction is both, you could move that way and improve, so \(x^{\ast}\) was not optimal.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>Why must \(\nabla f(x^{\ast})\) and \(\nabla g(x^{\ast})\) be anti-parallel?</span><span class="qx"></span></summary>
+    <div class="qa"><p>If they are parallel, every descent direction is also feasible and \(x^{\ast}\) cannot be optimal. Only when they point in opposite directions do the descent cone and the feasible cone stop overlapping:</p><div class="eq">\[ \nabla f(x^{\ast})=-\lambda\,\nabla g(x^{\ast}),\qquad \lambda\ \text{a +ve scalar} \]</div><p>With an equality constraint \(g(x)=0\) the feasible directions satisfy \(d^{\mathsf T}\nabla g(x^{\ast})=0\) and \(\lambda\) carries no sign restriction.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Minimise \(f(x)=x_1^{2}+2x_2+4x_2^{2}\) subject to \(x_1^{2}+x_2^{2}=1\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ 2x_1=-\lambda(2x_1)\ \Rightarrow\ 2x_1(1+\lambda)=0\ \Rightarrow\ x_1=0\ \text{or}\ \lambda=-1 \]</div><p>\(\lambda=-1\) gives \(x_2=-\tfrac13\) and \(x_1=\pm\tfrac{\sqrt8}{3}\); \(x_1=0\) gives \(x_2=\pm1\). Evaluating:</p><div class="eq">\[ f(0,1)=6,\qquad f(0,-1)=2,\qquad f\bigl(\pm\tfrac{\sqrt8}{3},-\tfrac13\bigr)=\tfrac23 \]</div><div class="res ans">minimiser \(\bigl(\pm\tfrac{\sqrt8}{3},\,-\tfrac13\bigr)\); \((0,1)\) is the maximiser</div></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>Give two equivalent definitions of a convex function, and say why \(f(x)=x^{2}\) qualifies.</span><span class="qx"></span></summary>
+    <div class="qa"><p>Its epigraph \(\{[x,z]:z\ge f(x)\}\) is a convex set; equivalently, for all \(\lambda\in[0,1]\)</p><div class="eq">\[ f(\lambda x_1+(1-\lambda)x_2)\le\lambda f(x_1)+(1-\lambda)f(x_2) \]</div><p>— the chord never dips below the curve. For twice-differentiable \(f\) the test is that the Hessian is positive (semi-)definite. Here \(f''(x)=2\gt0\), so \(x^{2}\) is convex.</p></div>
+  </details>
+</section>
 
 <!-- ============================ WEEK 10 ============================ -->
 <section class="week" id="w10" data-week="Week 10" data-title="Convexity, Duality &amp; KKT">
@@ -2777,6 +3132,27 @@ svg .grab:active{cursor:grabbing}
   </div>
 </section>
 
+<section class="quiz" data-quiz="w10" id="quiz-w10">
+  <h4>Self-check — Week 10</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>For a differentiable convex \(f\), what is the necessary and sufficient condition for a global minimum?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ x^{\ast}\ \text{is a global minimum}\iff\nabla f(x^{\ast})=0 \]</div><p>For a general function \(\nabla f=0\) only marks a stationary point. Convexity is what upgrades it to a global guarantee — and the set of all global minima is itself convex.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>Which composition rules preserve convexity, and which one fails?</span><span class="qx"></span></summary>
+    <div class="qa"><p>Sum of convex functions is convex. \(f\circ g\) is convex when \(f\) is convex and <em>non-decreasing</em> and \(g\) is convex, and also when \(f\) is convex and \(g\) is linear.</p><p>Without the non-decreasing condition it breaks: \(g(x)=x^{2}\) and \(f(x)=e^{-x}\) are both convex, yet \(h(x)=e^{-x^{2}}\) is not.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Why is the linear-regression objective convex?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ f(w)=\sum_{i=1}^{n}\underbrace{(w^{\mathsf T}x_i-y_i)^{2}}_{h_i(w)} \]</div><p>Each \(h_i=f\circ g\) with \(f(z)=z^{2}\) convex and \(g(w)=w^{\mathsf T}x_i-y_i\) linear — a convex function of a linear function, so convex. A sum of convex functions is convex, so \(f(w)\) is convex and \(\nabla f(w)=0\) finds the global minimum.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>State the four KKT conditions and name each.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \nabla f(x^{\ast})+\lambda^{\ast}\nabla h(x^{\ast})=0 \quad[\text{stationarity}] \]</div><div class="eq">\[ \lambda^{\ast}h(x^{\ast})=0 \quad[\text{complementary slackness}] \]</div><div class="eq">\[ h(x^{\ast})\le0 \quad[\text{primal feasibility}] \qquad \lambda^{\ast}\ge0 \quad[\text{dual feasibility}] \]</div><p>Weak duality \(g(\lambda^{\ast})\le f(x^{\ast})\) always holds; when \(f\) and \(h\) are convex, strong duality closes the gap.</p></div>
+  </details>
+</section>
+
 <!-- ============================ WEEK 11 ============================ -->
 <section class="week" id="w11" data-week="Week 11" data-title="Continuous Random Variables">
   <span class="week-tag">Week 11</span>
@@ -2879,7 +3255,7 @@ svg .grab:active{cursor:grabbing}
   <p>For \(X\), \(A\subseteq\Omega\), the conditional PDF is given as</p>
   <div class="eq">\[ f_{X|A}(x)=\frac{P\bigl(X\in[x,x+dx]\mid A\bigr)}{dx} \]</div>
 
-  <div class="box ex"><span class="lbl">Example</span>
+  <div class="box ex" data-step><span class="lbl">Example</span>
     <div class="eq">\[ f_X(x)=\begin{cases}\tfrac{x}{2},&\text{if }x\in[0,2]\\0,&\text{otherwise}\end{cases}\qquad A=x\gt1 \]</div>
     <div class="eq">\[ f_{X|A}(x)=\frac{P\bigl[X\in(x,x+dx)\mid X\gt1\bigr]}{dx} \]</div>
     <div class="eq">\[ \text{Now; } P(A)=\int_1^2\frac{x}{2}\,dx=\left[\frac{x^{2}}{4}\right]_1^2=\frac34 \]</div>
@@ -3084,6 +3460,14 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ \operatorname{Cov}[X,Y]=E\bigl[(X-E(X))(Y-E(Y))\bigr]=E[X\,Y]-\bigl[E(X)\cdot E(Y)\bigr] \]</div>
   <div class="eq">\[ \underset{\substack{\downarrow\\ \text{Correlation co-efficient}}}{\rho[X,Y]}=\frac{\operatorname{Cov}[X,Y]}{\sqrt{\operatorname{Var}(X)}\sqrt{\operatorname{Var}(Y)}} \]</div>
   <div class="res">Independent \(\Rightarrow\) Uncorrelated&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;Uncorrelated \(\nRightarrow\) Independent</div>
+  <figure class="viz" data-viz="xc9" id="viz-xc9">
+    <div class="viz-head"><span class="viz-title">Convolution, sliding</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>The shaded band is the overlap of \(f_X(x)\) and \(f_Y(z-x)\). Its width <em>is</em> \(f_Z(z)\) — tracing it out gives \(z\) then \(2-z\).</figcaption>
+  </figure>
+
 </section>
 
 <section class="lec" id="w11l6" data-lec="Lecture 06 · Transformed Random Variables">
@@ -3180,8 +3564,37 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ X=\sigma Z+\mu \]</div>
   <div class="eq">\[ E[X]=E[\sigma Z+\mu]=\mu+\sigma E[Z]\ \Longrightarrow\ \mu\qquad[E[Z]=0] \]</div>
   <div class="eq">\[ \operatorname{Var}(X)=\operatorname{Var}[\sigma Z+\mu]=\sigma^{2}\operatorname{Var}[Z]=\sigma^{2}\qquad[\operatorname{Var}[Z]=1] \]</div>
+  <figure class="viz" data-viz="xc10" id="viz-xc10">
+    <div class="viz-head"><span class="viz-title">The exponential forgets</span><span class="viz-badge">Interactive</span></div>
+    <div class="viz-stage"></div>
+    <div class="viz-ctrls"></div>
+    <div class="viz-out"></div>
+    <figcaption>\(P(X\ge a\mid X\ge b)\) and \(P(X\ge a-b)\) stay equal whatever you do to \(\lambda\), \(a\) and \(b\) — that is memorylessness.</figcaption>
+  </figure>
+
 </section>
 
+
+<section class="quiz" data-quiz="w11" id="quiz-w11">
+  <h4>Self-check — Week 11</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>For \(f_X(x)=\tfrac{x}{2}\) on \([0,2]\), find \(F_X(x)\) and \(E[X]\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ F_X(x)=\int_0^{x}\frac{x}{2}\,dx=\left[\frac{x^{2}}{4}\right]_0^{x}=\frac{x^{2}}{4} \]</div><div class="eq">\[ E[X]=\int_0^2 x\cdot\frac{x}{2}\,dx=\left[\frac{x^{3}}{6}\right]_0^2=\frac86=\frac43 \]</div></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>Condition that same density on \(A=\{x\gt1\}\). What is \(f_{X|A}\)?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ P(A)=\int_1^2\frac{x}{2}\,dx=\left[\frac{x^{2}}{4}\right]_1^2=\frac34 \]</div><div class="eq">\[ f_{X|A}(x)=\frac{x/2}{3/4}=\frac{2x}{3}\ \text{on}\ [1,2],\quad 0\ \text{elsewhere} \]</div><p>Dividing by \(P(A)\) is what makes the restricted piece integrate to 1 again.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Derive \(\operatorname{Var}[X]=\tfrac{(b-a)^2}{12}\) for \(X\sim\text{unif}[a,b]\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ E[X]=\frac{b+a}{2},\qquad E[X^{2}]=\int_a^b x^{2}\frac{1}{b-a}dx=\frac13(b^{2}+a^{2}+ab) \]</div><div class="eq">\[ \operatorname{Var}[X]=\frac13(b^{2}+a^{2}+ab)-\frac{(b+a)^{2}}{4}=\frac{(b-a)^{2}}{12} \]</div></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>For \(X,Y\sim\text{unif}[0,1]\) independent, find the density of \(Z=\max(X,Y)\) and of \(Z=\min(X,Y)\).</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ \max:\ F_Z(z)=F_X(z)F_Y(z)=z^{2}\ \Rightarrow\ f_Z(z)=2z\ \text{on}\ [0,1] \]</div><div class="eq">\[ \min:\ F_Z(z)=1-(1-z)^{2}=2z-z^{2}\ \Rightarrow\ f_Z(z)=2-2z\ \text{on}\ [0,1] \]</div><p>The max leans to the right, the min to the left — and the sum \(X+Y\) gives the triangle \(f_Z(z)=z\) then \(2-z\).</p></div>
+  </details>
+</section>
 
 <!-- ============================ WEEK 12 ============================ -->
 <section class="week" id="w12" data-week="Week 12" data-title="The Multivariate Normal">
@@ -3240,6 +3653,27 @@ svg .grab:active{cursor:grabbing}
   <div class="eq">\[ \text{iii)}\quad X_i\ \text{and}\ X_j\ \text{are independent}\iff \Sigma_{ij}=0 \]</div>
 </section>
 
+
+<section class="quiz" data-quiz="w12" id="quiz-w12">
+  <h4>Self-check — Week 12</h4>
+  <p class="qsub">4 questions from this week's own worked examples. Try each before opening the answer.</p>
+  <details>
+    <summary><span class="qn">1</span><span>Build the bivariate normal from two independent standard normals.</span><span class="qx"></span></summary>
+    <div class="qa"><p>Take \(X_1=Z_1\) and \(X_2=\rho Z_1+\sqrt{1-\rho^{2}}Z_2\), i.e. \(X=AZ\) with</p><div class="eq">\[ A=\begin{bmatrix}1&0\\\rho&\sqrt{1-\rho^{2}}\end{bmatrix},\qquad \det A=\sqrt{1-\rho^{2}} \]</div><div class="eq">\[ \operatorname{Cov}(X)=AA^{\mathsf T}=\begin{bmatrix}1&\rho\\\rho&1\end{bmatrix}=\Sigma \]</div><p>Both marginals stay standard normal; \(\rho\) is the only new parameter.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">2</span><span>What does the factorisation \(f_X(x)=f_{X_1}(x_1)f_{X_2|X_1}(x_2|x_1)\) tell you?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ X_1\sim N(0,1),\qquad X_2\mid X_1\sim N\bigl(\rho x_1,\ 1-\rho^{2}\bigr) \]</div><p>Knowing \(X_1\) shifts the mean of \(X_2\) to \(\rho x_1\) and shrinks its variance to \(1-\rho^{2}\). At \(\rho=0\) nothing changes, and as \(|\rho|\to1\) the conditional variance collapses.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">3</span><span>Give the general multivariate normal density and the two linear-transform properties.</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ f_X(x)=\frac1{(2\pi)^{d/2}\sqrt{|\Sigma|}}\exp\left(-\tfrac12(x-\mu)^{\mathsf T}\Sigma^{-1}(x-\mu)\right) \]</div><div class="eq">\[ Y=a^{\mathsf T}X\sim N(a^{\mathsf T}\mu,\ a^{\mathsf T}\Sigma a),\qquad Y=AX\sim N(A\mu,\ A\Sigma A^{\mathsf T}) \]</div><p>Any linear image of a Gaussian is Gaussian.</p></div>
+  </details>
+  <details>
+    <summary><span class="qn">4</span><span>For the multivariate normal, when are \(X_i\) and \(X_j\) independent?</span><span class="qx"></span></summary>
+    <div class="qa"><div class="eq">\[ X_i\ \text{and}\ X_j\ \text{independent}\iff\Sigma_{ij}=0 \]</div><p>This is special to the Gaussian. In general uncorrelated does <em>not</em> imply independent — only the reverse holds.</p></div>
+  </details>
+</section>
 
 <div class="endnote">
   <h5>Colophon</h5>
@@ -4649,7 +5083,470 @@ window.MathJax = {
   }
 
   /* ---------- mount, lazily ---------- */
-  var builders = { w1: w1, w2: w2, w3: w3, w4: w4, w5: w5, w6: w6, w7: w7, w8: w8, w9: w9, w10: w10, w11: w11, w12: w12 };
+
+  /* ================= added figures ================= */
+
+  /* W1 L4 — move the separator, watch the 0/1 loss */
+  function xc1(host) {
+    var P = [[0, 0, 1], [1, 0, 1], [0, 1, 1], [4, 4, -1], [3, 4, -1], [4, 3, -1]];
+    var t = 2, mode = 'f';
+    var svg = stage(host, 460, 300), out = readout(host);
+    var m = mapper({ x: 46, y: 16, w: 390, h: 240, xmin: -0.6, xmax: 5, ymin: -0.6, ymax: 5 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 1, 1); frameBox(g, m);
+    txt(g, m.X(5), m.Y(0) + 17, 'x₁', 'lab', 'end');
+    txt(g, m.X(0) - 8, m.b.y + 10, 'x₂', 'lab', 'end');
+    var line = add(g, 'line', { class: 'c3' });
+    var dots = P.map(function () { return add(g, 'circle', { r: 6, class: 'grab' }); });
+    var rings = P.map(function () { return add(g, 'circle', { r: 10, fill: 'none', 'stroke-width': 2, stroke: 'var(--v4)', opacity: 0 }); });
+
+    function pred(p) { return mode === 'f' ? Math.sign(t - p[0]) : Math.sign(p[0] - 2 * p[1]); }
+    function draw() {
+      if (mode === 'f') {
+        line.setAttribute('x1', m.X(t)); line.setAttribute('y1', m.b.y);
+        line.setAttribute('x2', m.X(t)); line.setAttribute('y2', m.b.y + m.b.h);
+      } else {
+        line.setAttribute('x1', m.X(-0.6)); line.setAttribute('y1', m.Y(-0.3));
+        line.setAttribute('x2', m.X(5)); line.setAttribute('y2', m.Y(2.5));
+      }
+      var wrong = 0;
+      P.forEach(function (p, i) {
+        var ok = pred(p) === p[2];
+        if (!ok) wrong++;
+        dots[i].setAttribute('cx', m.X(p[0])); dots[i].setAttribute('cy', m.Y(p[1]));
+        dots[i].setAttribute('class', p[2] > 0 ? 'f1' : 'f2');
+        rings[i].setAttribute('cx', m.X(p[0])); rings[i].setAttribute('cy', m.Y(p[1]));
+        rings[i].setAttribute('opacity', ok ? 0 : 0.95);
+      });
+      out([
+        cell('rule', mode === 'f' ? 'sign(' + fmt(t, 1) + ' − x₁)' : 'sign(x₁ − 2x₂)'),
+        cell('misclassified', String(wrong) + ' of 6'),
+        cell('loss', fmt(wrong / 6, 3))
+      ]);
+    }
+    buttons(host, [
+      { label: 'f = sign(t − x₁)', group: 'r', pressed: true, on: function () { mode = 'f'; draw(); } },
+      { label: 'g = sign(x₁ − 2x₂)', group: 'r', pressed: false, on: function () { mode = 'g'; draw(); } }
+    ]);
+    slider(host, { label: 'threshold  t', min: -0.5, max: 5, step: 0.1, value: t, on: function (v) { t = v; mode = 'f'; draw(); } });
+    draw();
+  }
+
+  /* W2 L2 — continuity and differentiability at the join */
+  function xc2(host) {
+    var a = 0, mm = 2, c = 6;           // left piece a x² + m x + c, right piece 4x + 2
+    var svg = stage(host, 460, 300), out = readout(host);
+    var m = mapper({ x: 46, y: 14, w: 390, h: 244, xmin: 0, xmax: 4, ymin: 0, ymax: 20 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 1, 4); frameBox(g, m);
+    var clip = clipTo(svg, m);
+    var left = add(g, 'path', { class: 'c1', 'clip-path': clip });
+    var right = add(g, 'path', { class: 'c2', 'clip-path': clip });
+    var join = add(g, 'line', { class: 'grid', 'stroke-dasharray': '4 4', x1: m.X(2), y1: m.b.y, x2: m.X(2), y2: m.b.y + m.b.h });
+    var dL = add(g, 'circle', { r: 5, class: 'f1' });
+    var dR = add(g, 'circle', { r: 5, class: 'f2' });
+    txt(g, m.X(2) + 6, m.b.y + 12, 'x = 2', 'tick');
+
+    function draw() {
+      var i, x, p = [], q = [];
+      for (i = 0; i <= 120; i++) { x = 2 * i / 120; p.push([m.X(x), m.Y(a * x * x + mm * x + c)]); }
+      for (i = 0; i <= 120; i++) { x = 2 + 2 * i / 120; q.push([m.X(x), m.Y(4 * x + 2)]); }
+      left.setAttribute('d', poly(p)); right.setAttribute('d', poly(q));
+      var lhl = 4 * a + 2 * mm + c, rhl = 10;
+      var dl = 4 * a + mm, dr = 4;
+      dL.setAttribute('cx', m.X(2)); dL.setAttribute('cy', m.Y(lhl));
+      dR.setAttribute('cx', m.X(2)); dR.setAttribute('cy', m.Y(rhl));
+      var cont = Math.abs(lhl - rhl) < 1e-9, diff = cont && Math.abs(dl - dr) < 1e-9;
+      out([
+        cell('LHL', fmt(lhl, 2)), cell('RHL', fmt(rhl, 2)),
+        cell('continuous', cont ? 'yes' : 'no'),
+        cell("left f′ / right f′", fmt(dl, 2) + ' / ' + fmt(dr, 2)),
+        cell('differentiable', diff ? 'yes' : 'no')
+      ]);
+    }
+    buttons(host, [
+      { label: '2x + 8', group: 'p', on: function () { a = 0; mm = 2; c = 8; sa.set(0); sm.set(2); sc.set(8); draw(); } },
+      { label: '2x + 6', group: 'p', pressed: true, on: function () { a = 0; mm = 2; c = 6; sa.set(0); sm.set(2); sc.set(6); draw(); } },
+      { label: 'x² + 6', group: 'p', on: function () { a = 1; mm = 0; c = 6; sa.set(1); sm.set(0); sc.set(6); draw(); } }
+    ]);
+    var sa = slider(host, { label: 'left  a (x²)', min: 0, max: 2, step: 0.25, value: a, on: function (v) { a = v; draw(); } });
+    var sm = slider(host, { label: 'left  m (x)', min: 0, max: 6, step: 0.25, value: mm, on: function (v) { mm = v; draw(); } });
+    var sc = slider(host, { label: 'left  c', min: 2, max: 10, step: 0.5, value: c, on: function (v) { c = v; draw(); } });
+    draw();
+  }
+
+  /* W3 L1 — Gaussian elimination, one row operation at a time */
+  function xc3(host) {
+    var A0 = [[1, 2, 2, 2], [2, 4, 6, 8], [3, 6, 8, 10]];
+    var A, step;
+    var OPS = [
+      { t: 'R₂ → R₂ − 2R₁', f: function (M) { for (var j = 0; j < 4; j++) M[1][j] -= 2 * M[0][j]; } },
+      { t: 'R₃ → R₃ − 3R₁', f: function (M) { for (var j = 0; j < 4; j++) M[2][j] -= 3 * M[0][j]; } },
+      { t: 'R₃ → R₃ − R₂', f: function (M) { for (var j = 0; j < 4; j++) M[2][j] -= M[1][j]; } }
+    ];
+    var svg = stage(host, 460, 190), out = readout(host);
+    var g = add(svg, 'g', null);
+    var cells = [], boxes = [];
+    var x0 = 120, y0 = 54, dx = 56, dy = 40;
+    add(g, 'path', { d: 'M' + (x0 - 18) + ' ' + (y0 - 26) + ' h-10 v' + (2 * dy + 34) + ' h10', class: 'grid', 'stroke-width': 1.5 });
+    add(g, 'path', { d: 'M' + (x0 + 3 * dx + 18) + ' ' + (y0 - 26) + ' h10 v' + (2 * dy + 34) + ' h-10', class: 'grid', 'stroke-width': 1.5 });
+    for (var i = 0; i < 3; i++) {
+      cells.push([]); boxes.push([]);
+      for (var j = 0; j < 4; j++) {
+        boxes[i].push(add(g, 'rect', { x: x0 + j * dx - 20, y: y0 + i * dy - 15, width: 40, height: 26, rx: 4, fill: 'none', opacity: 0 }));
+        cells[i].push(txt(g, x0 + j * dx, y0 + i * dy + 4, '0', 'tick', 'middle'));
+      }
+    }
+    var lbl = txt(g, 20, 26, '', 'lab');
+
+    function reset() { A = A0.map(function (r) { return r.slice(); }); step = 0; draw(); }
+    function leading(M) {
+      var ps = [], r, cc;
+      for (r = 0; r < 3; r++) for (cc = 0; cc < 4; cc++) if (Math.abs(M[r][cc]) > 1e-9) { ps.push([r, cc]); break; }
+      return ps;
+    }
+    // true rank, computed independently — row operations never change it
+    function trueRank(M) {
+      var R = M.map(function (r) { return r.slice(); }), rank = 0, row = 0, cc, i, k, piv, f;
+      for (cc = 0; cc < 4 && row < 3; cc++) {
+        piv = -1;
+        for (i = row; i < 3; i++) if (Math.abs(R[i][cc]) > 1e-9) { piv = i; break; }
+        if (piv < 0) continue;
+        var t = R[row]; R[row] = R[piv]; R[piv] = t;
+        for (i = row + 1; i < 3; i++) {
+          f = R[i][cc] / R[row][cc];
+          for (k = cc; k < 4; k++) R[i][k] -= f * R[row][k];
+        }
+        row++; rank++;
+      }
+      return rank;
+    }
+    function draw() {
+      var ps = leading(A), key = {};
+      ps.forEach(function (p) { key[p[0] + ',' + p[1]] = 1; });
+      for (var i = 0; i < 3; i++) for (var j = 0; j < 4; j++) {
+        cells[i][j].textContent = String(A[i][j]);
+        var on = key[i + ',' + j];
+        boxes[i][j].setAttribute('opacity', on ? 1 : 0);
+        boxes[i][j].setAttribute('stroke', 'var(--v1)');
+        boxes[i][j].setAttribute('stroke-width', 1.6);
+      }
+      lbl.textContent = step === 0 ? 'original matrix A' : (step < OPS.length ? 'after ' + OPS[step - 1].t : 'row echelon form U');
+      var r = trueRank(A), done = step === OPS.length;
+      out([
+        cell('step', step + ' of ' + OPS.length),
+        cell(done ? 'pivots' : 'leading entries', String(ps.length)),
+        cell('rank', String(r)),
+        cell('nullity', String(4 - r)),
+        cell('rank + nullity', String(r) + ' + ' + (4 - r) + ' = 4'),
+        cell('note', 'row operations never change the rank')
+      ]);
+    }
+    buttons(host, [
+      { label: 'Next row operation', on: function () { if (step < OPS.length) { OPS[step].f(A); step++; draw(); } } },
+      { label: 'Reset', on: reset }
+    ]);
+    reset();
+  }
+
+  /* W4 L1 — ridge: what λ buys and what it costs */
+  function xc4(host) {
+    var X = [0.5, 1.1, 1.9, 2.6, 3.4, 4.1, 4.8], Y = [1.4, 2.6, 3.1, 4.6, 4.9, 6.4, 6.6];
+    var lam = 0, n = X.length;
+    var svg = stage(host, 460, 290), out = readout(host);
+    var m = mapper({ x: 46, y: 14, w: 390, h: 232, xmin: 0, xmax: 5.4, ymin: 0, ymax: 8 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 1, 2); frameBox(g, m);
+    var fit = add(g, 'path', { class: 'c1' });
+    var ols = add(g, 'path', { class: 'grid', 'stroke-dasharray': '5 5' });
+    X.forEach(function (x, i) { add(g, 'circle', { cx: m.X(x), cy: m.Y(Y[i]), r: 4.6, class: 'f3' }); });
+
+    function solve(l) {
+      var sx = 0, sy = 0, sxx = 0, sxy = 0, i;
+      for (i = 0; i < n; i++) { sx += X[i]; sy += Y[i]; sxx += X[i] * X[i]; sxy += X[i] * Y[i]; }
+      var A = sxx + l, B = sx, C = sx, D = n + l, det = A * D - B * C;
+      return { w: (D * sxy - B * sy) / det, b: (A * sy - C * sxy) / det };
+    }
+    var base = solve(0);
+    ols.setAttribute('d', poly([[m.X(0), m.Y(base.b)], [m.X(5.4), m.Y(base.w * 5.4 + base.b)]]));
+    function draw() {
+      var s = solve(lam), i, L = 0;
+      fit.setAttribute('d', poly([[m.X(0), m.Y(s.b)], [m.X(5.4), m.Y(s.w * 5.4 + s.b)]]));
+      for (i = 0; i < n; i++) L += Math.pow(s.w * X[i] + s.b - Y[i], 2);
+      out([
+        cell('λ', fmt(lam, 2)),
+        cell('θ′ (slope)', fmt(s.w, 3)),
+        cell('θ″ (intercept)', fmt(s.b, 3)),
+        cell('‖θ‖²', fmt(s.w * s.w + s.b * s.b, 3)),
+        cell('squared error', fmt(L, 3))
+      ]);
+    }
+    slider(host, { label: 'regularisation  λ', min: 0, max: 60, step: 0.5, value: lam, on: function (v) { lam = v; draw(); } });
+    draw();
+  }
+
+  /* W6 L3 — definiteness of a quadratic form */
+  function xc5(host) {
+    var a = 2, b = 1, c = 1;
+    var svg = stage(host, 460, 300), out = readout(host);
+    var m = mapper({ x: 40, y: 14, w: 400, h: 244, xmin: -3, xmax: 3, ymin: -3, ymax: 3 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 1, 1); zeroAxes(g, m); frameBox(g, m);
+    var clip = clipTo(svg, m);
+    var paths = [1, 2, 3, 4].map(function () { return add(g, 'path', { class: 'c1', 'clip-path': clip, opacity: .85 }); });
+    var dot = add(g, 'circle', { cx: m.X(0), cy: m.Y(0), r: 4, class: 'f4' });
+
+    function draw() {
+      var lv = [0.5, 1.5, 3, 5];
+      paths.forEach(function (p, k) {
+        var L = lv[k], pts = [], seg = [], i, th, r2, r;
+        for (i = 0; i <= 360; i++) {
+          th = i * Math.PI / 180;
+          var ct = Math.cos(th), st = Math.sin(th);
+          var q = a * ct * ct + 2 * b * ct * st + c * st * st;
+          if (q <= 1e-6) { if (seg.length > 1) pts.push(seg); seg = []; continue; }
+          r = Math.sqrt(L / q);
+          if (r > 6) { if (seg.length > 1) pts.push(seg); seg = []; continue; }
+          seg.push([m.X(r * ct), m.Y(r * st)]);
+        }
+        if (seg.length > 1) pts.push(seg);
+        p.setAttribute('d', pts.map(poly).join(' '));
+        p.setAttribute('class', (a * c - b * b) > 0 ? 'c1' : 'c2');
+      });
+      var e = eigSym(a, b, c), ac = a * c, bb = b * b, kind;
+      if (ac < bb) kind = 'saddle point';
+      else if (Math.abs(ac - bb) < 1e-9) kind = a > 0 ? 'positive semi-definite' : 'negative semi-definite';
+      else kind = a > 0 ? 'positive definite' : 'negative definite';
+      dot.setAttribute('class', ac < bb ? 'f2' : 'f4');
+      out([
+        cell('f', fmt(a, 2) + 'x² + 2(' + fmt(b, 2) + ')xy + ' + fmt(c, 2) + 'y²'),
+        cell('a', fmt(a, 2)), cell('ac', fmt(ac, 2)), cell('b²', fmt(bb, 2)),
+        cell('eigenvalues', fmt(e.l1, 2) + ',  ' + fmt(e.l2, 2)),
+        cell('verdict', kind)
+      ]);
+    }
+    slider(host, { label: 'a', min: -3, max: 3, step: 0.1, value: a, on: function (v) { a = v; draw(); } });
+    slider(host, { label: 'b', min: -3, max: 3, step: 0.1, value: b, on: function (v) { b = v; draw(); } });
+    slider(host, { label: 'c', min: -3, max: 3, step: 0.1, value: c, on: function (v) { c = v; draw(); } });
+    draw();
+  }
+
+  /* W8 L4 — which step size actually arrives */
+  function xc6(host) {
+    var T = 30, konst = 0.15;
+    var svg = stage(host, 460, 290), out = readout(host);
+    var m = mapper({ x: 44, y: 14, w: 392, h: 228, xmin: 0, xmax: T, ymin: -1, ymax: 11 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 5, 2); frameBox(g, m);
+    add(g, 'line', { x1: m.b.x, y1: m.Y(5), x2: m.b.x + m.b.w, y2: m.Y(5), class: 'grid', 'stroke-dasharray': '5 4' });
+    txt(g, m.b.x + m.b.w - 4, m.Y(5) - 7, 'minimum  x = 5', 'tick', 'end');
+    txt(g, m.b.x + m.b.w / 2, m.b.y + m.b.h + 20, 'iteration  t', 'lab', 'middle');
+    var p1 = add(g, 'path', { class: 'c1' }), p2 = add(g, 'path', { class: 'c2' }), p3 = add(g, 'path', { class: 'c3' });
+
+    function run(eta) {
+      var x = 10, pts = [[m.X(0), m.Y(x)]], t;
+      for (t = 0; t < T; t++) { x = x - eta(t) * 2 * (x - 5); pts.push([m.X(t + 1), m.Y(Math.max(-1, Math.min(11, x)))]); }
+      return { pts: pts, x: x };
+    }
+    function draw() {
+      var A = run(function (t) { return 1 / Math.pow(2, t); });
+      var B = run(function (t) { return 1 / (t + 1); });
+      var C = run(function () { return konst; });
+      p1.setAttribute('d', poly(A.pts)); p2.setAttribute('d', poly(B.pts)); p3.setAttribute('d', poly(C.pts));
+      out([
+        cell('η = 1/2ᵗ', 'ends at ' + fmt(A.x, 3)),
+        cell('η = 1/(t+1)', 'ends at ' + fmt(B.x, 3)),
+        cell('η = ' + fmt(konst, 2), 'ends at ' + fmt(C.x, 3)),
+        cell('Σ 1/2ᵗ', '2  (bounded)'),
+        cell('Σ 1/(t+1)', '∞  (diverges)')
+      ]);
+    }
+    slider(host, { label: 'constant η', min: 0.02, max: 1.05, step: 0.01, value: konst, on: function (v) { konst = v; draw(); } });
+    draw();
+  }
+
+  /* W9 L5 — the convex hull of a set of points */
+  function xc8(host) {
+    var pts = [[-2, -1.2], [-0.6, 1.8], [1.5, 2.1], [2.4, -0.4], [0.9, -1.9], [-1.1, 0.3], [0.4, 0.6], [1.6, 1.0]];
+    var svg = stage(host, 440, 300), out = readout(host);
+    var m = mapper({ x: 36, y: 14, w: 388, h: 246, xmin: -3, xmax: 3, ymin: -2.6, ymax: 2.6 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 1, 1); frameBox(g, m);
+    var hull = add(g, 'path', { fill: 'var(--tint-2)', stroke: 'var(--v1)', 'stroke-width': 2, 'stroke-linejoin': 'round' });
+    var dots = pts.map(function () { return add(g, 'circle', { r: 6.5, class: 'f3 grab' }); });
+
+    function convexHull(P) {
+      var s = P.map(function (p, i) { return { p: p, i: i }; })
+        .sort(function (u, v) { return u.p[0] - v.p[0] || u.p[1] - v.p[1]; });
+      function cross(o, a, b) { return (a.p[0] - o.p[0]) * (b.p[1] - o.p[1]) - (a.p[1] - o.p[1]) * (b.p[0] - o.p[0]); }
+      var lo = [], hi = [], i;
+      for (i = 0; i < s.length; i++) { while (lo.length >= 2 && cross(lo[lo.length - 2], lo[lo.length - 1], s[i]) <= 0) lo.pop(); lo.push(s[i]); }
+      for (i = s.length - 1; i >= 0; i--) { while (hi.length >= 2 && cross(hi[hi.length - 2], hi[hi.length - 1], s[i]) <= 0) hi.pop(); hi.push(s[i]); }
+      lo.pop(); hi.pop();
+      return lo.concat(hi);
+    }
+    function draw() {
+      var h = convexHull(pts), on = {};
+      h.forEach(function (v) { on[v.i] = 1; });
+      hull.setAttribute('d', h.length > 2 ? poly(h.map(function (v) { return [m.X(v.p[0]), m.Y(v.p[1])]; })) + 'Z' : '');
+      pts.forEach(function (p, i) {
+        dots[i].setAttribute('cx', m.X(p[0])); dots[i].setAttribute('cy', m.Y(p[1]));
+        dots[i].setAttribute('class', (on[i] ? 'f1' : 'f3') + ' grab');
+      });
+      out([
+        cell('points', String(pts.length)),
+        cell('hull vertices', String(h.length)),
+        cell('inside the hull', String(pts.length - h.length)),
+        cell('note', 'every interior point is a convex combination of the vertices')
+      ]);
+    }
+    draggable(svg, function () {
+      return pts.map(function (p, i) {
+        return {
+          x: m.X(p[0]), y: m.Y(p[1]),
+          set: function (px, py) {
+            pts[i][0] = Math.max(-2.9, Math.min(2.9, m.iX(px)));
+            pts[i][1] = Math.max(-2.5, Math.min(2.5, m.iY(py)));
+            draw();
+          }
+        };
+      });
+    });
+    draw();
+  }
+
+  /* W9 L6 — the chord test for convexity */
+  function xc7(host) {
+    var x1 = -1.6, x2 = 1.9, kind = 'convex';
+    var F = {
+      convex: function (x) { return 0.55 * x * x + 0.3; },
+      wiggle: function (x) { return 0.22 * x * x * x * x - 1.05 * x * x + 0.25 * x + 2.1; }
+    };
+    var svg = stage(host, 460, 300), out = readout(host);
+    var m = mapper({ x: 40, y: 14, w: 400, h: 244, xmin: -3, xmax: 3, ymin: -0.4, ymax: 5.2 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 1, 1); frameBox(g, m);
+    var clip = clipTo(svg, m);
+    var curve = add(g, 'path', { class: 'c1', 'clip-path': clip });
+    var chord = add(g, 'line', { class: 'c3' });
+    var dA = add(g, 'circle', { r: 6.5, class: 'f3 grab' }), dB = add(g, 'circle', { r: 6.5, class: 'f3 grab' });
+    var dM = add(g, 'circle', { r: 5, class: 'f4' });
+    var drop = add(g, 'line', { class: 'grid', 'stroke-dasharray': '3 3' });
+
+    function draw() {
+      var f = F[kind], i, x, p = [];
+      for (i = 0; i <= 240; i++) { x = -3 + 6 * i / 240; p.push([m.X(x), m.Y(f(x))]); }
+      curve.setAttribute('d', poly(p));
+      var y1 = f(x1), y2 = f(x2), xm = (x1 + x2) / 2, chordY = (y1 + y2) / 2, curveY = f(xm);
+      chord.setAttribute('x1', m.X(x1)); chord.setAttribute('y1', m.Y(y1));
+      chord.setAttribute('x2', m.X(x2)); chord.setAttribute('y2', m.Y(y2));
+      dA.setAttribute('cx', m.X(x1)); dA.setAttribute('cy', m.Y(y1));
+      dB.setAttribute('cx', m.X(x2)); dB.setAttribute('cy', m.Y(y2));
+      dM.setAttribute('cx', m.X(xm)); dM.setAttribute('cy', m.Y(curveY));
+      drop.setAttribute('x1', m.X(xm)); drop.setAttribute('y1', m.Y(chordY));
+      drop.setAttribute('x2', m.X(xm)); drop.setAttribute('y2', m.Y(curveY));
+      var ok = chordY >= curveY - 1e-9;
+      out([
+        cell('f(midpoint)', fmt(curveY, 3)),
+        cell('chord at midpoint', fmt(chordY, 3)),
+        cell('chord − curve', fmt(chordY - curveY, 3)),
+        cell('test', ok ? 'chord on or above — convex here' : 'chord dips below — not convex')
+      ]);
+    }
+    buttons(host, [
+      { label: 'convex curve', group: 'k', pressed: true, on: function () { kind = 'convex'; draw(); } },
+      { label: 'non-convex curve', group: 'k', on: function () { kind = 'wiggle'; draw(); } }
+    ]);
+    draggable(svg, function () {
+      var f = F[kind];
+      return [
+        { x: m.X(x1), y: m.Y(f(x1)), set: function (px) { x1 = Math.max(-2.9, Math.min(x2 - 0.3, m.iX(px))); draw(); } },
+        { x: m.X(x2), y: m.Y(f(x2)), set: function (px) { x2 = Math.min(2.9, Math.max(x1 + 0.3, m.iX(px))); draw(); } }
+      ];
+    });
+    draw();
+  }
+
+  /* W11 L5 — the convolution that makes the triangle */
+  function xc9(host) {
+    var z = 0.8;
+    var svg = stage(host, 460, 330), out = readout(host);
+    var top = mapper({ x: 44, y: 12, w: 392, h: 110, xmin: -1.2, xmax: 2.4, ymin: 0, ymax: 1.45 });
+    var bot = mapper({ x: 44, y: 182, w: 392, h: 120, xmin: -1.2, xmax: 2.4, ymin: 0, ymax: 1.25 });
+    var g = add(svg, 'g', null);
+    frameBox(g, top); frameBox(g, bot);
+    txt(g, top.b.x + 2, top.b.y - 1, 'f_X(x)  and  f_Y(z − x)', 'lab');
+    txt(g, bot.b.x + 2, bot.b.y - 1, 'f_Z(z)  — the overlap area', 'lab');
+    var fx = add(g, 'path', { class: 'c1' });
+    var fy = add(g, 'path', { class: 'c2' });
+    var band = add(g, 'rect', { fill: 'var(--tint-2)', stroke: 'none' });
+    var tri = add(g, 'path', { class: 'c3' });
+    var mark = add(g, 'circle', { r: 5, class: 'f4' });
+    var zline = add(g, 'line', { class: 'grid', 'stroke-dasharray': '3 3' });
+    fx.setAttribute('d', poly([[top.X(-1.2), top.Y(0)], [top.X(0), top.Y(0)], [top.X(0), top.Y(1)], [top.X(1), top.Y(1)], [top.X(1), top.Y(0)], [top.X(2.4), top.Y(0)]]));
+    tri.setAttribute('d', poly([[bot.X(0), bot.Y(0)], [bot.X(1), bot.Y(1)], [bot.X(2), bot.Y(0)]]));
+
+    function draw() {
+      fy.setAttribute('d', poly([[top.X(-1.2), top.Y(0)], [top.X(z - 1), top.Y(0)], [top.X(z - 1), top.Y(1)], [top.X(z), top.Y(1)], [top.X(z), top.Y(0)], [top.X(2.4), top.Y(0)]]));
+      var lo = Math.max(0, z - 1), hi = Math.min(1, z), w = Math.max(0, hi - lo);
+      band.setAttribute('x', top.X(lo)); band.setAttribute('y', top.Y(1));
+      band.setAttribute('width', Math.max(0, top.X(hi) - top.X(lo)));
+      band.setAttribute('height', top.Y(0) - top.Y(1));
+      mark.setAttribute('cx', bot.X(z)); mark.setAttribute('cy', bot.Y(w));
+      zline.setAttribute('x1', bot.X(z)); zline.setAttribute('y1', bot.Y(0));
+      zline.setAttribute('x2', bot.X(z)); zline.setAttribute('y2', bot.Y(w));
+      out([
+        cell('z', fmt(z, 2)),
+        cell('overlap', '[' + fmt(lo, 2) + ', ' + fmt(hi, 2) + ']'),
+        cell('f_Z(z)', fmt(w, 3)),
+        cell('formula', z <= 1 ? 'z' : '2 − z')
+      ]);
+    }
+    slider(host, { label: 'z', min: 0, max: 2, step: 0.01, value: z, on: function (v) { z = v; draw(); } });
+    draw();
+  }
+
+  /* W11 L7 — the exponential forgets how long you waited */
+  function xc10(host) {
+    var lam = 0.8, a = 2.4, b = 1.2;
+    var svg = stage(host, 460, 290), out = readout(host);
+    var m = mapper({ x: 44, y: 14, w: 392, h: 228, xmin: 0, xmax: 6, ymin: 0, ymax: 1.05 });
+    var g = add(svg, 'g', null);
+    gridlines(g, m, 1, 0.25); frameBox(g, m);
+    var clip = clipTo(svg, m);
+    var shadeA = add(g, 'path', { fill: 'var(--tint-2)', stroke: 'none', 'clip-path': clip });
+    var curve = add(g, 'path', { class: 'c1', 'clip-path': clip });
+    var la = add(g, 'line', { class: 'c3' }), lb = add(g, 'line', { class: 'c2', 'stroke-dasharray': '5 4' });
+    txt(g, m.b.x + m.b.w - 4, m.b.y + 12, 'f_X(x) = λe^(−λx)', 'lab', 'end');
+
+    function draw() {
+      if (b > a - 0.1) b = a - 0.1;
+      var i, x, p = [], q = [];
+      for (i = 0; i <= 240; i++) { x = 6 * i / 240; p.push([m.X(x), m.Y(lam * Math.exp(-lam * x))]); }
+      curve.setAttribute('d', poly(p));
+      q.push([m.X(a), m.Y(0)]);
+      for (i = 0; i <= 160; i++) { x = a + (6 - a) * i / 160; q.push([m.X(x), m.Y(lam * Math.exp(-lam * x))]); }
+      q.push([m.X(6), m.Y(0)]);
+      shadeA.setAttribute('d', poly(q) + 'Z');
+      la.setAttribute('x1', m.X(a)); la.setAttribute('y1', m.b.y); la.setAttribute('x2', m.X(a)); la.setAttribute('y2', m.b.y + m.b.h);
+      lb.setAttribute('x1', m.X(b)); lb.setAttribute('y1', m.b.y); lb.setAttribute('x2', m.X(b)); lb.setAttribute('y2', m.b.y + m.b.h);
+      var Pa = Math.exp(-lam * a), Pb = Math.exp(-lam * b), Pab = Math.exp(-lam * (a - b));
+      out([
+        cell('P(X ≥ a)', fmt(Pa, 4)),
+        cell('P(X ≥ b)', fmt(Pb, 4)),
+        cell('P(X ≥ a | X ≥ b)', fmt(Pa / Pb, 4)),
+        cell('P(X ≥ a − b)', fmt(Pab, 4)),
+        cell('equal?', Math.abs(Pa / Pb - Pab) < 1e-9 ? 'yes — memoryless' : 'no')
+      ]);
+    }
+    slider(host, { label: 'rate  λ', min: 0.2, max: 2.5, step: 0.05, value: lam, on: function (v) { lam = v; draw(); } });
+    slider(host, { label: 'a', min: 1, max: 5.5, step: 0.05, value: a, on: function (v) { a = v; draw(); } });
+    slider(host, { label: 'b  (already waited)', min: 0.1, max: 4, step: 0.05, value: b, on: function (v) { b = v; draw(); } });
+    draw();
+  }
+
+  var builders = { w1: w1, w2: w2, w3: w3, w4: w4, w5: w5, w6: w6, w7: w7, w8: w8, w9: w9, w10: w10, w11: w11, w12: w12,
+    xc1: xc1, xc2: xc2, xc3: xc3, xc4: xc4, xc5: xc5, xc6: xc6, xc7: xc7, xc8: xc8, xc9: xc9, xc10: xc10 };
   var pending = [].slice.call(document.querySelectorAll('.viz'));
   function build(node) {
     if (node.dataset.built) return;
@@ -4667,5 +5564,236 @@ window.MathJax = {
 })();
 </script>
 
+<script>
+/* =========================================================
+   Study tools — search, progress, bookmarks, steppers
+   All UI here is generated at runtime; no markup depends on it.
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var LS = {
+    get: function (k, d) { try { var v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { } }
+  };
+
+  var lecs = [].slice.call(document.querySelectorAll('main section.lec'));
+  var toc = document.getElementById('toc');
+  var filter = document.getElementById('filter');
+  if (!lecs.length || !toc || !filter) return;
+
+  var done = LS.get('mlf-done', {});
+  var fav = LS.get('mlf-fav', {});
+
+  /* ---------- search index, captured before MathJax rewrites the DOM ---------- */
+  var index = lecs.map(function (sec) {
+    var raw = sec.textContent || '';
+    raw = raw.replace(/\\[()[\]]/g, ' ')
+             .replace(/\\(?:begin|end)\{[a-z*]+\}/gi, ' ')
+             .replace(/\\[a-zA-Z]+/g, ' ')
+             .replace(/[{}$^_&]/g, ' ')
+             .replace(/\s+/g, ' ')
+             .trim();
+    var wk = sec.previousElementSibling;
+    while (wk && !wk.classList.contains('week')) wk = wk.previousElementSibling;
+    return {
+      id: sec.id,
+      title: sec.dataset.lec || '',
+      week: wk ? (wk.dataset.week || '') : '',
+      text: raw,
+      low: raw.toLowerCase()
+    };
+  });
+
+  function esc(s) { return s.replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+  function snippet(entry, q) {
+    var i = entry.low.indexOf(q);
+    if (i < 0) return '';
+    var a = Math.max(0, i - 42), b = Math.min(entry.text.length, i + q.length + 68);
+    var pre = (a > 0 ? '…' : '') + entry.text.slice(a, i);
+    var hit = entry.text.slice(i, i + q.length);
+    var post = entry.text.slice(i + q.length, b) + (b < entry.text.length ? '…' : '');
+    return esc(pre) + '<mark>' + esc(hit) + '</mark>' + esc(post);
+  }
+
+  /* ---------- results panel ---------- */
+  var results = document.createElement('div');
+  results.className = 'results';
+  results.id = 'results';
+  filter.closest('.rail-tools').insertAdjacentElement('afterend', results);
+
+  function runSearch() {
+    var q = filter.value.trim().toLowerCase();
+    if (q.length < 2) { results.classList.remove('on'); results.innerHTML = ''; return; }
+    var hits = [];
+    index.forEach(function (e) {
+      var inTitle = e.title.toLowerCase().indexOf(q) > -1;
+      var at = e.low.indexOf(q);
+      if (!inTitle && at < 0) return;
+      var n = 0, from = 0;
+      while (at > -1 && n < 99) { n++; from = at + q.length; at = e.low.indexOf(q, from); }
+      hits.push({ e: e, n: n, inTitle: inTitle });
+    });
+    hits.sort(function (a, b) { return (b.inTitle - a.inTitle) || (b.n - a.n); });
+    if (!hits.length) {
+      results.innerHTML = '<div class="none">No match in the text.</div>';
+      results.classList.add('on');
+      return;
+    }
+    var total = hits.reduce(function (s, h) { return s + h.n; }, 0);
+    var html = '<div class="rh">' + total + ' match' + (total === 1 ? '' : 'es') + ' in ' + hits.length + ' lecture' + (hits.length === 1 ? '' : 's') + '</div>';
+    hits.slice(0, 20).forEach(function (h) {
+      html += '<a href="#' + h.e.id + '" data-go="' + h.e.id + '">' +
+        '<span class="rt">' + esc(h.e.week) + ' · ' + esc(h.e.title) + '</span>' +
+        '<span class="rs">' + (snippet(h.e, q) || esc(h.e.text.slice(0, 90)) + '…') + '</span></a>';
+    });
+    results.innerHTML = html;
+    results.classList.add('on');
+  }
+  filter.addEventListener('input', runSearch);
+  results.addEventListener('click', function (e) {
+    var a = e.target.closest('a[data-go]');
+    if (!a) return;
+    if (window.matchMedia('(max-width: 900px)').matches) {
+      var rail = document.getElementById('rail');
+      if (rail) rail.classList.add('closed');
+    }
+  });
+
+  /* ---------- progress summary in the rail ---------- */
+  var sum = document.createElement('div');
+  sum.className = 'rail-sum';
+  sum.innerHTML =
+    '<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">' +
+    '<circle class="ring-bg" cx="15" cy="15" r="12"/>' +
+    '<circle class="ring-fg" id="ring" cx="15" cy="15" r="12" transform="rotate(-90 15 15)" stroke-dasharray="0 999"/></svg>' +
+    '<span class="pt"><span class="pn" id="pnum">0 / ' + lecs.length + '</span>' +
+    '<span class="pl">lectures done</span></span>' +
+    '<button type="button" id="resetProg" title="Clear your saved progress">Reset</button>';
+  filter.closest('.rail-tools').insertAdjacentElement('beforebegin', sum);
+
+  var ring = sum.querySelector('#ring'), pnum = sum.querySelector('#pnum');
+  var C = 2 * Math.PI * 12;
+
+  function paintProgress() {
+    var n = lecs.filter(function (s) { return done[s.id]; }).length;
+    pnum.textContent = n + ' / ' + lecs.length;
+    ring.setAttribute('stroke-dasharray', (C * n / lecs.length).toFixed(1) + ' ' + C.toFixed(1));
+  }
+  sum.querySelector('#resetProg').addEventListener('click', function () {
+    done = {}; LS.set('mlf-done', done);
+    lecs.forEach(function (s) { syncLec(s); });
+    paintProgress(); orderFavs();
+  });
+
+  /* ---------- per-lecture done + star ---------- */
+  function tocLink(id) { return toc.querySelector('a[data-target="' + id + '"]'); }
+
+  function syncLec(sec) {
+    var mk = sec.querySelector('.lmark');
+    if (mk) {
+      mk.querySelector('.tick').setAttribute('aria-pressed', String(!!done[sec.id]));
+      mk.querySelector('.star').setAttribute('aria-pressed', String(!!fav[sec.id]));
+    }
+    var a = tocLink(sec.id);
+    if (a) {
+      a.classList.toggle('done', !!done[sec.id]);
+      a.classList.toggle('fav-on', !!fav[sec.id]);
+    }
+  }
+
+  lecs.forEach(function (sec) {
+    var h = sec.querySelector('h3');
+    if (!h) return;
+    var mk = document.createElement('span');
+    mk.className = 'lmark';
+    mk.innerHTML =
+      '<button type="button" class="tick" aria-pressed="false" title="Mark this lecture done" aria-label="Mark this lecture done">✓</button>' +
+      '<button type="button" class="star" aria-pressed="false" title="Bookmark this lecture" aria-label="Bookmark this lecture">★</button>';
+    h.appendChild(mk);
+    mk.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b) return;
+      var store = b.classList.contains('tick') ? done : fav;
+      if (store[sec.id]) delete store[sec.id]; else store[sec.id] = 1;
+      LS.set(b.classList.contains('tick') ? 'mlf-done' : 'mlf-fav', store);
+      syncLec(sec); paintProgress(); orderFavs();
+    });
+  });
+
+  // tick + star glyphs inside the contents entries
+  lecs.forEach(function (sec) {
+    var a = tocLink(sec.id);
+    if (a && !a.querySelector('.tick')) {
+      a.insertAdjacentHTML('afterbegin', '<span class="fav" aria-hidden="true">★</span><span class="tick" aria-hidden="true">✓</span>');
+    }
+  });
+
+  /* ---------- starred group at the top of the contents ---------- */
+  var favLi = document.createElement('li');
+  favLi.className = 'wk';
+  favLi.innerHTML = '<a href="#" id="favHead"><span class="n">★</span><span>Bookmarked</span></a><ul></ul>';
+  function orderFavs() {
+    var ul = favLi.querySelector('ul');
+    ul.innerHTML = '';
+    var any = 0;
+    lecs.forEach(function (sec) {
+      if (!fav[sec.id]) return;
+      any++;
+      var li = document.createElement('li');
+      li.innerHTML = '<a href="#' + sec.id + '">' + (sec.dataset.lec || sec.id) + '</a>';
+      ul.appendChild(li);
+    });
+    favLi.style.display = any ? '' : 'none';
+    if (any && favLi.parentNode !== toc) toc.insertBefore(favLi, toc.firstChild);
+  }
+  favLi.querySelector('#favHead').addEventListener('click', function (e) { e.preventDefault(); });
+
+  lecs.forEach(syncLec);
+  paintProgress();
+  orderFavs();
+
+  /* ---------- worked-example steppers ---------- */
+  document.querySelectorAll('[data-step]').forEach(function (box) {
+    var eqs = [].slice.call(box.querySelectorAll('.eq'));
+    if (eqs.length < 3) return;
+    var bar = document.createElement('div');
+    bar.className = 'stepbar';
+    bar.innerHTML =
+      '<button type="button" class="go">Step through</button>' +
+      '<button type="button" class="prev" disabled>Back</button>' +
+      '<button type="button" class="next" disabled>Next</button>' +
+      '<span class="sc"></span>';
+    box.appendChild(bar);
+
+    var go = bar.querySelector('.go'), prev = bar.querySelector('.prev'),
+        next = bar.querySelector('.next'), sc = bar.querySelector('.sc');
+    var on = false, i = 0;
+
+    function paint() {
+      eqs.forEach(function (eq, k) {
+        eq.classList.toggle('dim', on && k > i);
+        eq.classList.toggle('cur', on && k === i);
+      });
+      box.classList.toggle('stepping', on);
+      prev.disabled = !on || i === 0;
+      next.disabled = !on || i >= eqs.length - 1;
+      sc.textContent = on ? ('step ' + (i + 1) + ' of ' + eqs.length) : '';
+      go.textContent = on ? 'Show all' : 'Step through';
+    }
+    go.addEventListener('click', function () { on = !on; i = 0; paint(); });
+    prev.addEventListener('click', function () { if (i > 0) { i--; paint(); } });
+    next.addEventListener('click', function () {
+      if (i < eqs.length - 1) {
+        i++; paint();
+        var r = eqs[i].getBoundingClientRect();
+        if (r.bottom > innerHeight - 40 || r.top < 60) eqs[i].scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    });
+    paint();
+  });
+})();
+</script>
 </body>
 </html>
